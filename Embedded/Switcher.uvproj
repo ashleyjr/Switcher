@@ -521,12 +521,12 @@
             <File>
               <FileName>InitDevice.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\InitDevice.c</FilePath>
+              <FilePath>.\Src\InitDevice.c</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\main.c</FilePath>
+              <FilePath>.\Src\main.c</FilePath>
             </File>
           </Files>
         </Group>
