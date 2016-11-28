@@ -1,0 +1,162 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/28/2016  21:11:59  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\InitDevice.obj, .\Objects\main.obj TO .\Objects\Switcher PRINT (.\Listings\Switche
+>> r.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\InitDevice.obj (INITDEVICE)
+  .\Objects\main.obj (MAIN)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\Switcher (INITDEVICE)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0017H     UNIT         ?PR?MAIN?MAIN
+            CODE    0817H     000FH     UNIT         ?PR?ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0826H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0832H     0008H     UNIT         ?PR?TIMER01_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    083AH     0007H     UNIT         ?PR?WDT_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0841H     0004H     UNIT         ?PR?PORTS_1_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0845H     0004H     UNIT         ?PR?PBCFG_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0849H     0001H     UNIT         ?PR?TIMER_SETUP_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Switcher (INITDEVICE)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN
+  +--> ?PR?ENTER_DEFAULTMODE_FROM_RESET?INIT...
+
+?PR?ENTER_DEFAULTMODE_FROM_RESET?INIT...
+  +--> ?PR?WDT_0_ENTER_DEFAULTMODE_FROM_RESE...
+  +--> ?PR?PORTS_1_ENTER_DEFAULTMODE_FROM_RE...
+  +--> ?PR?PBCFG_0_ENTER_DEFAULTMODE_FROM_RE...
+  +--> ?PR?TIMER01_0_ENTER_DEFAULTMODE_FROM_...
+  +--> ?PR?TIMER_SETUP_0_ENTER_DEFAULTMODE_F...
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/28/2016  21:11:59  PAGE 2
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        INITDEVICE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0097H         PUBLIC        WDTCN
+  D:00A5H         PUBLIC        P1MDOUT
+  D:00E3H         PUBLIC        XBR2
+  C:0845H         PUBLIC        PBCFG_0_enter_DefaultMode_from_RESET
+  C:0832H         PUBLIC        TIMER01_0_enter_DefaultMode_from_RESET
+  C:083AH         PUBLIC        WDT_0_enter_DefaultMode_from_RESET
+  D:0088H         PUBLIC        TCON
+  C:0849H         PUBLIC        TIMER_SETUP_0_enter_DefaultMode_from_RESET
+  C:0817H         PUBLIC        enter_DefaultMode_from_RESET
+  C:0841H         PUBLIC        PORTS_1_enter_DefaultMode_from_RESET
+  -------         PROC          ENTER_DEFAULTMODE_FROM_RESET
+  C:0817H         LINE#         20
+  C:0817H         LINE#         22
+  C:081AH         LINE#         23
+  C:081DH         LINE#         24
+  C:0820H         LINE#         25
+  C:0823H         LINE#         26
+  -------         ENDPROC       ENTER_DEFAULTMODE_FROM_RESET
+  -------         PROC          WDT_0_ENTER_DEFAULTMODE_FROM_RESET
+  C:083AH         LINE#         36
+  C:083AH         LINE#         39
+  C:083DH         LINE#         40
+  C:0840H         LINE#         44
+  -------         ENDPROC       WDT_0_ENTER_DEFAULTMODE_FROM_RESET
+  -------         PROC          PORTS_1_ENTER_DEFAULTMODE_FROM_RESET
+  C:0841H         LINE#         49
+  C:0841H         LINE#         70
+  C:0844H         LINE#         88
+  -------         ENDPROC       PORTS_1_ENTER_DEFAULTMODE_FROM_RESET
+  -------         PROC          PBCFG_0_ENTER_DEFAULTMODE_FROM_RESET
+  C:0845H         LINE#         93
+  C:0845H         LINE#         107
+  C:0848H         LINE#         114
+  -------         ENDPROC       PBCFG_0_ENTER_DEFAULTMODE_FROM_RESET
+  -------         PROC          TIMER01_0_ENTER_DEFAULTMODE_FROM_RESET
+  -------         DO            
+  D:0007H         SYMBOL        TCON_save
+  -------         ENDDO         
+  C:0832H         LINE#         119
+  C:0832H         LINE#         122
+  C:0834H         LINE#         124
+  C:0837H         LINE#         142
+  C:0839H         LINE#         147
+  -------         ENDPROC       TIMER01_0_ENTER_DEFAULTMODE_FROM_RESET
+  -------         PROC          TIMER_SETUP_0_ENTER_DEFAULTMODE_FROM_RESET
+  C:0849H         LINE#         152
+  C:0849H         LINE#         163
+  -------         ENDPROC       TIMER_SETUP_0_ENTER_DEFAULTMODE_FROM_RESET
+  -------         ENDMOD        INITDEVICE
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/28/2016  21:11:59  PAGE 3
+
+
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  B:0090H.7       PUBLIC        S1
+  B:00A0H.1       PUBLIC        S2
+  B:0090H.0       PUBLIC        LED1
+  B:0090H.1       PUBLIC        LED2
+  C:0800H         PUBLIC        main
+  -------         PROC          MAIN
+  C:0800H         LINE#         105
+  C:0800H         LINE#         106
+  C:0800H         LINE#         107
+  C:0803H         LINE#         109
+  C:0803H         LINE#         110
+  C:0803H         LINE#         112
+  C:0806H         LINE#         113
+  C:0806H         LINE#         114
+  C:0808H         LINE#         115
+  C:080AH         LINE#         117
+  C:080AH         LINE#         118
+  C:080CH         LINE#         119
+  C:080CH         LINE#         122
+  C:080FH         LINE#         123
+  C:080FH         LINE#         124
+  C:0811H         LINE#         125
+  C:0813H         LINE#         127
+  C:0813H         LINE#         128
+  C:0815H         LINE#         129
+  C:0815H         LINE#         130
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 003EH BYTE ( 3%) *
+******************************************************************************
+
+Program Size: data=9.0 xdata=0 code=77
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
