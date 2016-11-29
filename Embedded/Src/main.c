@@ -9,7 +9,7 @@
 
 #include <SI_C8051F850_Register_Enums.h>
 #include "InitDevice.h"
-#include "Pid.h"
+#include "Pid.h"							// Holds controller configuration
 
 //-----------------------------------------------------------------------------
 // Pin Declarations
@@ -42,9 +42,8 @@ SBIT(S2, SFR_P2, 1);
 
 void main (void)
 {
-	float input = 1;
-	float target = 2;
-	float error;
+	uint16_t	adc;
+	uint16_t	pwm;
 
 		
 	enter_DefaultMode_from_RESET();
@@ -71,8 +70,8 @@ void main (void)
 //         LED2 = LED_ON;
 //      }
 	   
-	   error = pidCalcError(input,target);
-		input += 1;
+		pwm = pidUpdate(adc);
+		pwm++;
    }
 }
 

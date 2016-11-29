@@ -6,10 +6,11 @@
 #ifndef PID_H
 #define PID_H
 
-#define P 1
-#define I 1
-#define D 1
+#define P 			10
+#define I 			1
+#define D 			1
+#define ADC_TARGET	100
 
-float pidCalcError(float input,	float target);
+unsigned short pidUpdate(unsigned short adc);
 
 #endif // PID

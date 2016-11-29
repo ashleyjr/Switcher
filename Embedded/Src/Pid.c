@@ -5,6 +5,10 @@
 //-----------------------------------------------------------------------------
 #include "Pid.h"
 
-float pidCalcError(float input,	float target){
-	return target - input;
+unsigned short pidUpdate(unsigned short adc){
+	unsigned short error;
+	unsigned short pwm;
+	error = ADC_TARGET - adc;
+	pwm = P*error;
+	return pwm;
 }
