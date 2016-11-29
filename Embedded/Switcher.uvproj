@@ -513,6 +513,11 @@
               <FileType>5</FileType>
               <FilePath>.\Inc\STRING.H</FilePath>
             </File>
+            <File>
+              <FileName>Pid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Inc\Pid.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -527,6 +532,11 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>Pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Pid.c</FilePath>
             </File>
           </Files>
         </Group>
