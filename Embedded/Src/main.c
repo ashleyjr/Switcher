@@ -47,9 +47,8 @@ void main (void)
 
 		
 	enter_DefaultMode_from_RESET();
-	
-   while (1)
-   {
+	pidInit();
+	while (1){
 //      // Set the state of LED1
 //      if (S1 == SW_PRESSED)
 //      {
