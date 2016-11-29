@@ -536,7 +536,7 @@
             <File>
               <FileName>Pid.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Pid.c</FilePath>
+              <FilePath>.\Src\Pid.c</FilePath>
             </File>
           </Files>
         </Group>
