@@ -1,9 +1,9 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        11/28/2016  22:33:09  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/01/2016  22:09:23  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
-C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\InitDevice.obj, .\Objects\main.obj TO .\Objects\Switcher PRINT (.\Listings\Switche
->> r.m51) RAMSIZE (256)
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\InitDevice.obj, .\Objects\main.obj, .\Objects\Pid.obj TO .\Objects\Switcher PRINT 
+>> (.\Listings\Switcher.m51) RAMSIZE (256)
 
 
 MEMORY MODEL: SMALL
@@ -12,7 +12,16 @@ MEMORY MODEL: SMALL
 INPUT MODULES INCLUDED:
   .\Objects\InitDevice.obj (INITDEVICE)
   .\Objects\main.obj (MAIN)
+  .\Objects\Pid.obj (PID)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?IMUL)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (PRINTF)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?PLDIIDATA)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CCASE)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (PUTCHAR)
 
 
 LINK MAP OF MODULE:  .\Objects\Switcher (INITDEVICE)
@@ -23,43 +32,69 @@ LINK MAP OF MODULE:  .\Objects\Switcher (INITDEVICE)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            IDATA   0008H     0001H     UNIT         ?STACK
+            DATA    0008H     0016H     UNIT         _DATA_GROUP_
+                    001EH     0002H                  *** GAP ***
+            BIT     0020H.0   0001H.1   UNIT         _BIT_GROUP_
+                    0021H.1   0000H.7                *** GAP ***
+            DATA    0022H     0004H     UNIT         ?DT?PID
+            IDATA   0026H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
                     0003H     07FDH                  *** GAP ***
-            CODE    0800H     0017H     UNIT         ?PR?MAIN?MAIN
-            CODE    0817H     000FH     UNIT         ?PR?ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
-            CODE    0826H     000CH     UNIT         ?C_C51STARTUP
-            CODE    0832H     0008H     UNIT         ?PR?TIMER01_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
-            CODE    083AH     0007H     UNIT         ?PR?WDT_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
-            CODE    0841H     0004H     UNIT         ?PR?PORTS_1_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
-            CODE    0845H     0004H     UNIT         ?PR?PBCFG_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
-            CODE    0849H     0001H     UNIT         ?PR?TIMER_SETUP_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0800H     035CH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    0B5CH     00A0H     UNIT         ?C?LIB_CODE
+            CODE    0BFCH     0042H     UNIT         ?PR?_PIDUPDATE?PID
+            CODE    0C3EH     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    0C65H     0024H     UNIT         ?PR?MAIN?MAIN
+            CODE    0C89H     0018H     UNIT         ?PR?ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0CA1H     000EH     UNIT         ?PR?TIMER01_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0CAFH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0CBBH     000AH     UNIT         ?PR?TIMER_SETUP_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0CC5H     000AH     UNIT         ?PR?PIDINIT?PID
+            CODE    0CCFH     0007H     UNIT         ?PR?WDT_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0CD6H     0007H     UNIT         ?PR?PBCFG_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0CDDH     0004H     UNIT         ?PR?CLOCK_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0CE1H     0004H     UNIT         ?PR?PORTS_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0CE5H     0004H     UNIT         ?PR?UART_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0CE9H     0004H     UNIT         ?PR?RSTSRC_0_ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0CEDH     0004H     UNIT         ?CO?MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/01/2016  22:09:23  PAGE 2
+
+
 
 
 
 OVERLAY MAP OF MODULE:   .\Objects\Switcher (INITDEVICE)
 
 
-SEGMENT
-  +--> CALLED SEGMENT
----------------------
-?C_C51STARTUP
+SEGMENT                                             BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT                            START    LENGTH     START    LENGTH
+------------------------------------------------------------------------------------
+?C_C51STARTUP                                    -----    -----      -----    -----
   +--> ?PR?MAIN?MAIN
 
-?PR?MAIN?MAIN
+?PR?MAIN?MAIN                                    -----    -----      0008H    0002H
   +--> ?PR?ENTER_DEFAULTMODE_FROM_RESET?INIT...
+  +--> ?PR?PIDINIT?PID
+  +--> ?CO?MAIN
+  +--> ?PR?PRINTF?PRINTF
+  +--> ?PR?_PIDUPDATE?PID
 
-?PR?ENTER_DEFAULTMODE_FROM_RESET?INIT...
+?PR?ENTER_DEFAULTMODE_FROM_RESET?INIT...         -----    -----      -----    -----
   +--> ?PR?WDT_0_ENTER_DEFAULTMODE_FROM_RESE...
-  +--> ?PR?PORTS_1_ENTER_DEFAULTMODE_FROM_RE...
+  +--> ?PR?CLOCK_0_ENTER_DEFAULTMODE_FROM_RE...
+  +--> ?PR?PORTS_0_ENTER_DEFAULTMODE_FROM_RE...
   +--> ?PR?PBCFG_0_ENTER_DEFAULTMODE_FROM_RE...
   +--> ?PR?TIMER01_0_ENTER_DEFAULTMODE_FROM_...
   +--> ?PR?TIMER_SETUP_0_ENTER_DEFAULTMODE_F...
+  +--> ?PR?UART_0_ENTER_DEFAULTMODE_FROM_RES...
+  +--> ?PR?RSTSRC_0_ENTER_DEFAULTMODE_FROM_R...
 
+?PR?PRINTF?PRINTF                                0020H.0  0001H.1    000AH    0014H
+  +--> ?PR?PUTCHAR?PUTCHAR
 
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/28/2016  22:33:09  PAGE 2
+?PR?_PIDUPDATE?PID                               -----    -----      000AH    0004H
 
 
 
@@ -70,93 +105,203 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
 
   -------         MODULE        INITDEVICE
   C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0CE5H         PUBLIC        UART_0_enter_DefaultMode_from_RESET
   D:0097H         PUBLIC        WDTCN
-  D:00A5H         PUBLIC        P1MDOUT
+  D:00A4H         PUBLIC        P0MDOUT
+  D:00E1H         PUBLIC        XBR0
   D:00E3H         PUBLIC        XBR2
-  C:0845H         PUBLIC        PBCFG_0_enter_DefaultMode_from_RESET
-  C:0832H         PUBLIC        TIMER01_0_enter_DefaultMode_from_RESET
-  C:083AH         PUBLIC        WDT_0_enter_DefaultMode_from_RESET
+  C:0CE9H         PUBLIC        RSTSRC_0_enter_DefaultMode_from_RESET
+  C:0CD6H         PUBLIC        PBCFG_0_enter_DefaultMode_from_RESET
+  C:0CA1H         PUBLIC        TIMER01_0_enter_DefaultMode_from_RESET
+  C:0CDDH         PUBLIC        CLOCK_0_enter_DefaultMode_from_RESET
+  C:0CCFH         PUBLIC        WDT_0_enter_DefaultMode_from_RESET
+  D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
-  C:0849H         PUBLIC        TIMER_SETUP_0_enter_DefaultMode_from_RESET
-  C:0817H         PUBLIC        enter_DefaultMode_from_RESET
-  C:0841H         PUBLIC        PORTS_1_enter_DefaultMode_from_RESET
+  C:0CBBH         PUBLIC        TIMER_SETUP_0_enter_DefaultMode_from_RESET
+  D:00A9H         PUBLIC        CLKSEL
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/01/2016  22:09:23  PAGE 3
+
+
+  D:008DH         PUBLIC        TH1
+  C:0C89H         PUBLIC        enter_DefaultMode_from_RESET
+  D:008BH         PUBLIC        TL1
+  C:0CE1H         PUBLIC        PORTS_0_enter_DefaultMode_from_RESET
+  D:00EFH         PUBLIC        RSTSRC
+  D:0098H         PUBLIC        SCON0
+  D:008EH         PUBLIC        CKCON
   -------         PROC          ENTER_DEFAULTMODE_FROM_RESET
-  C:0817H         LINE#         20
-  C:0817H         LINE#         22
-  C:081AH         LINE#         23
-  C:081DH         LINE#         24
-  C:0820H         LINE#         25
-  C:0823H         LINE#         26
+  C:0C89H         LINE#         20
+  C:0C89H         LINE#         22
+  C:0C8CH         LINE#         23
+  C:0C8FH         LINE#         24
+  C:0C92H         LINE#         25
+  C:0C95H         LINE#         26
+  C:0C98H         LINE#         27
+  C:0C9BH         LINE#         28
+  C:0C9EH         LINE#         29
   -------         ENDPROC       ENTER_DEFAULTMODE_FROM_RESET
   -------         PROC          WDT_0_ENTER_DEFAULTMODE_FROM_RESET
-  C:083AH         LINE#         36
-  C:083AH         LINE#         39
-  C:083DH         LINE#         40
-  C:0840H         LINE#         44
+  C:0CCFH         LINE#         39
+  C:0CCFH         LINE#         42
+  C:0CD2H         LINE#         43
+  C:0CD5H         LINE#         47
   -------         ENDPROC       WDT_0_ENTER_DEFAULTMODE_FROM_RESET
-  -------         PROC          PORTS_1_ENTER_DEFAULTMODE_FROM_RESET
-  C:0841H         LINE#         49
-  C:0841H         LINE#         70
-  C:0844H         LINE#         88
-  -------         ENDPROC       PORTS_1_ENTER_DEFAULTMODE_FROM_RESET
+  -------         PROC          CLOCK_0_ENTER_DEFAULTMODE_FROM_RESET
+  C:0CDDH         LINE#         52
+  C:0CDDH         LINE#         60
+  C:0CE0H         LINE#         64
+  -------         ENDPROC       CLOCK_0_ENTER_DEFAULTMODE_FROM_RESET
+  -------         PROC          PORTS_0_ENTER_DEFAULTMODE_FROM_RESET
+  C:0CE1H         LINE#         69
+  C:0CE1H         LINE#         91
+  C:0CE4H         LINE#         109
+  -------         ENDPROC       PORTS_0_ENTER_DEFAULTMODE_FROM_RESET
   -------         PROC          PBCFG_0_ENTER_DEFAULTMODE_FROM_RESET
-  C:0845H         LINE#         93
-  C:0845H         LINE#         107
-  C:0848H         LINE#         114
+  C:0CD6H         LINE#         114
+  C:0CD6H         LINE#         133
+  C:0CD9H         LINE#         148
+  C:0CDCH         LINE#         155
   -------         ENDPROC       PBCFG_0_ENTER_DEFAULTMODE_FROM_RESET
   -------         PROC          TIMER01_0_ENTER_DEFAULTMODE_FROM_RESET
   -------         DO            
   D:0007H         SYMBOL        TCON_save
   -------         ENDDO         
-  C:0832H         LINE#         119
-  C:0832H         LINE#         122
-  C:0834H         LINE#         124
-  C:0837H         LINE#         142
-  C:0839H         LINE#         147
+  C:0CA1H         LINE#         160
+  C:0CA1H         LINE#         163
+  C:0CA3H         LINE#         165
+  C:0CA6H         LINE#         179
+  C:0CA9H         LINE#         186
+  C:0CACH         LINE#         191
+  C:0CAEH         LINE#         196
   -------         ENDPROC       TIMER01_0_ENTER_DEFAULTMODE_FROM_RESET
   -------         PROC          TIMER_SETUP_0_ENTER_DEFAULTMODE_FROM_RESET
-  C:0849H         LINE#         152
-  C:0849H         LINE#         163
+  C:0CBBH         LINE#         201
+  C:0CBBH         LINE#         217
+  C:0CBEH         LINE#         236
+  C:0CC1H         LINE#         244
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/01/2016  22:09:23  PAGE 4
+
+
+  C:0CC4H         LINE#         248
   -------         ENDPROC       TIMER_SETUP_0_ENTER_DEFAULTMODE_FROM_RESET
+  -------         PROC          UART_0_ENTER_DEFAULTMODE_FROM_RESET
+  C:0CE5H         LINE#         253
+  C:0CE5H         LINE#         258
+  C:0CE8H         LINE#         262
+  -------         ENDPROC       UART_0_ENTER_DEFAULTMODE_FROM_RESET
+  -------         PROC          RSTSRC_0_ENTER_DEFAULTMODE_FROM_RESET
+  C:0CE9H         LINE#         267
+  C:0CE9H         LINE#         279
+  C:0CECH         LINE#         284
+  -------         ENDPROC       RSTSRC_0_ENTER_DEFAULTMODE_FROM_RESET
   -------         ENDMOD        INITDEVICE
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/28/2016  22:33:09  PAGE 3
-
-
 
   -------         MODULE        MAIN
   C:0000H         SYMBOL        _ICE_DUMMY_
-  B:0090H.7       PUBLIC        S1
-  B:00A0H.1       PUBLIC        S2
-  B:0090H.0       PUBLIC        LED1
-  B:0090H.1       PUBLIC        LED2
-  C:0800H         PUBLIC        main
+  C:0C65H         PUBLIC        main
+  B:0098H.1       PUBLIC        SCON0_TI
   -------         PROC          MAIN
-  C:0800H         LINE#         105
-  C:0800H         LINE#         106
-  C:0800H         LINE#         107
-  C:0803H         LINE#         109
-  C:0803H         LINE#         110
-  C:0803H         LINE#         112
-  C:0806H         LINE#         113
-  C:0806H         LINE#         114
-  C:0808H         LINE#         115
-  C:080AH         LINE#         117
-  C:080AH         LINE#         118
-  C:080CH         LINE#         119
-  C:080CH         LINE#         122
-  C:080FH         LINE#         123
-  C:080FH         LINE#         124
-  C:0811H         LINE#         125
-  C:0813H         LINE#         127
-  C:0813H         LINE#         128
-  C:0815H         LINE#         129
-  C:0815H         LINE#         130
+  -------         DO            
+  D:0008H         SYMBOL        pwm
+  -------         ENDDO         
+  C:0C65H         LINE#         98
+  C:0C65H         LINE#         100
+  C:0C67H         LINE#         101
+  C:0C6AH         LINE#         102
+  C:0C6DH         LINE#         103
+  C:0C6DH         LINE#         104
+  C:0C7CH         LINE#         105
+  C:0C87H         LINE#         106
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
-******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 003EH BYTE ( 3%) *
-******************************************************************************
+  -------         MODULE        PID
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0BFCH         PUBLIC        _pidUpdate
+  D:0022H         PUBLIC        last_error
+  C:0CC5H         PUBLIC        pidInit
+  D:0024H         PUBLIC        integral
+  -------         PROC          PIDINIT
+  C:0CC5H         LINE#         17
+  C:0CC5H         LINE#         18
+  C:0CCAH         LINE#         19
+  C:0CCEH         LINE#         20
+  -------         ENDPROC       PIDINIT
+  -------         PROC          _PIDUPDATE
+  D:0006H         SYMBOL        adc
+  -------         DO            
+  D:0002H         SYMBOL        error
+  D:0002H         SYMBOL        pwm
+  D:000AH         SYMBOL        p
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        d
+  D:000CH         SYMBOL        integral
+  D:0004H         SYMBOL        derivative
+  -------         ENDDO         
+  C:0BFCH         LINE#         22
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/01/2016  22:09:23  PAGE 5
 
-Program Size: data=9.0 xdata=0 code=77
+
+  C:0BFCH         LINE#         32
+  C:0C06H         LINE#         35
+  C:0C12H         LINE#         38
+  C:0C1CH         LINE#         39
+  C:0C1DH         LINE#         42
+  C:0C26H         LINE#         43
+  C:0C2AH         LINE#         44
+  C:0C2AH         LINE#         47
+  C:0C2EH         LINE#         48
+  C:0C35H         LINE#         49
+  C:0C3AH         LINE#         50
+  C:0C3DH         LINE#         51
+  -------         ENDPROC       _PIDUPDATE
+  -------         ENDMOD        PID
+
+  -------         MODULE        ?C?IMUL
+  C:0B5CH         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
+
+  -------         MODULE        PRINTF
+  D:000AH         PUBLIC        ?_PRINTF517?BYTE
+  D:000AH         PUBLIC        ?_PRINTF?BYTE
+  D:000AH         PUBLIC        ?_SPRINTF517?BYTE
+  D:000AH         PUBLIC        ?_SPRINTF?BYTE
+  C:0862H         PUBLIC        _PRINTF
+  C:0862H         PUBLIC        _PRINTF517
+  C:085CH         PUBLIC        _SPRINTF
+  C:085CH         PUBLIC        _SPRINTF517
+  -------         ENDMOD        PRINTF
+
+  -------         MODULE        ?C?CLDPTR
+  C:0B6EH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0B87H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:0BB4H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?PLDIIDATA
+  C:0BC6H         PUBLIC        ?C?PLDIIDATA
+  -------         ENDMOD        ?C?PLDIIDATA
+
+  -------         MODULE        ?C?CCASE
+  C:0BD6H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+  -------         MODULE        PUTCHAR
+  C:0C3EH         PUBLIC        _PUTCHAR
+  -------         ENDMOD        PUTCHAR
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00C2H BYTE ( 9%) *
+******************************************************************************
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/01/2016  22:09:23  PAGE 6
+
+
+
+Program Size: data=36.1 xdata=0 code=1268
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
