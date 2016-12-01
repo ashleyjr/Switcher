@@ -22,11 +22,16 @@ extern void enter_DefaultMode_from_RESET(void) {
 	WDT_0_enter_DefaultMode_from_RESET();
 	CLOCK_0_enter_DefaultMode_from_RESET();
 	PORTS_0_enter_DefaultMode_from_RESET();
+	PORTS_1_enter_DefaultMode_from_RESET();
 	PBCFG_0_enter_DefaultMode_from_RESET();
+	ADC_0_enter_DefaultMode_from_RESET();
 	TIMER01_0_enter_DefaultMode_from_RESET();
+	TIMER16_2_enter_DefaultMode_from_RESET();
 	TIMER_SETUP_0_enter_DefaultMode_from_RESET();
 	UART_0_enter_DefaultMode_from_RESET();
+	VREF_0_enter_DefaultMode_from_RESET();
 	RSTSRC_0_enter_DefaultMode_from_RESET();
+	INTERRUPT_0_enter_DefaultMode_from_RESET();
 	// [Config Calls]$
 
 
@@ -109,6 +114,93 @@ extern void PORTS_0_enter_DefaultMode_from_RESET(void) {
 }
 
 //================================================================================
+// PORTS_1_enter_DefaultMode_from_RESET
+//================================================================================
+extern void PORTS_1_enter_DefaultMode_from_RESET(void) {
+	// $[P1 - Port 1 Pin Latch]
+	// [P1 - Port 1 Pin Latch]$
+
+	// $[P1MDOUT - Port 1 Output Mode]
+	/*
+	// B0 (Port 1 Bit 0 Output Mode) = PUSH_PULL (P1.0 output is push-pull.)
+	// B1 (Port 1 Bit 1 Output Mode) = OPEN_DRAIN (P1.1 output is open-
+	//     drain.)
+	// B2 (Port 1 Bit 2 Output Mode) = OPEN_DRAIN (P1.2 output is open-
+	//     drain.)
+	// B3 (Port 1 Bit 3 Output Mode) = OPEN_DRAIN (P1.3 output is open-
+	//     drain.)
+	// B4 (Port 1 Bit 4 Output Mode) = OPEN_DRAIN (P1.4 output is open-
+	//     drain.)
+	// B5 (Port 1 Bit 5 Output Mode) = OPEN_DRAIN (P1.5 output is open-
+	//     drain.)
+	// B6 (Port 1 Bit 6 Output Mode) = OPEN_DRAIN (P1.6 output is open-
+	//     drain.)
+	// B7 (Port 1 Bit 7 Output Mode) = OPEN_DRAIN (P1.7 output is open-
+	//     drain.)
+	*/
+	P1MDOUT = P1MDOUT_B0__PUSH_PULL | P1MDOUT_B1__OPEN_DRAIN | P1MDOUT_B2__OPEN_DRAIN
+		 | P1MDOUT_B3__OPEN_DRAIN | P1MDOUT_B4__OPEN_DRAIN | P1MDOUT_B5__OPEN_DRAIN
+		 | P1MDOUT_B6__OPEN_DRAIN | P1MDOUT_B7__OPEN_DRAIN;
+	// [P1MDOUT - Port 1 Output Mode]$
+
+	// $[P1MDIN - Port 1 Input Mode]
+	/*
+	// B0 (Port 1 Bit 0 Input Mode) = DIGITAL (P1.0 pin is configured for
+	//     digital mode.)
+	// B1 (Port 1 Bit 1 Input Mode) = DIGITAL (P1.1 pin is configured for
+	//     digital mode.)
+	// B2 (Port 1 Bit 2 Input Mode) = ANALOG (P1.2 pin is configured for
+	//     analog mode.)
+	// B3 (Port 1 Bit 3 Input Mode) = DIGITAL (P1.3 pin is configured for
+	//     digital mode.)
+	// B4 (Port 1 Bit 4 Input Mode) = DIGITAL (P1.4 pin is configured for
+	//     digital mode.)
+	// B5 (Port 1 Bit 5 Input Mode) = DIGITAL (P1.5 pin is configured for
+	//     digital mode.)
+	// B6 (Port 1 Bit 6 Input Mode) = DIGITAL (P1.6 pin is configured for
+	//     digital mode.)
+	// B7 (Port 1 Bit 7 Input Mode) = DIGITAL (P1.7 pin is configured for
+	//     digital mode.)
+	*/
+	P1MDIN = P1MDIN_B0__DIGITAL | P1MDIN_B1__DIGITAL | P1MDIN_B2__ANALOG
+		 | P1MDIN_B3__DIGITAL | P1MDIN_B4__DIGITAL | P1MDIN_B5__DIGITAL
+		 | P1MDIN_B6__DIGITAL | P1MDIN_B7__DIGITAL;
+	// [P1MDIN - Port 1 Input Mode]$
+
+	// $[P1SKIP - Port 1 Skip]
+	/*
+	// B0 (Port 1 Bit 0 Skip) = NOT_SKIPPED (P1.0 pin is not skipped by the
+	//     crossbar.)
+	// B1 (Port 1 Bit 1 Skip) = NOT_SKIPPED (P1.1 pin is not skipped by the
+	//     crossbar.)
+	// B2 (Port 1 Bit 2 Skip) = SKIPPED (P1.2 pin is skipped by the
+	//     crossbar.)
+	// B3 (Port 1 Bit 3 Skip) = NOT_SKIPPED (P1.3 pin is not skipped by the
+	//     crossbar.)
+	// B4 (Port 1 Bit 4 Skip) = NOT_SKIPPED (P1.4 pin is not skipped by the
+	//     crossbar.)
+	// B5 (Port 1 Bit 5 Skip) = NOT_SKIPPED (P1.5 pin is not skipped by the
+	//     crossbar.)
+	// B6 (Port 1 Bit 6 Skip) = NOT_SKIPPED (P1.6 pin is not skipped by the
+	//     crossbar.)
+	// B7 (Port 1 Bit 7 Skip) = NOT_SKIPPED (P1.7 pin is not skipped by the
+	//     crossbar.)
+	*/
+	P1SKIP = P1SKIP_B0__NOT_SKIPPED | P1SKIP_B1__NOT_SKIPPED | P1SKIP_B2__SKIPPED
+		 | P1SKIP_B3__NOT_SKIPPED | P1SKIP_B4__NOT_SKIPPED | P1SKIP_B5__NOT_SKIPPED
+		 | P1SKIP_B6__NOT_SKIPPED | P1SKIP_B7__NOT_SKIPPED;
+	// [P1SKIP - Port 1 Skip]$
+
+	// $[P1MASK - Port 1 Mask]
+	// [P1MASK - Port 1 Mask]$
+
+	// $[P1MAT - Port 1 Match]
+	// [P1MAT - Port 1 Match]$
+
+
+}
+
+//================================================================================
 // PBCFG_0_enter_DefaultMode_from_RESET
 //================================================================================
 extern void PBCFG_0_enter_DefaultMode_from_RESET(void) {
@@ -155,6 +247,70 @@ extern void PBCFG_0_enter_DefaultMode_from_RESET(void) {
 }
 
 //================================================================================
+// ADC_0_enter_DefaultMode_from_RESET
+//================================================================================
+extern void ADC_0_enter_DefaultMode_from_RESET(void) {
+	// $[ADC0GTH - ADC0 Greater-Than High Byte]
+	// [ADC0GTH - ADC0 Greater-Than High Byte]$
+
+	// $[ADC0GTL - ADC0 Greater-Than Low Byte]
+	// [ADC0GTL - ADC0 Greater-Than Low Byte]$
+
+	// $[ADC0LTH - ADC0 Less-Than High Byte]
+	// [ADC0LTH - ADC0 Less-Than High Byte]$
+
+	// $[ADC0LTL - ADC0 Less-Than Low Byte]
+	// [ADC0LTL - ADC0 Less-Than Low Byte]$
+
+	// $[ADC0PWR - ADC0 Power Control]
+	// [ADC0PWR - ADC0 Power Control]$
+
+	// $[ADC0TK - ADC0 Burst Mode Track Time]
+	// [ADC0TK - ADC0 Burst Mode Track Time]$
+
+	// $[ADC0MX - ADC0 Multiplexer Selection]
+	/*
+	// ADC0MX (AMUX0 Positive Input Selection) = ADC0P10 (Select ADC0.10.)
+	*/
+	ADC0MX = ADC0MX_ADC0MX__ADC0P10;
+	// [ADC0MX - ADC0 Multiplexer Selection]$
+
+	// $[ADC0AC - ADC0 Accumulator Configuration]
+	// [ADC0AC - ADC0 Accumulator Configuration]$
+
+	// $[ADC0CF - ADC0 Configuration]
+	/*
+	// ADSC (SAR Clock Divider) = 1
+	// AD8BE (8-Bit Mode Enable) = NORMAL (ADC0 operates in 10-bit or 12-bit
+	//     mode (normal operation).)
+	// ADGN (Gain Control) = GAIN_1 (The on-chip PGA gain is 1.)
+	// ADTM (Track Mode) = TRACK_NORMAL (Normal Track Mode. When ADC0 is
+	//     enabled, conversion begins immediately following the start-of-
+	//     conversion signal.)
+	*/
+	ADC0CF = (1 << ADC0CF_ADSC__SHIFT) | ADC0CF_AD8BE__NORMAL | ADC0CF_ADGN__GAIN_1
+		 | ADC0CF_ADTM__TRACK_NORMAL;
+	// [ADC0CF - ADC0 Configuration]$
+
+	// $[ADC0CN1 - ADC0 Control 1]
+	// [ADC0CN1 - ADC0 Control 1]$
+
+	// $[ADC0CN0 - ADC0 Control 0]
+	/*
+	// ADEN (ADC Enable) = ENABLED (Enable ADC0 (active and ready for data
+	//     conversions).)
+	// ADCM (Start of Conversion Mode Select) = TIMER2 (ADC0 conversion
+	//     initiated on overflow of Timer 2.)
+	*/
+	ADC0CN0 &= ~ADC0CN0_ADCM__FMASK;
+	ADC0CN0 |= ADC0CN0_ADEN__ENABLED
+		 | ADC0CN0_ADCM__TIMER2;
+	// [ADC0CN0 - ADC0 Control 0]$
+
+
+}
+
+//================================================================================
 // TIMER01_0_enter_DefaultMode_from_RESET
 //================================================================================
 extern void TIMER01_0_enter_DefaultMode_from_RESET(void) {
@@ -190,6 +346,63 @@ extern void TIMER01_0_enter_DefaultMode_from_RESET(void) {
 	//Restore Timer Configuration
 	TCON = TCON_save;
 
+	// [Timer Restoration]$
+
+
+}
+
+//================================================================================
+// TIMER16_2_enter_DefaultMode_from_RESET
+//================================================================================
+extern void TIMER16_2_enter_DefaultMode_from_RESET(void) {
+	// $[Timer Initialization]
+	// Save Timer Configuration
+	U8 TMR2CN_TR2_save = TMR2CN & TMR2CN_TR2__BMASK;
+	// Stop Timer
+	TMR2CN &= ~(TMR2CN_TR2__BMASK);
+	// [Timer Initialization]$
+
+	// $[TMR2CN - Timer 2 Control]
+	// [TMR2CN - Timer 2 Control]$
+
+	// $[TMR2H - Timer 2 High Byte]
+	/*
+	// TMR2H (Timer 2 High Byte) = 255
+	*/
+	TMR2H = (255 << TMR2H_TMR2H__SHIFT);
+	// [TMR2H - Timer 2 High Byte]$
+
+	// $[TMR2L - Timer 2 Low Byte]
+	/*
+	// TMR2L (Timer 2 Low Byte) = 255
+	*/
+	TMR2L = (255 << TMR2L_TMR2L__SHIFT);
+	// [TMR2L - Timer 2 Low Byte]$
+
+	// $[TMR2RLH - Timer 2 Reload High Byte]
+	/*
+	// TMR2RLH (Timer 2 Reload High Byte) = 254
+	*/
+	TMR2RLH = (254 << TMR2RLH_TMR2RLH__SHIFT);
+	// [TMR2RLH - Timer 2 Reload High Byte]$
+
+	// $[TMR2RLL - Timer 2 Reload Low Byte]
+	/*
+	// TMR2RLL (Timer 2 Reload Low Byte) = 2
+	*/
+	TMR2RLL = (2 << TMR2RLL_TMR2RLL__SHIFT);
+	// [TMR2RLL - Timer 2 Reload Low Byte]$
+
+	// $[TMR2CN]
+	/*
+	// TR2 (Timer 2 Run Control) = RUN (Start Timer 2 running.)
+	*/
+	TMR2CN |= TMR2CN_TR2__RUN;
+	// [TMR2CN]$
+
+	// $[Timer Restoration]
+	// Restore Timer Configuration
+	TMR2CN |= TMR2CN_TR2_save;
 	// [Timer Restoration]$
 
 
@@ -262,6 +475,28 @@ extern void UART_0_enter_DefaultMode_from_RESET(void) {
 }
 
 //================================================================================
+// VREF_0_enter_DefaultMode_from_RESET
+//================================================================================
+extern void VREF_0_enter_DefaultMode_from_RESET(void) {
+	// $[REF0CN - Voltage Reference Control]
+	/*
+	// REFSL (Voltage Reference Select) = VDD_PIN (The ADC0 voltage reference
+	//     is the VDD pin.)
+	// IREFLVL (Internal Voltage Reference Level) = 1P65 (The internal
+	//     reference operates at 1.65 V nominal.)
+	// GNDSL (Analog Ground Reference) = GND_PIN (The ADC0 ground reference
+	//     is the GND pin.)
+	// TEMPE (Temperature Sensor Enable) = TEMP_DISABLED (Disable the
+	//     Temperature Sensor.)
+	*/
+	REF0CN = REF0CN_REFSL__VDD_PIN | REF0CN_IREFLVL__1P65 | REF0CN_GNDSL__GND_PIN
+		 | REF0CN_TEMPE__TEMP_DISABLED;
+	// [REF0CN - Voltage Reference Control]$
+
+
+}
+
+//================================================================================
 // RSTSRC_0_enter_DefaultMode_from_RESET
 //================================================================================
 extern void RSTSRC_0_enter_DefaultMode_from_RESET(void) {
@@ -279,6 +514,46 @@ extern void RSTSRC_0_enter_DefaultMode_from_RESET(void) {
 	RSTSRC = RSTSRC_C0RSEF__NOT_SET | RSTSRC_MCDRSF__SET | RSTSRC_PORSF__SET
 		 | RSTSRC_SWRSF__NOT_SET;
 	// [RSTSRC - Reset Source]$
+
+
+}
+
+//================================================================================
+// INTERRUPT_0_enter_DefaultMode_from_RESET
+//================================================================================
+extern void INTERRUPT_0_enter_DefaultMode_from_RESET(void) {
+	// $[EIE1 - Extended Interrupt Enable 1]
+	/*
+	// EADC0 (ADC0 Conversion Complete Interrupt Enable) = ENABLED (Enable
+	//     interrupt requests generated by the ADINT flag.)
+	// ECP0 (Comparator0 (CP0) Interrupt Enable) = DISABLED (Disable CP0
+	//     interrupts.)
+	// ECP1 (Comparator1 (CP1) Interrupt Enable) = DISABLED (Disable CP1
+	//     interrupts.)
+	// EMAT (Port Match Interrupts Enable) = DISABLED (Disable all Port Match
+	//     interrupts.)
+	// EPCA0 (Programmable Counter Array (PCA0) Interrupt Enable) = DISABLED
+	//     (Disable all PCA0 interrupts.)
+	// ESMB0 (SMBus (SMB0) Interrupt Enable) = DISABLED (Disable all SMB0
+	//     interrupts.)
+	// ET3 (Timer 3 Interrupt Enable) = DISABLED (Disable Timer 3
+	//     interrupts.)
+	// EWADC0 (Window Comparison ADC0 Interrupt Enable) = DISABLED (Disable
+	//     ADC0 Window Comparison interrupt.)
+	*/
+	EIE1 = EIE1_EADC0__ENABLED | EIE1_ECP0__DISABLED | EIE1_ECP1__DISABLED
+		 | EIE1_EMAT__DISABLED | EIE1_EPCA0__DISABLED | EIE1_ESMB0__DISABLED
+		 | EIE1_ET3__DISABLED | EIE1_EWADC0__DISABLED;
+	// [EIE1 - Extended Interrupt Enable 1]$
+
+	// $[EIP1 - Extended Interrupt Priority 1]
+	// [EIP1 - Extended Interrupt Priority 1]$
+
+	// $[IE - Interrupt Enable]
+	// [IE - Interrupt Enable]$
+
+	// $[IP - Interrupt Priority]
+	// [IP - Interrupt Priority]$
 
 
 }

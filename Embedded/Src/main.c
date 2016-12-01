@@ -34,7 +34,7 @@ void main (void){
 	enter_DefaultMode_from_RESET();
 	pidInit();
 	while (1){
-		putchar (40);
+		printf("P1.2 voltage: %d mV\n",ADC0);
 		pwm = pidUpdate(pwm);
 	}
 }
