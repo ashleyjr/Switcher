@@ -1,0 +1,3 @@
+Toolchain:
+	1 - Install Keil c51 and uVision IDE (https://www.keil.com/download/product/)
+	2 - Install Silicon Labs debug driver for Keil uVision (http://www.silabs.com/products/mcu/Pages/8-bit-microcontroller-software.aspx)
