@@ -13,7 +13,7 @@
 //-----------------------------------------------------------------------------
 // Global Variables
 //-----------------------------------------------------------------------------
-extern U16 CEX0_Compare_Value;       // Holds current PCA compare value (from main)
+extern 	U8 	pwm;   	// Holds current PCA compare value (from main)
 
 //-----------------------------------------------------------------------------
 // PCA0_ISR
@@ -31,12 +31,9 @@ extern U16 CEX0_Compare_Value;       // Holds current PCA compare value (from ma
 // the global variable "CEX0_Compare_Value".
 //
 //-----------------------------------------------------------------------------
-INTERRUPT (PCA0_ISR, PCA0_IRQn)
-{
-	   PCA0CN_CCF0 = 0;                           // Clear module 0 interrupt flag.
-
-	   //PCA0CPL0 = (CEX0_Compare_Value & 0x00FF);
-	   PCA0CPH0 = CEX0_Compare_Value ;
+INTERRUPT (PCA0_ISR, PCA0_IRQn){
+	PCA0CN_CCF0 = 0; 	// Clear module 0 interrupt flag.
+	PCA0CPH0 = pwm;		// Assign to pwm control register
 }
 
 

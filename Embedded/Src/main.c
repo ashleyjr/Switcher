@@ -16,33 +16,32 @@
 //-----------------------------------------------------------------------------
 // Global CONSTANTS
 //-----------------------------------------------------------------------------
-
-#define SYSCLK      24500000           // SYSCLK frequency in Hz
-#define BAUDRATE      115200           // Baud rate of UART in bps
-
-//-----------------------------------------------------------------------------
-// Function PROTOTYPES
-//-----------------------------------------------------------------------------
+//#define DEBUG			1
+#define SYSCLK      	24500000   	// SYSCLK frequency in Hz
+#ifdef DEBUG
+	#define BAUDRATE   	115200    	// Baud rate of UART in bps
+#endif
 //-----------------------------------------------------------------------------
 // Global Variables
 //-----------------------------------------------------------------------------
-U16 CEX0_Compare_Value;       // Holds current PCA compare value
+U8 	pwm;       						// Holds current PCA compare value
 //-----------------------------------------------------------------------------
 // MAIN Routine
 //-----------------------------------------------------------------------------
 
 void main (void){
-	uint16_t	pwm;
-	SCON0_TI = 1;                       	//This STDIO library requres TI to be set for prints to occur
+	#ifdef DEBUG
+		SCON0_TI = 1;                       	//This STDIO library requres TI to be set for prints to occur
+	#endif
 	enter_DefaultMode_from_RESET();
-	pidInit();
-	// Configure initial PWM duty cycle = 50%
-	CEX0_Compare_Value = 0;
+	//pidInit();
+	pwm = 0;
 	while (1){
-
-		CEX0_Compare_Value = ADC0 >> 2;
-		printf("%d,%hu mV\n",ADC0,CEX0_Compare_Value);
-		pwm = pidUpdate(pwm);
+		pwm = ADC0 >> 2;
+		#if DEBUG
+			printf("%d,%hu mV\n",ADC0,pwm);
+		#endif
+		//pwm = pidUpdate(pwm);
 	}
 }
 //-----------------------------------------------------------------------------
