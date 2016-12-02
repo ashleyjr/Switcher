@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        12/02/2016  23:28:53  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/02/2016  23:33:57  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -59,7 +59,7 @@ SEGMENT
   +--> ?PR?ENTER_DEFAULTMODE_FROM_RESET?INIT...
 
 
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:28:53  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:33:57  PAGE 2
 
 
 
@@ -109,50 +109,50 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:0007H         SYMBOL        TMR2CN_TR2_save
   -------         ENDDO         
   C:0800H         LINE#         10
-  C:0800H         LINE#         16
-  C:0803H         LINE#         17
-  C:0806H         LINE#         20
-  C:0809H         LINE#         22
-  C:080CH         LINE#         32
-  C:080FH         LINE#         42
-  C:0812H         LINE#         52
-  C:0815H         LINE#         62
-  C:0818H         LINE#         72
-  C:081BH         LINE#         79
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:28:53  PAGE 3
+  C:0800H         LINE#         15
+  C:0803H         LINE#         16
+  C:0806H         LINE#         19
+  C:0809H         LINE#         21
+  C:080CH         LINE#         31
+  C:080FH         LINE#         40
+  C:0812H         LINE#         49
+  C:0815H         LINE#         59
+  C:0818H         LINE#         68
+  C:081BH         LINE#         75
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:33:57  PAGE 3
 
 
-  C:081EH         LINE#         83
-  C:0821H         LINE#         86
-  C:0824H         LINE#         92
-  C:0827H         LINE#         94
-  C:082AH         LINE#         98
-  C:082CH         LINE#         100
-  C:082EH         LINE#         103
-  C:0831H         LINE#         105
-  C:0834H         LINE#         107
-  C:0836H         LINE#         110
-  C:083AH         LINE#         113
-  C:083DH         LINE#         115
-  C:0840H         LINE#         117
-  C:0843H         LINE#         119
-  C:0846H         LINE#         121
-  C:0849H         LINE#         123
-  C:084CH         LINE#         125
-  C:084EH         LINE#         128
-  C:0851H         LINE#         137
-  C:0854H         LINE#         145
-  C:0857H         LINE#         148
-  C:085AH         LINE#         151
-  C:085DH         LINE#         157
-  C:0860H         LINE#         163
-  C:0863H         LINE#         172
-  C:0866H         LINE#         183
-  C:0868H         LINE#         185
-  C:086BH         LINE#         188
-  C:086EH         LINE#         197
-  C:0871H         LINE#         202
-  C:0874H         LINE#         205
+  C:081EH         LINE#         79
+  C:0821H         LINE#         81
+  C:0824H         LINE#         86
+  C:0827H         LINE#         88
+  C:082AH         LINE#         92
+  C:082CH         LINE#         94
+  C:082EH         LINE#         97
+  C:0831H         LINE#         99
+  C:0834H         LINE#         101
+  C:0836H         LINE#         104
+  C:083AH         LINE#         107
+  C:083DH         LINE#         109
+  C:0840H         LINE#         111
+  C:0843H         LINE#         113
+  C:0846H         LINE#         115
+  C:0849H         LINE#         117
+  C:084CH         LINE#         119
+  C:084EH         LINE#         122
+  C:0851H         LINE#         130
+  C:0854H         LINE#         137
+  C:0857H         LINE#         140
+  C:085AH         LINE#         143
+  C:085DH         LINE#         149
+  C:0860H         LINE#         155
+  C:0863H         LINE#         164
+  C:0866H         LINE#         174
+  C:0868H         LINE#         176
+  C:086BH         LINE#         178
+  C:086EH         LINE#         186
+  C:0871H         LINE#         190
+  C:0874H         LINE#         193
   -------         ENDPROC       ENTER_DEFAULTMODE_FROM_RESET
   -------         ENDMOD        INITDEVICE
 
@@ -179,7 +179,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:000EH         PUBLIC        integral
   -------         PROC          PIDINIT
   C:08ECH         LINE#         17
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:28:53  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:33:57  PAGE 4
 
 
   C:08ECH         LINE#         18
@@ -239,7 +239,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
 ******************************************************************************
 * RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00E1H BYTE (10%) *
 ******************************************************************************
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:28:53  PAGE 5
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:33:57  PAGE 5
 
 
 
