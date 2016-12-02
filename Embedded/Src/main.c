@@ -40,7 +40,7 @@ void main (void){
 	CEX0_Compare_Value = 0;
 	while (1){
 
-		CEX0_Compare_Value = ADC0 << 6;
+		CEX0_Compare_Value = ADC0 >> 2;
 		printf("%d,%hu mV\n",ADC0,CEX0_Compare_Value);
 		pwm = pidUpdate(pwm);
 	}

@@ -35,8 +35,8 @@ INTERRUPT (PCA0_ISR, PCA0_IRQn)
 {
 	   PCA0CN_CCF0 = 0;                           // Clear module 0 interrupt flag.
 
-	   PCA0CPL0 = (CEX0_Compare_Value & 0x00FF);
-	   PCA0CPH0 = (CEX0_Compare_Value & 0xFF00)>>8;
+	   //PCA0CPL0 = (CEX0_Compare_Value & 0x00FF);
+	   PCA0CPH0 = CEX0_Compare_Value ;
 }
 
 
