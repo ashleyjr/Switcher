@@ -32,7 +32,7 @@ U8 	pwm;       									// Holds current PCA compare value
 //-----------------------------------------------------------------------------
 
 void main (void){
-	enter_DefaultMode_from_RESET();
+	initDevice();
 	pidInit();
 	pwm = 0;
 	while (1){

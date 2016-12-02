@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        12/02/2016  23:42:41  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/02/2016  23:43:38  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -47,7 +47,7 @@ LINK MAP OF MODULE:  .\Objects\Switcher (INITDEVICE)
                     005EH     07A2H                  *** GAP ***
             CODE    0800H     035CH     UNIT         ?PR?PRINTF?PRINTF
             CODE    0B5CH     00A0H     UNIT         ?C?LIB_CODE
-            CODE    0BFCH     0075H     UNIT         ?PR?ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0BFCH     0075H     UNIT         ?PR?INITDEVICE?INITDEVICE
             CODE    0C71H     0042H     UNIT         ?PR?_PIDUPDATE?PID
             CODE    0CB3H     0036H     UNIT         ?PR?MAIN?MAIN
             CODE    0CE9H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
@@ -59,27 +59,27 @@ LINK MAP OF MODULE:  .\Objects\Switcher (INITDEVICE)
 
 
 OVERLAY MAP OF MODULE:   .\Objects\Switcher (INITDEVICE)
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:42:41  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:43:38  PAGE 2
 
 
 
 
-SEGMENT                                             BIT_GROUP          DATA_GROUP 
-  +--> CALLED SEGMENT                            START    LENGTH     START    LENGTH
-------------------------------------------------------------------------------------
-?C_C51STARTUP                                    -----    -----      -----    -----
+SEGMENT                              BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT             START    LENGTH     START    LENGTH
+---------------------------------------------------------------------
+?C_C51STARTUP                     -----    -----      -----    -----
   +--> ?PR?MAIN?MAIN
 
-?PR?MAIN?MAIN                                    -----    -----      -----    -----
-  +--> ?PR?ENTER_DEFAULTMODE_FROM_RESET?INIT...
+?PR?MAIN?MAIN                     -----    -----      -----    -----
+  +--> ?PR?INITDEVICE?INITDEVICE
   +--> ?PR?PIDINIT?PID
   +--> ?PR?_PIDUPDATE?PID
   +--> ?CO?MAIN
   +--> ?PR?PRINTF?PRINTF
 
-?PR?_PIDUPDATE?PID                               -----    -----      0008H    0004H
+?PR?_PIDUPDATE?PID                -----    -----      0008H    0004H
 
-?PR?PRINTF?PRINTF                                0020H.0  0001H.1    0008H    0014H
+?PR?PRINTF?PRINTF                 0020H.0  0001H.1    0008H    0014H
   +--> ?PR?PUTCHAR?PUTCHAR
 
 
@@ -94,6 +94,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:0097H         PUBLIC        WDTCN
   D:00BCH         PUBLIC        ADC0CF
   D:00E6H         PUBLIC        EIE1
+  C:0BFCH         PUBLIC        initDevice
   D:00A4H         PUBLIC        P0MDOUT
   B:00D8H.6       PUBLIC        PCA0CN_CR
   D:00A5H         PUBLIC        P1MDOUT
@@ -117,9 +118,8 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:00E8H         PUBLIC        ADC0CN0
   D:00A9H         PUBLIC        CLKSEL
   D:008DH         PUBLIC        TH1
-  C:0BFCH         PUBLIC        enter_DefaultMode_from_RESET
   D:008BH         PUBLIC        TL1
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:42:41  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:43:38  PAGE 3
 
 
   D:00EFH         PUBLIC        RSTSRC
@@ -127,7 +127,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:00CDH         PUBLIC        TMR2H
   D:008EH         PUBLIC        CKCON
   D:00CCH         PUBLIC        TMR2L
-  -------         PROC          ENTER_DEFAULTMODE_FROM_RESET
+  -------         PROC          INITDEVICE
   -------         DO            
   D:0007H         SYMBOL        TCON_save
   D:0007H         SYMBOL        TMR2CN_TR2_save
@@ -174,12 +174,12 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   C:0C6AH         LINE#         186
   C:0C6DH         LINE#         190
   C:0C70H         LINE#         193
-  -------         ENDPROC       ENTER_DEFAULTMODE_FROM_RESET
+  -------         ENDPROC       INITDEVICE
   -------         ENDMOD        INITDEVICE
 
   -------         MODULE        MAIN
   C:0000H         SYMBOL        _ICE_DUMMY_
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:42:41  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:43:38  PAGE 4
 
 
   C:0CB3H         PUBLIC        main
@@ -239,7 +239,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   -------         ENDPROC       _PIDUPDATE
   -------         ENDMOD        PID
 
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:42:41  PAGE 5
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:43:38  PAGE 5
 
 
   -------         MODULE        INTERRUPTS
@@ -299,7 +299,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
 ******************************************************************************
 
 Program Size: data=35.1 xdata=0 code=1341
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:42:41  PAGE 6
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:43:38  PAGE 6
 
 
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

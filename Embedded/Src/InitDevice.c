@@ -7,7 +7,7 @@
 #include <SI_C8051F850_Register_Enums.h>
 #include "InitDevice.h"
 
-void enter_DefaultMode_from_RESET(void) {
+void initDevice(void) {
 	U8 TCON_save;
 	U8 TMR2CN_TR2_save;
 	// Watchdog
