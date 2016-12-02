@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        12/02/2016  23:36:22  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/02/2016  23:39:27  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -16,6 +16,13 @@ INPUT MODULES INCLUDED:
   .\Objects\Interrupts.obj (INTERRUPTS)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?IMUL)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (PRINTF)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?PLDIIDATA)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CCASE)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (PUTCHAR)
 
 
 LINK MAP OF MODULE:  .\Objects\Switcher (INITDEVICE)
@@ -26,40 +33,54 @@ LINK MAP OF MODULE:  .\Objects\Switcher (INITDEVICE)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     0004H     UNIT         ?DT?_PIDUPDATE?PID
-            DATA    000CH     0004H     UNIT         ?DT?PID
-            DATA    0010H     0001H     UNIT         ?DT?MAIN
-            IDATA   0011H     0001H     UNIT         ?STACK
+            DATA    0008H     0014H     UNIT         _DATA_GROUP_
+            DATA    001CH     0004H     UNIT         ?DT?PID
+            BIT     0020H.0   0001H.1   UNIT         _BIT_GROUP_
+                    0021H.1   0000H.7                *** GAP ***
+            DATA    0022H     0001H     UNIT         ?DT?MAIN
+            IDATA   0023H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
                     0003H     0058H                  *** GAP ***
             CODE    005BH     0003H     ABSOLUTE     
                     005EH     07A2H                  *** GAP ***
-            CODE    0800H     0075H     UNIT         ?PR?ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
-            CODE    0875H     0042H     UNIT         ?PR?_PIDUPDATE?PID
-            CODE    08B7H     0017H     UNIT         ?PR?MAIN?MAIN
-            CODE    08CEH     0012H     UNIT         ?C?LIB_CODE
-            CODE    08E0H     000CH     UNIT         ?C_C51STARTUP
-            CODE    08ECH     000AH     UNIT         ?PR?PIDINIT?PID
-            CODE    08F6H     0006H     UNIT         ?PR?PCA0_ISR?INTERRUPTS
+            CODE    0800H     035CH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    0B5CH     00A0H     UNIT         ?C?LIB_CODE
+            CODE    0BFCH     0075H     UNIT         ?PR?ENTER_DEFAULTMODE_FROM_RESET?INITDEVICE
+            CODE    0C71H     0042H     UNIT         ?PR?_PIDUPDATE?PID
+            CODE    0CB3H     0036H     UNIT         ?PR?MAIN?MAIN
+            CODE    0CE9H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    0D10H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0D1CH     000BH     UNIT         ?CO?MAIN
+            CODE    0D27H     000AH     UNIT         ?PR?PIDINIT?PID
+            CODE    0D31H     0006H     UNIT         ?PR?PCA0_ISR?INTERRUPTS
 
 
 
 OVERLAY MAP OF MODULE:   .\Objects\Switcher (INITDEVICE)
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:39:27  PAGE 2
 
 
-SEGMENT
-  +--> CALLED SEGMENT
----------------------
-?C_C51STARTUP
+
+
+SEGMENT                                             BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT                            START    LENGTH     START    LENGTH
+------------------------------------------------------------------------------------
+?C_C51STARTUP                                    -----    -----      -----    -----
   +--> ?PR?MAIN?MAIN
 
-?PR?MAIN?MAIN
+?PR?MAIN?MAIN                                    -----    -----      -----    -----
   +--> ?PR?ENTER_DEFAULTMODE_FROM_RESET?INIT...
+  +--> ?PR?PIDINIT?PID
+  +--> ?PR?_PIDUPDATE?PID
+  +--> ?CO?MAIN
+  +--> ?PR?PRINTF?PRINTF
 
+?PR?_PIDUPDATE?PID                               -----    -----      0008H    0004H
 
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:36:22  PAGE 2
+?PR?PRINTF?PRINTF                                0020H.0  0001H.1    0008H    0014H
+  +--> ?PR?PUTCHAR?PUTCHAR
 
 
 
@@ -96,8 +117,11 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:00E8H         PUBLIC        ADC0CN0
   D:00A9H         PUBLIC        CLKSEL
   D:008DH         PUBLIC        TH1
-  C:0800H         PUBLIC        enter_DefaultMode_from_RESET
+  C:0BFCH         PUBLIC        enter_DefaultMode_from_RESET
   D:008BH         PUBLIC        TL1
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:39:27  PAGE 3
+
+
   D:00EFH         PUBLIC        RSTSRC
   D:0098H         PUBLIC        SCON0
   D:00CDH         PUBLIC        TMR2H
@@ -108,83 +132,85 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:0007H         SYMBOL        TCON_save
   D:0007H         SYMBOL        TMR2CN_TR2_save
   -------         ENDDO         
-  C:0800H         LINE#         10
-  C:0800H         LINE#         15
-  C:0803H         LINE#         16
-  C:0806H         LINE#         19
-  C:0809H         LINE#         21
-  C:080CH         LINE#         31
-  C:080FH         LINE#         40
-  C:0812H         LINE#         49
-  C:0815H         LINE#         59
-  C:0818H         LINE#         68
-  C:081BH         LINE#         75
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:36:22  PAGE 3
-
-
-  C:081EH         LINE#         79
-  C:0821H         LINE#         81
-  C:0824H         LINE#         86
-  C:0827H         LINE#         88
-  C:082AH         LINE#         92
-  C:082CH         LINE#         94
-  C:082EH         LINE#         97
-  C:0831H         LINE#         99
-  C:0834H         LINE#         101
-  C:0836H         LINE#         104
-  C:083AH         LINE#         107
-  C:083DH         LINE#         109
-  C:0840H         LINE#         111
-  C:0843H         LINE#         113
-  C:0846H         LINE#         115
-  C:0849H         LINE#         117
-  C:084CH         LINE#         119
-  C:084EH         LINE#         122
-  C:0851H         LINE#         130
-  C:0854H         LINE#         137
-  C:0857H         LINE#         140
-  C:085AH         LINE#         143
-  C:085DH         LINE#         149
-  C:0860H         LINE#         155
-  C:0863H         LINE#         164
-  C:0866H         LINE#         174
-  C:0868H         LINE#         176
-  C:086BH         LINE#         178
-  C:086EH         LINE#         186
-  C:0871H         LINE#         190
-  C:0874H         LINE#         193
+  C:0BFCH         LINE#         10
+  C:0BFCH         LINE#         15
+  C:0BFFH         LINE#         16
+  C:0C02H         LINE#         19
+  C:0C05H         LINE#         21
+  C:0C08H         LINE#         31
+  C:0C0BH         LINE#         40
+  C:0C0EH         LINE#         49
+  C:0C11H         LINE#         59
+  C:0C14H         LINE#         68
+  C:0C17H         LINE#         75
+  C:0C1AH         LINE#         79
+  C:0C1DH         LINE#         81
+  C:0C20H         LINE#         86
+  C:0C23H         LINE#         88
+  C:0C26H         LINE#         92
+  C:0C28H         LINE#         94
+  C:0C2AH         LINE#         97
+  C:0C2DH         LINE#         99
+  C:0C30H         LINE#         101
+  C:0C32H         LINE#         104
+  C:0C36H         LINE#         107
+  C:0C39H         LINE#         109
+  C:0C3CH         LINE#         111
+  C:0C3FH         LINE#         113
+  C:0C42H         LINE#         115
+  C:0C45H         LINE#         117
+  C:0C48H         LINE#         119
+  C:0C4AH         LINE#         122
+  C:0C4DH         LINE#         130
+  C:0C50H         LINE#         137
+  C:0C53H         LINE#         140
+  C:0C56H         LINE#         143
+  C:0C59H         LINE#         149
+  C:0C5CH         LINE#         155
+  C:0C5FH         LINE#         164
+  C:0C62H         LINE#         174
+  C:0C64H         LINE#         176
+  C:0C67H         LINE#         178
+  C:0C6AH         LINE#         186
+  C:0C6DH         LINE#         190
+  C:0C70H         LINE#         193
   -------         ENDPROC       ENTER_DEFAULTMODE_FROM_RESET
   -------         ENDMOD        INITDEVICE
 
   -------         MODULE        MAIN
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:08B7H         PUBLIC        main
-  D:0010H         PUBLIC        pwm
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:39:27  PAGE 4
+
+
+  C:0CB3H         PUBLIC        main
+  D:0022H         PUBLIC        pwm
+  B:0098H.1       PUBLIC        SCON0_TI
   D:00BDH         PUBLIC        ADC0
   -------         PROC          MAIN
-  C:08B7H         LINE#         32
-  C:08B7H         LINE#         36
-  C:08BAH         LINE#         38
-  C:08BDH         LINE#         39
-  C:08BDH         LINE#         40
-  C:08CCH         LINE#         45
+  C:0CB3H         LINE#         34
+  C:0CB3H         LINE#         36
+  C:0CB5H         LINE#         38
+  C:0CB8H         LINE#         39
+  C:0CBBH         LINE#         40
+  C:0CBEH         LINE#         41
+  C:0CBEH         LINE#         42
+  C:0CCDH         LINE#         43
+  C:0CD5H         LINE#         45
+  C:0CE7H         LINE#         47
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
   -------         MODULE        PID
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0875H         PUBLIC        _pidUpdate
-  D:000CH         PUBLIC        last_error
-  C:08ECH         PUBLIC        pidInit
-  D:000EH         PUBLIC        integral
+  C:0C71H         PUBLIC        _pidUpdate
+  D:001CH         PUBLIC        last_error
+  C:0D27H         PUBLIC        pidInit
+  D:001EH         PUBLIC        integral
   -------         PROC          PIDINIT
-  C:08ECH         LINE#         17
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:36:22  PAGE 4
-
-
-  C:08ECH         LINE#         18
-  C:08F1H         LINE#         19
-  C:08F5H         LINE#         20
+  C:0D27H         LINE#         17
+  C:0D27H         LINE#         18
+  C:0D2CH         LINE#         19
+  C:0D30H         LINE#         20
   -------         ENDPROC       PIDINIT
   -------         PROC          _PIDUPDATE
   D:0006H         SYMBOL        adc
@@ -197,51 +223,83 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:000AH         SYMBOL        integral
   D:0004H         SYMBOL        derivative
   -------         ENDDO         
-  C:0875H         LINE#         22
-  C:0875H         LINE#         32
-  C:087FH         LINE#         35
-  C:088BH         LINE#         38
-  C:0895H         LINE#         39
-  C:0896H         LINE#         42
-  C:089FH         LINE#         43
-  C:08A3H         LINE#         44
-  C:08A3H         LINE#         47
-  C:08A7H         LINE#         48
-  C:08AEH         LINE#         49
-  C:08B3H         LINE#         50
-  C:08B6H         LINE#         51
+  C:0C71H         LINE#         22
+  C:0C71H         LINE#         32
+  C:0C7BH         LINE#         35
+  C:0C87H         LINE#         38
+  C:0C91H         LINE#         39
+  C:0C92H         LINE#         42
+  C:0C9BH         LINE#         43
+  C:0C9FH         LINE#         44
+  C:0C9FH         LINE#         47
+  C:0CA3H         LINE#         48
+  C:0CAAH         LINE#         49
+  C:0CAFH         LINE#         50
+  C:0CB2H         LINE#         51
   -------         ENDPROC       _PIDUPDATE
   -------         ENDMOD        PID
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:39:27  PAGE 5
+
 
   -------         MODULE        INTERRUPTS
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:00FCH         PUBLIC        PCA0CPH0
-  C:08F6H         PUBLIC        PCA0_ISR
+  C:0D31H         PUBLIC        PCA0_ISR
   B:00D8H.0       PUBLIC        PCA0CN_CCF0
   -------         PROC          PCA0_ISR
-  C:08F6H         LINE#         18
-  C:08F6H         LINE#         19
-  C:08F8H         LINE#         20
-  C:08FBH         LINE#         21
+  C:0D31H         LINE#         18
+  C:0D31H         LINE#         19
+  C:0D33H         LINE#         20
+  C:0D36H         LINE#         21
   -------         ENDPROC       PCA0_ISR
   -------         ENDMOD        INTERRUPTS
 
   -------         MODULE        ?C?IMUL
-  C:08CEH         PUBLIC        ?C?IMUL
+  C:0B5CH         PUBLIC        ?C?IMUL
   -------         ENDMOD        ?C?IMUL
 
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?PIDINIT?PID
+  -------         MODULE        PRINTF
+  D:0008H         PUBLIC        ?_PRINTF517?BYTE
+  D:0008H         PUBLIC        ?_PRINTF?BYTE
+  D:0008H         PUBLIC        ?_SPRINTF517?BYTE
+  D:0008H         PUBLIC        ?_SPRINTF?BYTE
+  C:0862H         PUBLIC        _PRINTF
+  C:0862H         PUBLIC        _PRINTF517
+  C:085CH         PUBLIC        _SPRINTF
+  C:085CH         PUBLIC        _SPRINTF517
+  -------         ENDMOD        PRINTF
 
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_PIDUPDATE?PID
+  -------         MODULE        ?C?CLDPTR
+  C:0B6EH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0B87H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:0BB4H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?PLDIIDATA
+  C:0BC6H         PUBLIC        ?C?PLDIIDATA
+  -------         ENDMOD        ?C?PLDIIDATA
+
+  -------         MODULE        ?C?CCASE
+  C:0BD6H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+  -------         MODULE        PUTCHAR
+  C:0CE9H         PUBLIC        _PUTCHAR
+  -------         ENDMOD        PUTCHAR
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00E1H BYTE (10%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 010BH BYTE (13%) *
 ******************************************************************************
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:36:22  PAGE 5
+
+Program Size: data=35.1 xdata=0 code=1341
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:39:27  PAGE 6
 
 
-
-Program Size: data=18.0 xdata=0 code=258
-LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
