@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        12/02/2016  23:39:27  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/02/2016  23:42:41  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -59,7 +59,7 @@ LINK MAP OF MODULE:  .\Objects\Switcher (INITDEVICE)
 
 
 OVERLAY MAP OF MODULE:   .\Objects\Switcher (INITDEVICE)
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:39:27  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:42:41  PAGE 2
 
 
 
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:008DH         PUBLIC        TH1
   C:0BFCH         PUBLIC        enter_DefaultMode_from_RESET
   D:008BH         PUBLIC        TL1
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:39:27  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:42:41  PAGE 3
 
 
   D:00EFH         PUBLIC        RSTSRC
@@ -179,7 +179,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
 
   -------         MODULE        MAIN
   C:0000H         SYMBOL        _ICE_DUMMY_
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:39:27  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:42:41  PAGE 4
 
 
   C:0CB3H         PUBLIC        main
@@ -188,15 +188,15 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:00BDH         PUBLIC        ADC0
   -------         PROC          MAIN
   C:0CB3H         LINE#         34
-  C:0CB3H         LINE#         36
-  C:0CB5H         LINE#         38
-  C:0CB8H         LINE#         39
-  C:0CBBH         LINE#         40
-  C:0CBEH         LINE#         41
-  C:0CBEH         LINE#         42
-  C:0CCDH         LINE#         43
-  C:0CD5H         LINE#         45
-  C:0CE7H         LINE#         47
+  C:0CB3H         LINE#         35
+  C:0CB6H         LINE#         36
+  C:0CB9H         LINE#         37
+  C:0CBCH         LINE#         38
+  C:0CBCH         LINE#         39
+  C:0CCBH         LINE#         40
+  C:0CD3H         LINE#         42
+  C:0CD5H         LINE#         43
+  C:0CE7H         LINE#         45
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
@@ -239,7 +239,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   -------         ENDPROC       _PIDUPDATE
   -------         ENDMOD        PID
 
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:39:27  PAGE 5
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:42:41  PAGE 5
 
 
   -------         MODULE        INTERRUPTS
@@ -299,7 +299,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
 ******************************************************************************
 
 Program Size: data=35.1 xdata=0 code=1341
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:39:27  PAGE 6
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/02/2016  23:42:41  PAGE 6
 
 
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
