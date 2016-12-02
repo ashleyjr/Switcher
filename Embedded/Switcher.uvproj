@@ -538,6 +538,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\Pid.c</FilePath>
             </File>
+            <File>
+              <FileName>Interrupts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Interrupts.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

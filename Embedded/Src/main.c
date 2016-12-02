@@ -23,7 +23,10 @@
 //-----------------------------------------------------------------------------
 // Function PROTOTYPES
 //-----------------------------------------------------------------------------
-
+//-----------------------------------------------------------------------------
+// Global Variables
+//-----------------------------------------------------------------------------
+U16 CEX0_Compare_Value;       // Holds current PCA compare value
 //-----------------------------------------------------------------------------
 // MAIN Routine
 //-----------------------------------------------------------------------------
@@ -33,8 +36,12 @@ void main (void){
 	SCON0_TI = 1;                       	//This STDIO library requres TI to be set for prints to occur
 	enter_DefaultMode_from_RESET();
 	pidInit();
+	// Configure initial PWM duty cycle = 50%
+	CEX0_Compare_Value = 0;
 	while (1){
-		printf("P1.2 voltage: %d mV\n",ADC0);
+
+		CEX0_Compare_Value = ADC0 << 6;
+		printf("%d,%hu mV\n",ADC0,CEX0_Compare_Value);
 		pwm = pidUpdate(pwm);
 	}
 }
