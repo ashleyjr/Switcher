@@ -38,8 +38,8 @@ void main (void){
 	initDevice();
 	pidInit();
 	while (1){
-		//pwm_0 = readAdc() >> 2;
-		//pwm_1 = 255 - pwm_0;
+		PCA0CPH0 = readAdc() >> 2;
+		PCA0CPH1 = 255 - PCA0CPH0;
 		//uartSendNum(pwm_0);
 		//uartSend(' ');
 		//uartSendNum(pwm_1);
