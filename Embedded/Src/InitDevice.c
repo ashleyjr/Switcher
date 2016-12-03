@@ -104,8 +104,6 @@ void initDevice(void) {
 		CKCON = 
 			CKCON_SCA__SYSCLK_DIV_12 	| 
 			CKCON_T0M__PRESCALE 		| 
-			CKCON_T2MH__EXTERNAL_CLOCK	| 
-			CKCON_T2ML__EXTERNAL_CLOCK 	| 
 			CKCON_T3MH__EXTERNAL_CLOCK 	| 
 			CKCON_T3ML__EXTERNAL_CLOCK	| 
 			CKCON_T1M__SYSCLK;
@@ -149,8 +147,8 @@ void initDevice(void) {
 			IE_EX1__DISABLED 	| 
 			IE_ESPI0__DISABLED	| 
 			IE_ET0__DISABLED 	| 
-			IE_ET1__DISABLED 	| 
-			IE_ET2__ENABLED 	| 
+			IE_ET1__ENABLED 	| 
+			IE_ET2__DISABLED 	| 
 			IE_ES0__DISABLED;
 	// PCA
 		PCA0CN_CR =
@@ -187,9 +185,9 @@ void initDevice(void) {
 		
 		// $[Timer Initialization]
 	// Save Timer Configuration
-	TMR2CN_TR2_save = TMR2CN & TMR2CN_TR2__BMASK;
+	//TMR2CN_TR2_save = TMR2CN & TMR2CN_TR2__BMASK;
 	// Stop Timer
-	TMR2CN &= ~(TMR2CN_TR2__BMASK);
+	//TMR2CN &= ~(TMR2CN_TR2__BMASK);
 	// [Timer Initialization]$
 
 	// $[TMR2CN - Timer 2 Control]
@@ -199,7 +197,7 @@ void initDevice(void) {
 	// T2SPLIT (Timer 2 Split Mode Enable) = 8_BIT_RELOAD (Timer 2 operates
 	//     as two 8-bit auto-reload timers.)
 	*/
-	TMR2CN |= TMR2CN_TF2LEN__ENABLED | TMR2CN_T2SPLIT__8_BIT_RELOAD;
+	//TMR2CN |= TMR2CN_TF2H__SET ;
 	// [TMR2CN - Timer 2 Control]$
 
 	// $[TMR2H - Timer 2 High Byte]
@@ -212,26 +210,26 @@ void initDevice(void) {
 	/*
 	// TMR2RLH (Timer 2 Reload High Byte) = 1
 	*/
-	TMR2RLH = (1 << TMR2RLH_TMR2RLH__SHIFT);
+	//TMR2RLH = (1 << TMR2RLH_TMR2RLH__SHIFT);
 	// [TMR2RLH - Timer 2 Reload High Byte]$
 
 	// $[TMR2RLL - Timer 2 Reload Low Byte]
 	/*
 	// TMR2RLL (Timer 2 Reload Low Byte) = 1
 	*/
-	TMR2RLL = (1 << TMR2RLL_TMR2RLL__SHIFT);
+	//TMR2RLL = (1 << TMR2RLL_TMR2RLL__SHIFT);
 	// [TMR2RLL - Timer 2 Reload Low Byte]$
 
 	// $[TMR2CN]
 	/*
 	// TR2 (Timer 2 Run Control) = RUN (Start Timer 2 running.)
 	*/
-	TMR2CN |= TMR2CN_TR2__RUN;
+	//TMR1CN |= TMR2CN_TR2__RUN;
 	// [TMR2CN]$
 
 	// $[Timer Restoration]
 	// Restore Timer Configuration
-	TMR2CN |= TMR2CN_TR2_save;
+	//TMR2CN |= TMR2CN_TR2_save;
 	// [Timer Restoration]$
 
 

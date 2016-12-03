@@ -10,6 +10,7 @@
 #ifndef __UART_H__
 #define __UART_H__
 
+void uartInit(void);
 void uartSend(U8 toSend);
 U8 uartGet(void);
 void uartSendNum(U16 toSend);

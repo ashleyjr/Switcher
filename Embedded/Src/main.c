@@ -9,7 +9,7 @@
 //-----------------------------------------------------------------------------
 #define SYSCLK      	24500000   				// SYSCLK frequency in Hz
 #ifdef DEBUG
-	#define BAUDRATE   	115200    				// Baud rate of UART in bps
+	#define BAUDRATE   	567600  				// Baud rate of UART in bps
 #endif
 
 //-----------------------------------------------------------------------------
@@ -25,26 +25,35 @@
 //-----------------------------------------------------------------------------
 // Global Variables
 //-----------------------------------------------------------------------------
-U8 	pwm_0;       								// Holds current PCA compare value
-U8 	pwm_1;       								// Holds current PCA compare value
+volatile bit update;
+
+SBIT(LED1, SFR_P1, 4);                 // DS5 P1.0 LED
 
 //-----------------------------------------------------------------------------
 // MAIN Routine
 //-----------------------------------------------------------------------------
 
 void main (void){
-	pwm_0 = 0;
-	pwm_1 = 0;
+	U16 adc;
 	initDevice();
-	pidInit();
+	uartInit();
+	update = 0;
 	while (1){
-		PCA0CPH0 = readAdc() >> 2;
-		PCA0CPH1 = 255 - PCA0CPH0;
-		//uartSendNum(pwm_0);
-		//uartSend(' ');
-		//uartSendNum(pwm_1);
-		//uartSend('\r');
-		//uartSend('\n');
+		if(update){
+			LED1 = 1;
+			adc = readAdc();
+			PCA0CPH0 = pidUpdate(adc,300,10);
+			PCA0CPH1 = pidUpdate(adc,300,-10);
+//			uartSendNum(adc);
+//			uartSend(' ');
+//			uartSendNum(PCA0CPH0);
+//			uartSend(' ');
+//			uartSendNum(PCA0CPH1);
+//			uartSend('\n');
+//			uartSend('\r');
+			LED1 = 0;
+			update = 0;
+		}
 	}
 }
 //-----------------------------------------------------------------------------

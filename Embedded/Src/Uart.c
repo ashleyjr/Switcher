@@ -6,10 +6,14 @@
 
 #include "Uart.h"
 
+void uartInit(void){
+	SCON0_TI = 1; 
+}
+
 void uartSend(U8 toSend){
+	while(SCON0_TI == 0);			// Stall if still sending
 	SCON0_TI = 0; 
 	SBUF0 = toSend;
-	while(SCON0_TI == 0);			// Stall until sent
 }
 
 U8 uartGet(void){

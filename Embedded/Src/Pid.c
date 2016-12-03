@@ -14,38 +14,15 @@ unsigned short last_error;
 //-----------------------------------------------------------------------------
 // Functions
 //-----------------------------------------------------------------------------
-void pidInit(void){
-	integral 	= 0;
-	last_error	= 0;
-}
 
-U8 pidUpdate(U8 adc){
-	unsigned short error;
-	unsigned short pwm;
-	unsigned short p;
-	unsigned short i;
-	unsigned short d;
-	unsigned short integral;
-	unsigned short derivative;
-	
-	// Feedback
-	error = ADC_TARGET - adc;
-
-	// Proportional
-	p = P*error;
-	
-	// Integral
-	integral += error;
-	i = I*integral;
-	
-	// Derivative
-	derivative = error - last_error;
-	last_error = error;
-	d = D*derivative;
-	
-	// Summing node
-	pwm = 	p; 
-	pwm += 	i;
-	pwm +=	d;
-	return adc;
+U8 pidUpdate(U16 adc, U16 target, int p){
+	int error;
+	int pwm;
+	error = target - adc;		// Feedback
+	pwm = p*error;				// Proportional error
+	if(pwm > PWM_TOP)			// Constrain the PWM output
+		return PWM_TOP;
+	if(pwm < PWM_BOTTOM)		
+		return PWM_BOTTOM;
+	return (U8)pwm;				// Cast as unsigned byte
 }
