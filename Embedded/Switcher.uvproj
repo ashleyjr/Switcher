@@ -518,6 +518,11 @@
               <FileType>5</FileType>
               <FilePath>.\Inc\Pid.h</FilePath>
             </File>
+            <File>
+              <FileName>Uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Inc\Uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -541,7 +546,12 @@
             <File>
               <FileName>Interrupts.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Interrupts.c</FilePath>
+              <FilePath>.\Src\Interrupts.c</FilePath>
+            </File>
+            <File>
+              <FileName>Uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Uart.c</FilePath>
             </File>
           </Files>
         </Group>

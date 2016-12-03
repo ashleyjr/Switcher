@@ -6,6 +6,9 @@
 #ifndef PID_H
 #define PID_H
 
+#include "SI_C8051F850_Register_Enums.h"
+#include "SI_C8051F850_Defs.h"
+
 //-----------------------------------------------------------------------------
 // Global Constants
 //-----------------------------------------------------------------------------
@@ -18,6 +21,6 @@
 // Function Prototypes
 //-----------------------------------------------------------------------------
 void pidInit(void);
-unsigned short pidUpdate(unsigned short adc);
+U8 pidUpdate(U8 adc);
 
 #endif // PID

@@ -19,7 +19,7 @@ void pidInit(void){
 	last_error	= 0;
 }
 
-unsigned short pidUpdate(unsigned short adc){
+U8 pidUpdate(U8 adc){
 	unsigned short error;
 	unsigned short pwm;
 	unsigned short p;
@@ -47,5 +47,5 @@ unsigned short pidUpdate(unsigned short adc){
 	pwm = 	p; 
 	pwm += 	i;
 	pwm +=	d;
-	return pwm;
+	return adc;
 }

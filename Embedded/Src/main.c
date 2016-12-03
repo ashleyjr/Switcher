@@ -8,15 +8,16 @@
 // Includes
 //-----------------------------------------------------------------------------
 
-#include <SI_C8051F850_Register_Enums.h>
-#include <stdio.h>
+#include "SI_C8051F850_Register_Enums.h"
+#include "SI_C8051F850_Defs.h"
 #include "InitDevice.h"
 #include "Pid.h"
+#include "Uart.h"
 
 //-----------------------------------------------------------------------------
 // Global CONSTANTS
 //-----------------------------------------------------------------------------
-#define DEBUG			1						// Comment out to remove debug output
+#define DEBUG			0						// Set to 1 to remove debug output
 #define SYSCLK      	24500000   				// SYSCLK frequency in Hz
 #ifdef DEBUG
 	#define BAUDRATE   	115200    				// Baud rate of UART in bps
@@ -38,6 +39,7 @@ void main (void){
 	while (1){
 		pwm = ADC0 >> 2;
 		pwm = pidUpdate(pwm);
+		uartSend(uartGet());
 		#if DEBUG
 			SCON0_TI = 1;                 		// This STDIO library requres TI to be set for prints to occur
 			printf("%d,%hu mV\n",ADC0,pwm);
