@@ -24,7 +24,7 @@ SBIT(LED1, SFR_P1, 4);                 // DS5 P1.0 LED
 // Interrupt every 99218.75Hz
 INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 	i++;
-	if(i == 2){
+	if(i == 1000){
 		LED1 = !LED1;
 		uartSend('a');
 		i = 0;
