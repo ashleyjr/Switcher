@@ -7,7 +7,6 @@
 //-----------------------------------------------------------------------------
 // Defines
 //-----------------------------------------------------------------------------
-#define DEBUG			1						// Set to 1 to remove debug output
 #define SYSCLK      	24500000   				// SYSCLK frequency in Hz
 #ifdef DEBUG
 	#define BAUDRATE   	115200    				// Baud rate of UART in bps
@@ -21,9 +20,6 @@
 #include "InitDevice.h"
 #include "Pid.h"
 #include "Uart.h"
-#ifdef DEBUG
-	#include "stdio.h"
-#endif
 
 //-----------------------------------------------------------------------------
 // Global Variables
@@ -42,10 +38,9 @@ void main (void){
 	pidInit();
 	while (1){
 		pwm_0 = ADC0 >> 2;
-		pwm_1 = 'a';
-		pwm_0 = 'a';
-		//pwm = pidUpdate(pwm);
-		uartSendNum(614);
+		pwm_1 = pwm_0;
+		uartSendNum(pwm_0);
+		uartSendNum(pwm_1);
 	}
 }
 //-----------------------------------------------------------------------------

@@ -9,7 +9,7 @@
 void uartSend(U8 toSend){
 	SCON0_TI = 0; 
 	SBUF0 = toSend;
-	while(SCON0_TI == 0);		// Stall until sent
+	while(SCON0_TI == 0);			// Stall until sent
 }
 
 U8 uartGet(void){
@@ -18,32 +18,16 @@ U8 uartGet(void){
 	return SBUF0;
 }
 
-void uartSendNum(U16 toSend){
+void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
 	U16 send = toSend;
 	U16 temp;
-
-	temp = send / 10000;
-	send -= (temp*10000);
-	temp += 48;
-	uartSend(temp);
-	
-		temp = send / 1000;
-	send -= (temp*1000);
-	temp += 48;
-	uartSend(temp);
-	
-		temp = send / 100;
-	send -= (temp*100);
-	temp += 48;
-	uartSend(temp);
-	
-		temp = send / 10;
-	send -= (temp*10);
-	temp += 48;
-	uartSend(temp);
-
-	uartSend(send + 48);
-	
+	U16 divider = 10000;
+	while(divider){
+		temp = send / divider;
+		send -= (temp*divider);
+		uartSend(temp + 48);
+		divider = divider / 10;
+	}
 	uartSend('\r');
 	uartSend('\n');
 	
