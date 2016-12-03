@@ -37,6 +37,8 @@ void main (void){
 	initDevice();
 	pidInit();
 	while (1){
+		ADC0CN0 |= ADC0CN0_ADBUSY__SET;
+		while(ADC0CN0 & ADC0CN0_ADBUSY__SET );
 		pwm_0 = ADC0 >> 2;
 		pwm_1 = 255 - pwm_0;
 		uartSendNum(pwm_0);

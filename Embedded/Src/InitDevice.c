@@ -9,7 +9,6 @@
 
 void initDevice(void) {
 	U8 TCON_save;
-	U8 TMR2CN_TR2_save;
 	// Watchdog
 		// Disable the watchdog timer
 		WDTCN = 0xDE; //First key
@@ -87,7 +86,7 @@ void initDevice(void) {
 			~ADC0CN0_ADCM__FMASK;
 		ADC0CN0 |= 
 			ADC0CN0_ADEN__ENABLED		|
-			ADC0CN0_ADCM__TIMER2;
+			ADC0CN0_ADCM__ADBUSY;
 	// Timer 0
 		TCON_save = 
 			TCON;
@@ -100,24 +99,6 @@ void initDevice(void) {
 			(150 << TL1_TL1__SHIFT);
 		TCON = 
 			TCON_save;
-	// Timer 2
-		TMR2CN_TR2_save = 
-			TMR2CN 				& 
-			TMR2CN_TR2__BMASK;
-		TMR2CN &= 
-			~(TMR2CN_TR2__BMASK);
-		TMR2H = 
-			(255 << TMR2H_TMR2H__SHIFT);
-		TMR2L = 
-			(255 << TMR2L_TMR2L__SHIFT);
-		TMR2RLH = 
-			(254 << TMR2RLH_TMR2RLH__SHIFT);
-		TMR2RLL = 
-			(2 << TMR2RLL_TMR2RLL__SHIFT);
-		TMR2CN |=
-			TMR2CN_TR2__RUN;
-		TMR2CN |= 
-			TMR2CN_TR2_save;
 	// Timer setup
 		CKCON = 
 			CKCON_SCA__SYSCLK_DIV_12 	| 

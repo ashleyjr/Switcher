@@ -523,6 +523,11 @@
               <FileType>5</FileType>
               <FilePath>.\Inc\Uart.h</FilePath>
             </File>
+            <File>
+              <FileName>Adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Inc\Adc.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -552,6 +557,11 @@
               <FileName>Uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\Uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>Adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Adc.c</FilePath>
             </File>
           </Files>
         </Group>
