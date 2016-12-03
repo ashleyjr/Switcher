@@ -42,13 +42,10 @@ void main (void){
 	pidInit();
 	while (1){
 		pwm_0 = ADC0 >> 2;
-		pwm_1 = pwm_0;
+		pwm_1 = 'a';
+		pwm_0 = 'a';
 		//pwm = pidUpdate(pwm);
-		//uartSend(uartGet());
-		#if DEBUG
-			SCON0_TI = 1;                 		// This STDIO library requres TI to be set for prints to occur
-			printf("%hu,%hu\n",pwm_0,pwm_1);
-		#endif
+		uartSendNum(614);
 	}
 }
 //-----------------------------------------------------------------------------

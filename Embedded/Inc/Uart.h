@@ -12,5 +12,5 @@
 
 void uartSend(U8 toSend);
 U8 uartGet(void);
-
+void uartSendNum(U16 toSend);
 #endif
