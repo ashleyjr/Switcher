@@ -38,13 +38,13 @@ void main (void){
 	initDevice();
 	pidInit();
 	while (1){
-		pwm_0 = readAdc() >> 2;
-		pwm_1 = 255 - pwm_0;
-		uartSendNum(pwm_0);
-		uartSend(' ');
-		uartSendNum(pwm_1);
-		uartSend('\r');
-		uartSend('\n');
+		//pwm_0 = readAdc() >> 2;
+		//pwm_1 = 255 - pwm_0;
+		//uartSendNum(pwm_0);
+		//uartSend(' ');
+		//uartSendNum(pwm_1);
+		//uartSend('\r');
+		//uartSend('\n');
 	}
 }
 //-----------------------------------------------------------------------------
