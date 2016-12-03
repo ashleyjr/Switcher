@@ -28,7 +28,4 @@ void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
 		uartSend(temp + 48);
 		divider = divider / 10;
 	}
-	uartSend('\r');
-	uartSend('\n');
-	
 }

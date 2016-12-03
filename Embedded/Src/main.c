@@ -38,9 +38,12 @@ void main (void){
 	pidInit();
 	while (1){
 		pwm_0 = ADC0 >> 2;
-		pwm_1 = pwm_0;
+		pwm_1 = 255 - pwm_0;
 		uartSendNum(pwm_0);
+		uartSend(' ');
 		uartSendNum(pwm_1);
+		uartSend('\r');
+		uartSend('\n');
 	}
 }
 //-----------------------------------------------------------------------------
