@@ -39,18 +39,28 @@ void main (void){
 	uartInit();
 	update = 0;
 	while (1){
+		LED1 = 0;
 		if(update){
+			LED1 = 1;
 			LED1 = 1;
 			adc = readAdc();
 			PCA0CPH0 = pidUpdate(adc,300,10);
 			PCA0CPH1 = pidUpdate(adc,300,-10);
-//			uartSendNum(adc);
-//			uartSend(' ');
-//			uartSendNum(PCA0CPH0);
-//			uartSend(' ');
-//			uartSendNum(PCA0CPH1);
-//			uartSend('\n');
-//			uartSend('\r');
+			
+			if(SCON0_RI){
+				SCON0_RI = 0;
+				switch(SBUF0){
+					case 'A': 	uartSendNum(adc);
+								uartSend('\n');
+								uartSend('\r');
+								break;
+					case 'B': 	uartSendNum(PCA0CPH0);
+								uartSend('\n');
+								uartSend('\r');
+								break;
+					
+				}
+			}
 			LED1 = 0;
 			update = 0;
 		}
