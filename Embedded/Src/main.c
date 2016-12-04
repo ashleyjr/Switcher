@@ -48,25 +48,22 @@ void main (void){
 			adc = readAdc();
 			PCA0CPH0 = pidUpdate(adc,300,10);
 			PCA0CPH1 = pidUpdate(adc,300,-10);
-			
+
 			// If uart has recived do somethng
 			if(SCON0_RI){
 				SCON0_RI = 0;
 				switch(SBUF0){
-					case 'A': 	uartSendNum(adc);
+					case 'a': 	uartSendNum(adc);
 								uartLoadBuffer('\n');
 								uartLoadBuffer('\r');
 								break;
-					case 'B': 	uartSendNum(PCA0CPH0);
+					case 'b': 	uartSendNum(PCA0CPH0);
 								uartLoadBuffer('\n');
 								uartLoadBuffer('\r');
 								break;
 					
 				}
 			}
-			
-			// Unload a byte from uart buffer
-			uartUnloadBuffer();
 		}
 	}
 }

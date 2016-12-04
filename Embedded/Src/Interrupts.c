@@ -13,6 +13,7 @@
 //-----------------------------------------------------------------------------
 extern volatile bit update;
 U32 i;
+U32 j;
 SBIT(LED1, SFR_P1, 4);
 
 //-----------------------------------------------------------------------------
@@ -21,9 +22,14 @@ SBIT(LED1, SFR_P1, 4);
 // Interrupt every 115.1KHz
 INTERRUPT (TIMER1_ISR, TIMER1_IRQn){
 	i++;
-	if(i == 10000){
+	j++;
+	if(i == 2000){
 		update = 1;
 		i = 0;
+	}
+	if(j == 50){
+		uartUnloadBuffer();
+		j = 0;
 	}
 }
 
