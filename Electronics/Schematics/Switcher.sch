@@ -8869,8 +8869,7 @@ unfilled</description>
 </instance>
 <instance part="SUPPLY4" gate="GND" x="91.44" y="33.02"/>
 <instance part="Q1" gate="G$1" x="48.26" y="43.18" smashed="yes" rot="MR0">
-<attribute name="NAME" x="50.8" y="48.26" size="1.778" layer="95" rot="MR180"/>
-<attribute name="VALUE" x="50.8" y="45.72" size="1.778" layer="96" rot="MR180"/>
+<attribute name="NAME" x="50.8" y="45.72" size="1.778" layer="95" rot="MR180"/>
 </instance>
 <instance part="SUPPLY5" gate="GND" x="45.72" y="33.02"/>
 <instance part="R4" gate="G$1" x="66.04" y="43.18" smashed="yes" rot="R180">
