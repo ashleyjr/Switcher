@@ -5,6 +5,6 @@
 #include "SI_C8051F850_Defs.h"
 
 
-U16 readAdc(void);
+U16 readAdc(U8 sel);
 
 #endif

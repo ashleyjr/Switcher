@@ -1,3 +1,4 @@
 *.lst
 *.obj
 *.uvgui.*
+*.s#*

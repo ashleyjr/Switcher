@@ -10,7 +10,7 @@
 #ifndef __UART_H__
 #define __UART_H__
 
-#define UART_BUFFER_SIZE 16
+#define UART_BUFFER_SIZE 64
 
 void uartInit(void);
 void uartUnloadBuffer(void);

@@ -45,9 +45,17 @@ void main (void){
 			update = 0;
 			
 			// PID update routine
-			adc = readAdc();
-			PCA0CPH0 = pidUpdate(adc,300,10);
-			PCA0CPH1 = pidUpdate(adc,300,-10);
+			//adc = readAdc();
+			//PCA0CPH0 = pidUpdate(adc,300,10);
+			//PCA0CPH1 = pidUpdate(adc,300,-10);
+			uartSendNum(readAdc(1));
+			uartLoadBuffer(' ');
+			uartSendNum(readAdc(2));
+			uartLoadBuffer(' ');
+			uartSendNum(readAdc(3));
+			uartLoadBuffer('\n');
+			uartLoadBuffer('\r');
+			
 
 			// If uart has recived do somethng
 			if(SCON0_RI){
