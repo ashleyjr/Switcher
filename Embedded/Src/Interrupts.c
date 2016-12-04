@@ -22,14 +22,19 @@ SBIT(LED1, SFR_P1, 4);
 // Interrupt every 115.1KHz
 INTERRUPT (TIMER1_ISR, TIMER1_IRQn){
 	i++;
-	j++;
-	if(i == 2000){
+	if(i == 5000){
 		update = 1;
 		i = 0;
 	}
-	if(j == 50){
+}
+
+INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
+	j++;
+	if(j == 2){
 		uartUnloadBuffer();
 		j = 0;
 	}
+	TMR2CN_TF2H = 0;
+	TMR2CN_TF2L = 0;
 }
 

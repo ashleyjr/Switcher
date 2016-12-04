@@ -114,7 +114,7 @@ void initDevice(void) {
 			TMOD_CT1__TIMER 		| 
 			TMOD_GATE1__DISABLED;
 		TCON |= 
-			TCON_TR1__RUN;
+			TCON_TR1__RUN ;
 	// UART
 		SCON0 |= 
 			SCON0_REN__RECEIVE_ENABLED;
@@ -146,9 +146,11 @@ void initDevice(void) {
 			IE_EX1__DISABLED 	| 
 			IE_ESPI0__DISABLED	| 
 			IE_ET0__DISABLED 	| 
-			IE_ET1__ENABLED 	| 
-			IE_ET2__DISABLED 	| 
+			IE_ET1__ENABLED	| 
+			IE_ET2__ENABLED 	| 
 			IE_ES0__DISABLED;
+		IP = IP_PX0__LOW | IP_PX1__LOW | IP_PSPI0__LOW | IP_PT0__LOW | IP_PT1__LOW
+		 | IP_PT2__HIGH | IP_PS0__LOW;
 	// PCA
 		PCA0CN_CR =
 			PCA0CN_CR__STOP;
@@ -223,7 +225,8 @@ void initDevice(void) {
 	/*
 	// TR2 (Timer 2 Run Control) = RUN (Start Timer 2 running.)
 	*/
-	//TMR1CN |= TMR2CN_TR2__RUN;
+	TMR2CN |= TMR2CN_TF2LEN__ENABLED | TMR2CN_T2SPLIT__8_BIT_RELOAD;
+	TMR2CN |= TMR2CN_TR2__RUN;
 	// [TMR2CN]$
 
 	// $[Timer Restoration]

@@ -8,7 +8,7 @@
 // Defines
 //-----------------------------------------------------------------------------
 #define SYSCLK      	24500000   				// SYSCLK frequency in Hz
-#define BAUDRATE   		115200  				// Baud rate of UART in bps
+#define BAUDRATE   		115200		// Baud rate of UART in bps
 
 
 //-----------------------------------------------------------------------------
@@ -38,15 +38,15 @@ void main (void){
 	uartInit();
 	update = 0;
 	while (1){
-		//LED1 = 0;
+		LED1 = 0;
 		if(update){
-			//LED1 = 1;
+			LED1 = 1;
 			update = 0;
 			
 			// PID update routine
 			//adc = readAdc();
-			//PCA0CPH0 = pidUpdate(adc,300,10);
-			//PCA0CPH1 = pidUpdate(adc,300,-10);
+			PCA0CPH0 = pidUpdate(adc,300,10);
+			PCA0CPH1 = pidUpdate(adc,300,-10);
 			uartSendNum(readAdc(ADC1));
 			uartLoadBuffer(' ');
 			uartSendNum(readAdc(ADC2));
