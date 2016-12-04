@@ -42,27 +42,31 @@ void main (void){
 		LED1 = 0;
 		if(update){
 			LED1 = 1;
-			LED1 = 1;
+			update = 0;
+			
+			// PID update routine
 			adc = readAdc();
 			PCA0CPH0 = pidUpdate(adc,300,10);
 			PCA0CPH1 = pidUpdate(adc,300,-10);
 			
+			// If uart has recived do somethng
 			if(SCON0_RI){
 				SCON0_RI = 0;
 				switch(SBUF0){
 					case 'A': 	uartSendNum(adc);
-								uartSend('\n');
-								uartSend('\r');
+								uartLoadBuffer('\n');
+								uartLoadBuffer('\r');
 								break;
 					case 'B': 	uartSendNum(PCA0CPH0);
-								uartSend('\n');
-								uartSend('\r');
+								uartLoadBuffer('\n');
+								uartLoadBuffer('\r');
 								break;
 					
 				}
 			}
-			LED1 = 0;
-			update = 0;
+			
+			// Unload a byte from uart buffer
+			uartUnloadBuffer();
 		}
 	}
 }

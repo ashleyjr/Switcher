@@ -9,7 +9,6 @@
 
 void initDevice(void) {
 	U8 TCON_save;
-	U8 TMR2CN_TR2_save;
 	// Watchdog
 		// Disable the watchdog timer
 		WDTCN = 0xDE; //First key
