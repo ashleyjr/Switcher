@@ -40,11 +40,11 @@ void main (void){
 	while (1){
 		
 		// Update the loop
-		LED1 = 1;
-		adc = readAdc(ADC1);
-		PCA0CPH0 = pidUpdate(adc,300,10);
-		PCA0CPH1 = pidUpdate(adc,300,-10);	
-		LED1 = 0;
+		//LED1 = 1;
+		//adc = readAdc(ADC1);
+		//PCA0CPH0 = pidUpdate(adc,300,10);
+		//PCA0CPH1 = pidUpdate(adc,300,-10);	
+		//LED1 = 0;
 		
 		
 		// If uart has recived do somethng
@@ -52,11 +52,18 @@ void main (void){
 		if(SCON0_RI){
 			SCON0_RI = 0;
 			switch(SBUF0){
-				case 'a': 	uartSendNum(PCA0CPH0);
+				case '1': 	uartSendNum(readAdc(ADC1));
+							uartSendNum(readAdc(ADC1));
 							uartLoadBuffer('\n');
 							uartLoadBuffer('\r');
 							break;
-				case 'b': 	uartSendNum(PCA0CPH1);
+				case '2': 	uartSendNum(readAdc(ADC2));
+							uartSendNum(readAdc(ADC2));
+							uartLoadBuffer('\n');
+							uartLoadBuffer('\r');
+							break;
+				case '3': 	uartSendNum(readAdc(ADC3));
+							uartSendNum(readAdc(ADC3));
 							uartLoadBuffer('\n');
 							uartLoadBuffer('\r');
 							break;
