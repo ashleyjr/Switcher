@@ -38,6 +38,8 @@ void main (void){
 	uartInit();
 	soft_timer = 0;
 	while (1){
+		PCA0CPH0 = 128;
+		PCA0CPH1 = 128;
 		
 		// Update the loop
 		//LED1 = 1;
