@@ -37,39 +37,33 @@ void main (void){
 	initDevice();
 	uartInit();
 	soft_timer = 0;
+	PCA0CPH0 = 255;
+	PCA0CPH1 = 255;
 	while (1){
-		PCA0CPH0 = 128;
-		PCA0CPH1 = 128;
-		
-		// Update the loop
-		//LED1 = 1;
-		//adc = readAdc(ADC1);
-		//PCA0CPH0 = pidUpdate(adc,300,10);
-		//PCA0CPH1 = pidUpdate(adc,300,-10);	
-		//LED1 = 0;
-		
 		
 		// If uart has recived do somethng
 		LED1 = 1;
 		if(SCON0_RI){
 			SCON0_RI = 0;
 			switch(SBUF0){
-				case '1': 	uartSendNum(readAdc(ADC1));
-							uartSendNum(readAdc(ADC1));
-							uartLoadBuffer('\n');
-							uartLoadBuffer('\r');
+				case '1': 	if(PCA0CPH0 < 255){
+								PCA0CPH0++;
+							}
 							break;
-				case '2': 	uartSendNum(readAdc(ADC2));
-							uartSendNum(readAdc(ADC2));
-							uartLoadBuffer('\n');
-							uartLoadBuffer('\r');
+				case '2': 	PCA0CPH0--;
 							break;
-				case '3': 	uartSendNum(readAdc(ADC3));
-							uartSendNum(readAdc(ADC3));
-							uartLoadBuffer('\n');
-							uartLoadBuffer('\r');
+				case '3': 	if(PCA0CPH1 < 255){
+								PCA0CPH1++;
+							}
+							break;
+				case '4': 	PCA0CPH1--;
 							break;
 			}
+			uartSendNum(PCA0CPH0);
+			uartLoadBuffer(',');
+			uartSendNum(PCA0CPH1);
+			uartLoadBuffer('\n');
+			uartLoadBuffer('\r');
 		}
 		LED1 = 0;
 		

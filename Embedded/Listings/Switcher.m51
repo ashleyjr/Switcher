@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        12/07/2016  20:59:19  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/07/2016  21:09:54  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -44,22 +44,22 @@ LINK MAP OF MODULE:  .\Objects\Switcher (INITDEVICE)
                     001EH     000DH                  *** GAP ***
             CODE    002BH     0003H     ABSOLUTE     
                     002EH     07D2H                  *** GAP ***
-            CODE    0800H     007DH     UNIT         ?PR?MAIN?MAIN
-            CODE    087DH     0078H     UNIT         ?C?LIB_CODE
-            CODE    08F5H     0077H     UNIT         ?PR?TIMER2_ISR?INTERRUPTS
-            CODE    096CH     006BH     UNIT         ?PR?INITDEVICE?INITDEVICE
-            CODE    09D7H     0044H     UNIT         ?PR?_UARTSENDNUM?UART
-            CODE    0A1BH     0038H     UNIT         ?PR?TIMER1_ISR?INTERRUPTS
-            CODE    0A53H     002BH     UNIT         ?PR?_PIDUPDATE?PID
-            CODE    0A7EH     001BH     UNIT         ?PR?UARTUNLOADBUFFER?UART
-            CODE    0A99H     0012H     UNIT         ?PR?_UARTLOADBUFFER?UART
-            CODE    0AABH     000FH     UNIT         ?PR?_READADC?ADC
-            CODE    0ABAH     000CH     UNIT         ?C_C51STARTUP
-            CODE    0AC6H     0008H     UNIT         ?PR?UARTINIT?UART
-            CODE    0ACEH     0008H     UNIT         ?PR?_UARTSEND?UART
+            CODE    0800H     0087H     UNIT         ?PR?MAIN?MAIN
+            CODE    0887H     0078H     UNIT         ?C?LIB_CODE
+            CODE    08FFH     0077H     UNIT         ?PR?TIMER2_ISR?INTERRUPTS
+            CODE    0976H     006BH     UNIT         ?PR?INITDEVICE?INITDEVICE
+            CODE    09E1H     0044H     UNIT         ?PR?_UARTSENDNUM?UART
+            CODE    0A25H     0038H     UNIT         ?PR?TIMER1_ISR?INTERRUPTS
+            CODE    0A5DH     002BH     UNIT         ?PR?_PIDUPDATE?PID
+            CODE    0A88H     001BH     UNIT         ?PR?UARTUNLOADBUFFER?UART
+            CODE    0AA3H     0012H     UNIT         ?PR?_UARTLOADBUFFER?UART
+            CODE    0AB5H     000FH     UNIT         ?PR?_READADC?ADC
+            CODE    0AC4H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0AD0H     0008H     UNIT         ?PR?UARTINIT?UART
+            CODE    0AD8H     0008H     UNIT         ?PR?_UARTSEND?UART
 
 
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  20:59:19  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  21:09:54  PAGE 2
 
 
 
@@ -83,7 +83,6 @@ SEGMENT                             DATA_GROUP
 ?PR?MAIN?MAIN                     0056H    0002H
   +--> ?PR?INITDEVICE?INITDEVICE
   +--> ?PR?UARTINIT?UART
-  +--> ?PR?_READADC?ADC
   +--> ?PR?_UARTSENDNUM?UART
   +--> ?PR?_UARTLOADBUFFER?UART
 
@@ -102,7 +101,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:0097H         PUBLIC        WDTCN
   D:00BCH         PUBLIC        ADC0CF
   D:00E6H         PUBLIC        EIE1
-  C:096CH         PUBLIC        initDevice
+  C:0976H         PUBLIC        initDevice
   D:00A4H         PUBLIC        P0MDOUT
   B:00D8H.6       PUBLIC        PCA0CN_CR
   D:00A5H         PUBLIC        P1MDOUT
@@ -119,10 +118,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:00E3H         PUBLIC        XBR2
   D:00BBH         PUBLIC        ADC0MX
   D:00D1H         PUBLIC        REF0CN
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  20:59:19  PAGE 3
-
-
   D:00F2H         PUBLIC        P1MDIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  21:09:54  PAGE 3
+
+
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
   D:00C8H         PUBLIC        TMR2CN
@@ -138,49 +137,49 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   -------         DO            
   D:0007H         SYMBOL        TCON_save
   -------         ENDDO         
-  C:096CH         LINE#         10
-  C:096CH         LINE#         14
-  C:096FH         LINE#         15
-  C:0972H         LINE#         18
-  C:0975H         LINE#         20
-  C:0978H         LINE#         30
-  C:097BH         LINE#         39
-  C:097EH         LINE#         48
-  C:0981H         LINE#         58
-  C:0984H         LINE#         67
-  C:0987H         LINE#         74
-  C:098AH         LINE#         78
-  C:098DH         LINE#         80
-  C:0990H         LINE#         85
-  C:0993H         LINE#         87
-  C:0996H         LINE#         91
-  C:0998H         LINE#         93
-  C:099AH         LINE#         96
-  C:099DH         LINE#         98
-  C:09A0H         LINE#         100
-  C:09A2H         LINE#         103
-  C:09A5H         LINE#         109
-  C:09A8H         LINE#         116
-  C:09ABH         LINE#         119
-  C:09AEH         LINE#         122
-  C:09B1H         LINE#         128
-  C:09B4H         LINE#         134
-  C:09B6H         LINE#         143
-  C:09B9H         LINE#         152
-  C:09BCH         LINE#         155
-  C:09BEH         LINE#         158
-  C:09C1H         LINE#         160
-  C:09C4H         LINE#         168
-  C:09C7H         LINE#         170
-  C:09CAH         LINE#         180
-  C:09CDH         LINE#         184
-  C:09D0H         LINE#         228
-  C:09D3H         LINE#         229
-  C:09D6H         LINE#         238
+  C:0976H         LINE#         10
+  C:0976H         LINE#         14
+  C:0979H         LINE#         15
+  C:097CH         LINE#         18
+  C:097FH         LINE#         20
+  C:0982H         LINE#         30
+  C:0985H         LINE#         39
+  C:0988H         LINE#         48
+  C:098BH         LINE#         58
+  C:098EH         LINE#         67
+  C:0991H         LINE#         74
+  C:0994H         LINE#         78
+  C:0997H         LINE#         80
+  C:099AH         LINE#         85
+  C:099DH         LINE#         87
+  C:09A0H         LINE#         91
+  C:09A2H         LINE#         93
+  C:09A4H         LINE#         96
+  C:09A7H         LINE#         98
+  C:09AAH         LINE#         100
+  C:09ACH         LINE#         103
+  C:09AFH         LINE#         109
+  C:09B2H         LINE#         116
+  C:09B5H         LINE#         119
+  C:09B8H         LINE#         122
+  C:09BBH         LINE#         128
+  C:09BEH         LINE#         134
+  C:09C0H         LINE#         143
+  C:09C3H         LINE#         152
+  C:09C6H         LINE#         155
+  C:09C8H         LINE#         158
+  C:09CBH         LINE#         160
+  C:09CEH         LINE#         168
+  C:09D1H         LINE#         170
+  C:09D4H         LINE#         180
+  C:09D7H         LINE#         184
+  C:09DAH         LINE#         228
+  C:09DDH         LINE#         229
+  C:09E0H         LINE#         238
   -------         ENDPROC       INITDEVICE
   -------         ENDMOD        INITDEVICE
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  20:59:19  PAGE 4
 
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  21:09:54  PAGE 4
 
 
   -------         MODULE        MAIN
@@ -201,139 +200,141 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   C:0803H         LINE#         38
   C:0806H         LINE#         39
   C:080FH         LINE#         40
-  C:080FH         LINE#         41
-  C:0812H         LINE#         42
-  C:0815H         LINE#         53
-  C:0817H         LINE#         54
-  C:081AH         LINE#         55
-  C:081CH         LINE#         56
-  C:082AH         LINE#         57
-  C:0832H         LINE#         58
-  C:0834H         LINE#         59
-  C:0834H         LINE#         60
-  C:0834H         LINE#         61
-  C:0836H         LINE#         62
-  C:083EH         LINE#         63
-  C:0840H         LINE#         64
-  C:0840H         LINE#         65
-  C:0840H         LINE#         66
-  C:0842H         LINE#         67
-  C:084AH         LINE#         68
-  C:0852H         LINE#         69
-  C:0857H         LINE#         70
-  C:085CH         LINE#         71
-  C:085CH         LINE#         72
-  C:085CH         LINE#         73
-  C:085CH         LINE#         74
-  C:085EH         LINE#         78
-  C:0872H         LINE#         79
-  C:087BH         LINE#         80
+  C:0812H         LINE#         41
+  C:0815H         LINE#         42
+  C:0815H         LINE#         45
+  C:0817H         LINE#         46
+  C:081AH         LINE#         47
+  C:081CH         LINE#         48
+  C:082DH         LINE#         49
+  C:0834H         LINE#         50
+  C:0836H         LINE#         51
+  C:0836H         LINE#         52
+  C:0838H         LINE#         53
+  C:083AH         LINE#         54
+  C:083CH         LINE#         55
+  C:0843H         LINE#         56
+  C:0845H         LINE#         57
+  C:0845H         LINE#         58
+  C:0847H         LINE#         59
+  C:0849H         LINE#         60
+  C:0849H         LINE#         61
+  C:0849H         LINE#         62
+  C:0850H         LINE#         63
+  C:0855H         LINE#         64
+  C:085CH         LINE#         65
+  C:0861H         LINE#         66
+  C:0866H         LINE#         67
+  C:0866H         LINE#         68
+  C:0868H         LINE#         72
+  C:087CH         LINE#         73
+  C:0885H         LINE#         74
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
   -------         MODULE        PID
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0A53H         PUBLIC        _pidUpdate
+  C:0A5DH         PUBLIC        _pidUpdate
   D:004EH         PUBLIC        last_error
   D:0050H         PUBLIC        integral
   -------         PROC          _PIDUPDATE
   D:0006H         SYMBOL        adc
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  21:09:54  PAGE 5
+
+
   D:0004H         SYMBOL        target
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  20:59:19  PAGE 5
-
-
   D:0002H         SYMBOL        p
   -------         DO            
   D:0006H         SYMBOL        error
   D:0006H         SYMBOL        pwm
   -------         ENDDO         
-  C:0A53H         LINE#         18
-  C:0A53H         LINE#         21
-  C:0A5AH         LINE#         22
-  C:0A61H         LINE#         23
-  C:0A6CH         LINE#         24
-  C:0A6FH         LINE#         25
-  C:0A7AH         LINE#         26
-  C:0A7DH         LINE#         27
-  C:0A7DH         LINE#         28
+  C:0A5DH         LINE#         18
+  C:0A5DH         LINE#         21
+  C:0A64H         LINE#         22
+  C:0A6BH         LINE#         23
+  C:0A76H         LINE#         24
+  C:0A79H         LINE#         25
+  C:0A84H         LINE#         26
+  C:0A87H         LINE#         27
+  C:0A87H         LINE#         28
   -------         ENDPROC       _PIDUPDATE
   -------         ENDMOD        PID
 
   -------         MODULE        INTERRUPTS
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0A1BH         PUBLIC        TIMER1_ISR
-  C:08F5H         PUBLIC        TIMER2_ISR
+  C:0A25H         PUBLIC        TIMER1_ISR
+  C:08FFH         PUBLIC        TIMER2_ISR
   B:00C8H.7       PUBLIC        TMR2CN_TF2H
   B:00C8H.6       PUBLIC        TMR2CN_TF2L
   D:0052H         PUBLIC        j
   -------         PROC          TIMER1_ISR
-  C:0A1BH         LINE#         22
-  C:0A2AH         LINE#         23
-  C:0A46H         LINE#         24
+  C:0A25H         LINE#         22
+  C:0A34H         LINE#         23
+  C:0A50H         LINE#         24
   -------         ENDPROC       TIMER1_ISR
   -------         PROC          TIMER2_ISR
-  C:08F5H         LINE#         26
-  C:0912H         LINE#         27
-  C:092AH         LINE#         28
-  C:093EH         LINE#         29
-  C:0941H         LINE#         30
-  C:094DH         LINE#         31
-  C:094DH         LINE#         32
-  C:094FH         LINE#         33
-  C:0951H         LINE#         34
+  C:08FFH         LINE#         26
+  C:091CH         LINE#         27
+  C:0934H         LINE#         28
+  C:0948H         LINE#         29
+  C:094BH         LINE#         30
+  C:0957H         LINE#         31
+  C:0957H         LINE#         32
+  C:0959H         LINE#         33
+  C:095BH         LINE#         34
   -------         ENDPROC       TIMER2_ISR
   -------         ENDMOD        INTERRUPTS
 
   -------         MODULE        UART
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0A7EH         PUBLIC        uartUnloadBuffer
+  C:0A88H         PUBLIC        uartUnloadBuffer
   D:0008H         PUBLIC        head
   D:0009H         PUBLIC        uart_buffer
-  C:0A99H         PUBLIC        _uartLoadBuffer
+  C:0AA3H         PUBLIC        _uartLoadBuffer
   D:0049H         PUBLIC        tail
-  C:0ACEH         PUBLIC        _uartSend
-  C:0AC6H         PUBLIC        uartInit
+  C:0AD8H         PUBLIC        _uartSend
+  C:0AD0H         PUBLIC        uartInit
   D:0099H         PUBLIC        SBUF0
   B:0098H.1       PUBLIC        SCON0_TI
-  C:09D7H         PUBLIC        _uartSendNum
+  C:09E1H         PUBLIC        _uartSendNum
   -------         PROC          UARTINIT
-  C:0AC6H         LINE#         13
-  C:0AC6H         LINE#         14
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  20:59:19  PAGE 6
+  C:0AD0H         LINE#         13
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  21:09:54  PAGE 6
 
 
-  C:0AC8H         LINE#         15
-  C:0ACBH         LINE#         16
-  C:0ACDH         LINE#         17
+  C:0AD0H         LINE#         14
+  C:0AD2H         LINE#         15
+  C:0AD5H         LINE#         16
+  C:0AD7H         LINE#         17
   -------         ENDPROC       UARTINIT
   -------         PROC          UARTUNLOADBUFFER
-  C:0A7EH         LINE#         19
-  C:0A7EH         LINE#         20
-  C:0A84H         LINE#         21
-  C:0A8EH         LINE#         22
-  C:0A90H         LINE#         23
-  C:0A95H         LINE#         24
-  C:0A98H         LINE#         25
-  C:0A98H         LINE#         26
-  C:0A98H         LINE#         27
+  C:0A88H         LINE#         19
+  C:0A88H         LINE#         20
+  C:0A8EH         LINE#         21
+  C:0A98H         LINE#         22
+  C:0A9AH         LINE#         23
+  C:0A9FH         LINE#         24
+  C:0AA2H         LINE#         25
+  C:0AA2H         LINE#         26
+  C:0AA2H         LINE#         27
   -------         ENDPROC       UARTUNLOADBUFFER
   -------         PROC          _UARTLOADBUFFER
   D:0007H         SYMBOL        tx
-  C:0A99H         LINE#         29
-  C:0A99H         LINE#         30
-  C:0A9BH         LINE#         31
-  C:0AA0H         LINE#         32
-  C:0AA3H         LINE#         33
-  C:0AA3H         LINE#         34
-  C:0AAAH         LINE#         35
+  C:0AA3H         LINE#         29
+  C:0AA3H         LINE#         30
+  C:0AA5H         LINE#         31
+  C:0AAAH         LINE#         32
+  C:0AADH         LINE#         33
+  C:0AADH         LINE#         34
+  C:0AB4H         LINE#         35
   -------         ENDPROC       _UARTLOADBUFFER
   -------         PROC          _UARTSEND
   D:0007H         SYMBOL        toSend
-  C:0ACEH         LINE#         38
-  C:0ACEH         LINE#         39
-  C:0AD1H         LINE#         40
-  C:0AD3H         LINE#         41
-  C:0AD5H         LINE#         42
+  C:0AD8H         LINE#         38
+  C:0AD8H         LINE#         39
+  C:0ADBH         LINE#         40
+  C:0ADDH         LINE#         41
+  C:0ADFH         LINE#         42
   -------         ENDPROC       _UARTSEND
   -------         PROC          _UARTSENDNUM
   D:0006H         SYMBOL        toSend
@@ -342,57 +343,60 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:0058H         SYMBOL        temp
   D:0082H         SYMBOL        divider
   -------         ENDDO         
-  C:09D7H         LINE#         44
-  C:09D7H         LINE#         45
-  C:09DBH         LINE#         47
-  C:09DEH         LINE#         48
-  C:09E4H         LINE#         49
-  C:09F3H         LINE#         50
-  C:0A01H         LINE#         51
-  C:0A09H         LINE#         52
-  C:0A18H         LINE#         53
-  C:0A1AH         LINE#         54
+  C:09E1H         LINE#         44
+  C:09E1H         LINE#         45
+  C:09E5H         LINE#         47
+  C:09E8H         LINE#         48
+  C:09EEH         LINE#         49
+  C:09FDH         LINE#         50
+  C:0A0BH         LINE#         51
+  C:0A13H         LINE#         52
+  C:0A22H         LINE#         53
+  C:0A24H         LINE#         54
   -------         ENDPROC       _UARTSENDNUM
   -------         ENDMOD        UART
 
   -------         MODULE        ADC
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:00BBH         PUBLIC        ADC0MX
-  C:0AABH         PUBLIC        _readAdc
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  20:59:19  PAGE 7
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/07/2016  21:09:54  PAGE 7
 
 
+  C:0AB5H         PUBLIC        _readAdc
   D:00E8H         PUBLIC        ADC0CN0
   D:00BDH         PUBLIC        ADC0
   -------         PROC          _READADC
   D:0007H         SYMBOL        sel
-  C:0AABH         LINE#         5
-  C:0AABH         LINE#         6
-  C:0AADH         LINE#         7
-  C:0AB0H         LINE#         8
-  C:0AB5H         LINE#         9
-  C:0AB9H         LINE#         10
+  C:0AB5H         LINE#         5
+  C:0AB5H         LINE#         6
+  C:0AB7H         LINE#         7
+  C:0ABAH         LINE#         8
+  C:0ABFH         LINE#         9
+  C:0AC3H         LINE#         10
   -------         ENDPROC       _READADC
   -------         ENDMOD        ADC
 
   -------         MODULE        ?C?IMUL
-  C:087DH         PUBLIC        ?C?IMUL
+  C:0887H         PUBLIC        ?C?IMUL
   -------         ENDMOD        ?C?IMUL
 
   -------         MODULE        ?C?UIDIV
-  C:088FH         PUBLIC        ?C?UIDIV
+  C:0899H         PUBLIC        ?C?UIDIV
   -------         ENDMOD        ?C?UIDIV
 
   -------         MODULE        ?C?ULCMP
-  C:08E4H         PUBLIC        ?C?ULCMP
+  C:08EEH         PUBLIC        ?C?ULCMP
   -------         ENDMOD        ?C?ULCMP
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_PIDUPDATE?PID
 
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_READADC?ADC
+
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0258H BYTE (29%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0262H BYTE (29%) *
 ******************************************************************************
 
-Program Size: data=91.0 xdata=0 code=735
-LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
+Program Size: data=91.0 xdata=0 code=745
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)
