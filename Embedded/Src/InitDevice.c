@@ -9,51 +9,42 @@
 
 void initDevice(void) {
 	U8 TCON_save;
-	// Watchdog
-		// Disable the watchdog timer
-		WDTCN = 0xDE; //First key
-		WDTCN = 0xAD; //Second key
+	// Watchdog 
+		WDTCN = 0xDE; 								// First key
+		WDTCN = 0xAD; 								// Second key - Watchdof now disabled
 	// Clock
-		// Processor off RC clock at full speed
-		CLKSEL = CLKSEL_CLKSL__HFOSC | CLKSEL_CLKDIV__SYSCLK_DIV_1;
+		CLKSEL = 
+			CLKSEL_CLKSL__HFOSC 				| 	// Use 24.5MHz interal clock
+			CLKSEL_CLKDIV__SYSCLK_DIV_1;			// Do not divide
 	// Port 0
 		P0MDOUT = 
-			P0MDOUT_B0__PUSH_PULL 	| 
-			P0MDOUT_B1__PUSH_PULL 	| 
-			P0MDOUT_B2__OPEN_DRAIN	| 
-			P0MDOUT_B3__OPEN_DRAIN 	| 
-			P0MDOUT_B4__PUSH_PULL 	| 
-			P0MDOUT_B5__OPEN_DRAIN	| 
-			P0MDOUT_B6__OPEN_DRAIN 	| 
+			P0MDOUT_B0__PUSH_PULL 				| 	// PWM1 output
+			P0MDOUT_B1__PUSH_PULL 				| 	// PWM2 output
+			P0MDOUT_B2__OPEN_DRAIN				| 
+			P0MDOUT_B3__OPEN_DRAIN 				| 
+			P0MDOUT_B4__PUSH_PULL 				| 	// UART TX
+			P0MDOUT_B5__OPEN_DRAIN				| 	// UART RX
+			P0MDOUT_B6__OPEN_DRAIN 				| 
 			P0MDOUT_B7__OPEN_DRAIN;
 	// Port 1
 		P1MDOUT = 
-			P1MDOUT_B0__PUSH_PULL 	| 
-			P1MDOUT_B1__OPEN_DRAIN 	| 
-			P1MDOUT_B2__OPEN_DRAIN	| 
-			P1MDOUT_B3__OPEN_DRAIN 	| 
-			P1MDOUT_B4__PUSH_PULL 	| 
-			P1MDOUT_B5__OPEN_DRAIN	| 
-			P1MDOUT_B6__OPEN_DRAIN 	| 
+			P1MDOUT_B0__OPEN_DRAIN 				| 
+			P1MDOUT_B1__OPEN_DRAIN 				| 
+			P1MDOUT_B2__OPEN_DRAIN				| 
+			P1MDOUT_B3__PUSH_PULL 				| 	// TEST2
+			P1MDOUT_B4__PUSH_PULL 				| 	// TEST1
+			P1MDOUT_B5__OPEN_DRAIN				| 
+			P1MDOUT_B6__OPEN_DRAIN 				| 
 			P1MDOUT_B7__OPEN_DRAIN;
 		P1MDIN = 
-			P1MDIN_B0__ANALOG 	| 
-			P1MDIN_B1__ANALOG 	| 
-			P1MDIN_B2__ANALOG	| 
-			P1MDIN_B3__DIGITAL 	| 
-			P1MDIN_B4__DIGITAL 	| 
-			P1MDIN_B5__DIGITAL	| 
-			P1MDIN_B6__DIGITAL 	| 
+			P1MDIN_B0__ANALOG 					|	// ADC1
+			P1MDIN_B1__ANALOG 					| 	// ADC2
+			P1MDIN_B2__ANALOG					| 	// ADC3
+			P1MDIN_B3__DIGITAL 					| 
+			P1MDIN_B4__DIGITAL 					| 
+			P1MDIN_B5__DIGITAL					| 
+			P1MDIN_B6__DIGITAL 					| 
 			P1MDIN_B7__DIGITAL;
-		P1SKIP = 
-			P1SKIP_B0__NOT_SKIPPED 	| 
-			P1SKIP_B1__NOT_SKIPPED 	| 
-			P1SKIP_B2__SKIPPED		| 
-			P1SKIP_B3__NOT_SKIPPED 	| 
-			P1SKIP_B4__NOT_SKIPPED 	| 
-			P1SKIP_B5__NOT_SKIPPED	| 
-			P1SKIP_B6__NOT_SKIPPED 	| 
-			P1SKIP_B7__NOT_SKIPPED;
 	// Port crossbar
 		XBR0 = 
 			XBR0_URT0E__ENABLED 	| 
