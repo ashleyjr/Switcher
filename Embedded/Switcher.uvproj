@@ -528,6 +528,11 @@
               <FileType>5</FileType>
               <FilePath>.\Inc\Adc.h</FilePath>
             </File>
+            <File>
+              <FileName>Pwm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Inc\Pwm.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -562,6 +567,11 @@
               <FileName>Adc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\Adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>Pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Pwm.c</FilePath>
             </File>
           </Files>
         </Group>

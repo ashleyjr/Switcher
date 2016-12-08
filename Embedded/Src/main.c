@@ -20,6 +20,7 @@
 #include "Pid.h"
 #include "Uart.h"
 #include "Adc.h"
+#include "Pwm.h"
 
 //-----------------------------------------------------------------------------
 // Global Variables
@@ -40,8 +41,8 @@ void main (void){
 	TEST1 = 1;
 	TEST2 = 1;
 	soft_timer = 0;
-	PCA0CPH0 = 255;
-	PCA0CPH1 = 255;
+	setPwm(0x80FF,0);
+	setPwm(0x88FF,1);
 	while (1){
 		
 		// If uart has recived do somethng

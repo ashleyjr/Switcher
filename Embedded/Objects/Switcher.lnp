@@ -3,6 +3,7 @@
 ".\Objects\Pid.obj",
 ".\Objects\Interrupts.obj",
 ".\Objects\Uart.obj",
-".\Objects\Adc.obj" 
+".\Objects\Adc.obj",
+".\Objects\Pwm.obj" 
 TO ".\Objects\Switcher" 
 PRINT(".\Listings\Switcher.m51") RAMSIZE(256) 
