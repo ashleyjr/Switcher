@@ -65,17 +65,17 @@ void initDevice(void) {
 			XBR2_WEAKPUD__PULL_UPS_ENABLED 		| 	// Weak pull ups
 			XBR2_XBARE__ENABLED;					// Enable cross bar
 	// ADC
-		ADC0MX = 
-			ADC0MX_ADC0MX__ADC0P10;
+		//ADC0MX = 									// Mux set in application
+		//	ADC0MX_ADC0MX__ADC0P10;
 		ADC0CF = 
-			(1 << ADC0CF_ADSC__SHIFT) 	| 
-			ADC0CF_AD8BE__NORMAL 		| 
-			ADC0CF_ADGN__GAIN_1 		|
-			ADC0CF_ADTM__TRACK_NORMAL;
+			(1 << ADC0CF_ADSC__SHIFT) 			| 
+			ADC0CF_AD8BE__NORMAL 				| 	// ADC set to 10 bit
+			ADC0CF_ADGN__GAIN_1 				|	// ADC gain set to 1
+			ADC0CF_ADTM__TRACK_NORMAL;				// Immediate covert
 		ADC0CN0 &=
 			~ADC0CN0_ADCM__FMASK;
 		ADC0CN0 |= 
-			ADC0CN0_ADEN__ENABLED		|
+			ADC0CN0_ADEN__ENABLED				|
 			ADC0CN0_ADCM__ADBUSY;
 	// Timer 0
 		TCON_save = 
@@ -121,55 +121,58 @@ void initDevice(void) {
 			RSTSRC_PORSF__SET		| 
 			RSTSRC_SWRSF__NOT_SET;
 	// Interrupt
-		EIE1 = 
-			EIE1_EADC0__DISABLED 	| 
-			EIE1_ECP0__DISABLED 	| 
-			EIE1_ECP1__DISABLED		| 
-			EIE1_EMAT__DISABLED 	| 
-			EIE1_EPCA0__DISABLED 	| 
-			EIE1_ESMB0__DISABLED 	| 
-			EIE1_ET3__DISABLED 		| 
-			EIE1_EWADC0__DISABLED;
+		//EIE1 = 									// None of these enabled
+		//	EIE1_EADC0__DISABLED 				| 
+		//	EIE1_ECP0__DISABLED 				| 
+		//	EIE1_ECP1__DISABLED					| 
+		//	EIE1_EMAT__DISABLED 				| 
+		//	EIE1_EPCA0__DISABLED 				| 
+		//	EIE1_ESMB0__DISABLED 				| 
+		//	EIE1_ET3__DISABLED 					| 
+		//	EIE1_EWADC0__DISABLED;
 		IE = 
-			IE_EA__ENABLED 		| 
-			IE_EX0__DISABLED 	| 
-			IE_EX1__DISABLED 	| 
-			IE_ESPI0__DISABLED	| 
-			IE_ET0__DISABLED 	| 
-			IE_ET1__ENABLED	| 
-			IE_ET2__ENABLED 	| 
+			IE_EA__ENABLED 						| 
+			IE_EX0__DISABLED 					| 
+			IE_EX1__DISABLED 					| 
+			IE_ESPI0__DISABLED					| 
+			IE_ET0__DISABLED 					| 
+			IE_ET1__ENABLED						| 	// Timer 1 enabled
+			IE_ET2__ENABLED 					| 	// Timer 2 enabled
 			IE_ES0__DISABLED;
-		IP = IP_PX0__LOW | IP_PX1__LOW | IP_PSPI0__LOW | IP_PT0__LOW | IP_PT1__LOW
-		 | IP_PT2__HIGH | IP_PS0__LOW;
+		IP = 
+			IP_PX0__LOW 						| 
+			IP_PX1__LOW 						| 
+			IP_PSPI0__LOW 						| 
+			IP_PT0__LOW 						| 
+			IP_PT1__LOW							|
+			IP_PT2__HIGH 						| 	// Timer 2 highest priority
+			IP_PS0__LOW;
 	// PCA
 		PCA0CN_CR =
 			PCA0CN_CR__STOP;
-			
 		PCA0CPH0 = 
 			(128 << PCA0CPH0_PCA0CPH0__SHIFT);
 		PCA0CPM0 = 
-			PCA0CPM0_CAPN__DISABLED 	| 
-			PCA0CPM0_ECCF__ENABLED 		| 
-			PCA0CPM0_MAT__ENABLED		| 
-			PCA0CPM0_CAPP__DISABLED 	| 
-			PCA0CPM0_ECOM__ENABLED		| 
-			PCA0CPM0_PWM__ENABLED 		| 
+			PCA0CPM0_CAPN__DISABLED 			| 
+			PCA0CPM0_ECCF__ENABLED 				| 
+			PCA0CPM0_MAT__ENABLED				| 
+			PCA0CPM0_CAPP__DISABLED 			| 
+			PCA0CPM0_ECOM__ENABLED				| 
+			PCA0CPM0_PWM__ENABLED 				| 
 			PCA0CPM0_TOG__DISABLED;
 		PCA0CPH1 = 
 			(128 << PCA0CPH0_PCA0CPH0__SHIFT);
 		PCA0CPM1 = 
-			PCA0CPM1_CAPN__DISABLED 	| 
-			PCA0CPM1_ECCF__ENABLED 		| 
-			PCA0CPM1_MAT__ENABLED		| 
-			PCA0CPM1_CAPP__DISABLED 	| 
-			PCA0CPM1_ECOM__ENABLED		| 
-			PCA0CPM1_PWM__ENABLED 		| 
+			PCA0CPM1_CAPN__DISABLED 			| 
+			PCA0CPM1_ECCF__ENABLED 				|		 
+			PCA0CPM1_MAT__ENABLED				| 
+			PCA0CPM1_CAPP__DISABLED 			| 
+			PCA0CPM1_ECOM__ENABLED				| 
+			PCA0CPM1_PWM__ENABLED 				| 
 			PCA0CPM1_TOG__DISABLED;
-		//PCA0POL = 
-		//	PCA0POL_CEX1POL__INVERT;
 		PCA0MD = 
-			PCA0MD_CIDL__NORMAL 			| 
-			PCA0MD_ECF__OVF_INT_DISABLED 	| 
+			PCA0MD_CIDL__NORMAL 				| 
+			PCA0MD_ECF__OVF_INT_DISABLED 		| 
 			PCA0MD_CPS__SYSCLK;		
 		PCA0CN |= 
 			PCA0CN_CR__RUN;
