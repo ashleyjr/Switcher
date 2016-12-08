@@ -11,7 +11,7 @@ void initDevice(void) {
 	U8 TCON_save;
 	// Watchdog 
 		WDTCN = 0xDE; 								// First key
-		WDTCN = 0xAD; 								// Second key - Watchdof now disabled
+		WDTCN = 0xAD; 								// Second key - Watchdog now disabled
 	// Clock
 		CLKSEL = 
 			CLKSEL_CLKSL__HFOSC 				| 	// Use 24.5MHz interal clock
@@ -47,24 +47,23 @@ void initDevice(void) {
 			P1MDIN_B7__DIGITAL;
 	// Port crossbar
 		XBR0 = 
-			XBR0_URT0E__ENABLED 	| 
-			XBR0_SPI0E__DISABLED 	| 
-			XBR0_SMB0E__DISABLED	| 
-			XBR0_CP0E__DISABLED 	| 
-			XBR0_CP0AE__DISABLED 	| 
-			XBR0_CP1E__DISABLED		| 
-			XBR0_CP1AE__DISABLED 	|
+			XBR0_URT0E__ENABLED 				| 	// Route out UART
+			XBR0_SPI0E__DISABLED 				| 
+			XBR0_SMB0E__DISABLED				| 
+			XBR0_CP0E__DISABLED 				| 
+			XBR0_CP0AE__DISABLED 				| 
+			XBR0_CP1E__DISABLED					| 
+			XBR0_CP1AE__DISABLED 				|
 			XBR0_SYSCKE__DISABLED;
 		XBR1 = 
-			XBR1_PCA0ME__CEX0_CEX1 	| 
-			XBR1_ECIE__DISABLED 	| 
-			XBR1_T0E__DISABLED		| 
-			XBR1_T1E__DISABLED 		|
+			XBR1_PCA0ME__CEX0_CEX1 				| 	// Route out PCA0 and PCA1
+			XBR1_ECIE__DISABLED 				| 
+			XBR1_T0E__DISABLED					| 
+			XBR1_T1E__DISABLED 					|
 			XBR1_T2E__DISABLED;
-
 		XBR2 = 
-			XBR2_WEAKPUD__PULL_UPS_ENABLED 	| 
-			XBR2_XBARE__ENABLED;
+			XBR2_WEAKPUD__PULL_UPS_ENABLED 		| 	// Weak pull ups
+			XBR2_XBARE__ENABLED;					// Enable cross bar
 	// ADC
 		ADC0MX = 
 			ADC0MX_ADC0MX__ADC0P10;
