@@ -26,6 +26,7 @@
 // Global Variables
 //-----------------------------------------------------------------------------
 volatile U32 soft_timer;
+extern volatile U8 uart_in[UART_SIZE_IN];
 
 SBIT(TEST2, SFR_P1, 3);                 // DS5 P1.0 LED
 SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
@@ -35,7 +36,7 @@ SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 //-----------------------------------------------------------------------------
 
 void main (void){
-	U16 adc;
+	U8 i;
 	initDevice();
 	uartInit();
 	TEST1 = 1;
@@ -43,49 +44,16 @@ void main (void){
 	soft_timer = 0;
 	setPwm(0x80FF,0);
 	setPwm(0x88FF,1);
+	SCON0_RI = 0;
 	while (1){
-		
-		// If uart has recived do somethng
-		if(SCON0_RI){
-			TEST1 = !TEST1;
-			TEST2 = !TEST2;
-			SCON0_RI = 0;
-			switch(SBUF0){
-				case '1': 	if(PCA0CPH0 < 255){
-								PCA0CPH0++;
-							}
-							break;
-				case '2': 	PCA0CPH0--;
-							break;
-				case '3': 	if(PCA0CPH1 < 255){
-								PCA0CPH1++;
-							}
-							break;
-				case '4': 	PCA0CPH1--;
-							break;
-				case '5':	readAdc(ADC1);
-							uartSendNum(readAdc(ADC1));
-							uartLoadBuffer(',');
-							break;
-				case '6':	readAdc(ADC2);
-							uartSendNum(readAdc(ADC2));
-							uartLoadBuffer(',');
-							break;
-				case '7':	readAdc(ADC3);
-							uartSendNum(readAdc(ADC3));
-							uartLoadBuffer(',');
-							break;
-							
-			}
-			uartSendNum(PCA0CPH0);
-			uartLoadBuffer(',');
-			uartSendNum(PCA0CPH1);
-			uartLoadBuffer('\n');
-			uartLoadBuffer('\r');
+		for(i=0;i<UART_SIZE_IN;i++){
+			uartLoadOut(uart_in[i]);
 		}
+		uartLoadOut('\n');
+		uartLoadOut('\r');
 	
 		// Stall until timer reaches set point
-		while(soft_timer < 200);
+		while(soft_timer < 50000);
 		soft_timer = 0;
 	}
 }

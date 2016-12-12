@@ -138,7 +138,7 @@ void initDevice(void) {
 			IE_ET0__DISABLED 					| 
 			IE_ET1__ENABLED						| 	// Timer 1 enabled
 			IE_ET2__ENABLED 					| 	// Timer 2 enabled
-			IE_ES0__DISABLED;
+			IE_ES0__ENABLED;
 		IP = 
 			IP_PX0__LOW 						| 
 			IP_PX1__LOW 						| 

@@ -6,9 +6,10 @@
 
 #include "Uart.h"
 
-U8 uart_buffer[UART_BUFFER_SIZE];
-U8 head;
-U8 tail;
+volatile U8 uart_out[UART_SIZE_OUT];
+volatile U8 uart_in[UART_SIZE_IN];
+volatile U8 head;
+volatile U8 tail;
 
 void uartInit(void){
 	SCON0_TI = 1; 
@@ -16,29 +17,12 @@ void uartInit(void){
 	tail = 0;
 }
 
-void uartUnloadBuffer(void){
-	if(head != tail){
-		uartSend(uart_buffer[tail]);
-		tail++;
-		if(tail == UART_BUFFER_SIZE){
-			tail = 0;
-		}
-	}
-}
-
-void uartLoadBuffer(U8 tx){
+void uartLoadOut(U8 tx){
+	uart_out[head] = tx;
 	head++;
-	if(head == UART_BUFFER_SIZE){
+	if(head == UART_SIZE_OUT){
 		head = 0;
 	}
-	uart_buffer[head] = tx;
-}
-
-
-void uartSend(U8 toSend){
-	while(SCON0_TI == 0);			// Stall if still sending
-	SCON0_TI = 0; 
-	SBUF0 = toSend;
 }
 
 void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
@@ -48,7 +32,7 @@ void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
 	while(divider){
 		temp = send / divider;
 		send -= (temp*divider);
-		uartLoadBuffer(temp + 48);
+		uartLoadOut(temp + 48);
 		divider = divider / 10;
 	}
 }

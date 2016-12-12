@@ -10,11 +10,10 @@
 #ifndef __UART_H__
 #define __UART_H__
 
-#define UART_BUFFER_SIZE 64
+#define UART_SIZE_IN 8
+#define UART_SIZE_OUT 16
 
 void uartInit(void);
-void uartUnloadBuffer(void);
-void uartLoadBuffer(U8 tx);
-void uartSend(U8 toSend);
+void uartLoadOut(U8 tx);
 void uartSendNum(U16 toSend);
 #endif
