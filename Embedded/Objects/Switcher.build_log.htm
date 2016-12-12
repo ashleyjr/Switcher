@@ -28,6 +28,8 @@ Project File Date:  12/08/2016
 Rebuild target 'Switcher'
 compiling InitDevice.c...
 compiling main.c...
+Src\main.c(40): warning C280: 'i': unreferenced local variable
+Src\main.c(41): warning C280: 'temp': unreferenced local variable
 compiling Pid.c...
 compiling Interrupts.c...
 compiling Uart.c...
@@ -37,12 +39,10 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_PIDUPDATE?PID
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_UARTSENDNUM?UART
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_READADC?ADC
-Program Size: data=50.0 xdata=0 code=770
+Program Size: data=52.0 xdata=0 code=784
 creating hex file from ".\Objects\Switcher"...
-".\Objects\Switcher" - 0 Error(s), 3 Warning(s).
+".\Objects\Switcher" - 0 Error(s), 4 Warning(s).
 </pre>
 </body>
 </html>

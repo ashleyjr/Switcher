@@ -27,6 +27,7 @@
 //-----------------------------------------------------------------------------
 volatile U32 soft_timer;
 extern volatile U8 uart_in[UART_SIZE_IN];
+extern volatile U8 uart_in_ptr;
 
 SBIT(TEST2, SFR_P1, 3);                 // DS5 P1.0 LED
 SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
@@ -37,6 +38,7 @@ SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 
 void main (void){
 	U8 i;
+	U8 temp;
 	initDevice();
 	uartInit();
 	TEST1 = 1;
@@ -46,14 +48,19 @@ void main (void){
 	setPwm(0x88FF,1);
 	SCON0_RI = 0;
 	while (1){
-		for(i=0;i<UART_SIZE_IN;i++){
-			uartLoadOut(uart_in[i]);
+		switch(uart_in[0]){
+			case 'a': 	uartSendNum(10000);
+						uartClear();
+						break;
+			case 'b': 	uartSendNum(20000);
+						uartClear();
+						break;
 		}
-		uartLoadOut('\n');
-		uartLoadOut('\r');
+		
+		
 	
 		// Stall until timer reaches set point
-		while(soft_timer < 50000);
+		while(soft_timer < 10000);
 		soft_timer = 0;
 	}
 }

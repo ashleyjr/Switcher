@@ -7,14 +7,25 @@
 #include "Uart.h"
 
 volatile U8 uart_out[UART_SIZE_OUT];
-volatile U8 uart_in[UART_SIZE_IN];
 volatile U8 head;
 volatile U8 tail;
+
+volatile U8 uart_in[UART_SIZE_IN];
+volatile U8 uart_in_ptr;
+
 
 void uartInit(void){
 	SCON0_TI = 1; 
 	head = 0;
 	tail = 0;
+	uartClear();
+}
+
+void uartClear(void){
+	U8 i;
+	for(i=0;i<UART_SIZE_IN;i++){
+		uart_in[i] = 0;
+	}
 }
 
 void uartLoadOut(U8 tx){
@@ -35,4 +46,6 @@ void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
 		uartLoadOut(temp + 48);
 		divider = divider / 10;
 	}
+	uartLoadOut('\n');
+	uartLoadOut('\r');
 }

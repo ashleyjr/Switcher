@@ -18,6 +18,7 @@ extern volatile U8 uart_out[UART_SIZE_OUT];
 extern volatile U8 uart_in[UART_SIZE_IN];
 extern volatile U8 head;
 extern volatile U8 tail;
+extern volatile U8 uart_in_ptr;
 
 U32 j;
 
@@ -49,7 +50,7 @@ INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 INTERRUPT (UART0_ISR, UART0_IRQn){
 	U8 i;
 	if(SCON0_RI){
-		for(i=0;i<(UART_SIZE_IN-1);i++){
+		for(i=0;i<UART_SIZE_IN;i++){
 			uart_in[i] = uart_in[i+1];
 		}
 		uart_in[UART_SIZE_IN-1] = SBUF0;

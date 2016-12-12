@@ -14,6 +14,7 @@
 #define UART_SIZE_OUT 16
 
 void uartInit(void);
+void uartClear(void);
 void uartLoadOut(U8 tx);
 void uartSendNum(U16 toSend);
 #endif
