@@ -21,11 +21,12 @@ void uartInit(void){
 }
 
 void uartClear(void){
-	uart_in[UART_IN_0] = 0;
-	uart_in[UART_IN_1] = 0;
-	uart_in[UART_IN_2] = 0;
-	uart_in[UART_IN_3] = 0;
-	uart_in[UART_IN_4] = 0;
+	uart_in[0] = 0;
+	uart_in[1] = 0;
+	uart_in[2] = 0;
+	uart_in[3] = 0;
+	uart_in[4] = 0;
+	uart_in[5] = 0;
 }
 
 void uartLoadOut(U8 tx){

@@ -37,16 +37,14 @@ SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 //-----------------------------------------------------------------------------
 
 void main (void){
-	U8 i;
-	U8 temp;
 	initDevice();
 	uartInit();
 	TEST1 = 1;
 	TEST2 = 1;
-	soft_timer = 0;
 	setPwm(0x80FF,0);
 	setPwm(0x88FF,1);
 	SCON0_RI = 0;
+	soft_timer = 0;
 	while (1){
 		
 		// Handle bounce back - Safe time to load buffer
@@ -56,13 +54,14 @@ void main (void){
 		}
 		
 		// The menu
-		if('x' == uart_in[UART_IN_0]){
-			if(	uartIsNum(uart_in[UART_IN_1]) & 
-				uartIsNum(uart_in[UART_IN_2]) & 
-				uartIsNum(uart_in[UART_IN_3]) 
+		if('x' == uart_in[0]){
+			if(	uartIsNum(uart_in[1]) & 
+				uartIsNum(uart_in[2]) & 
+				uartIsNum(uart_in[3]) &
+				uartIsNum(uart_in[4]) 
 				){
 				// 5 byte commands
-				switch(uart_in[UART_IN_4]){
+				switch(uart_in[5]){
 					case 'p':	// Write proportional setting
 								uartSendNum(1);
 								break;
@@ -87,7 +86,7 @@ void main (void){
 				}
 			}else{
 				// 2 byte commands
-				switch(uart_in[UART_IN_1]){
+				switch(uart_in[1]){
 					case 'x':	// Return ADC1 in mV
 								uartSendNum(8);
 								break;
