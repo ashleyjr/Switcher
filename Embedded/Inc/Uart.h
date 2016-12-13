@@ -19,4 +19,5 @@ void uartClear(void);
 void uartLoadOut(U8 tx);
 bool uartIsNum(U8 toCheck);
 void uartSendNum(U16 toSend);
+U16 uartGetNum(U8 * numStr);
 #endif

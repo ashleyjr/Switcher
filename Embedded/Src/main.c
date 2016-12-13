@@ -37,6 +37,8 @@ SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 //-----------------------------------------------------------------------------
 
 void main (void){
+	U16 p,i,d,v,c;
+	
 	initDevice();
 	uartInit();
 	TEST1 = 1;
@@ -60,22 +62,22 @@ void main (void){
 				uartIsNum(uart_in[3]) &
 				uartIsNum(uart_in[4]) 
 				){
-				// 5 byte commands
+				// 6 byte commands
 				switch(uart_in[5]){
 					case 'p':	// Write proportional setting
-								uartSendNum(1);
+								p = uartGetNum(&uart_in[4]);
 								break;
 					case 'i':	// Write integral setting
-								uartSendNum(2);
+								i = uartGetNum(&uart_in[4]);
 								break;
 					case 'd':	// Write derivative setting
-								uartSendNum(3);
+								d = uartGetNum(&uart_in[4]);
 								break;
 					case 'v':	// Write desired voltage output in mV
-								uartSendNum(4);
+								v = uartGetNum(&uart_in[4]);
 								break;
 					case 'c':	// Write desired current output in mA
-								uartSendNum(5);
+								c = uartGetNum(&uart_in[4]);
 								break;
 					case 'u':	// Set upper limit to input operation in mV
 								uartSendNum(6);
@@ -106,13 +108,13 @@ void main (void){
 								uartSendNum(13);
 								break;
 					case 'p':	// Read proportional setting
-								uartSendNum(14);
+								uartSendNum(p);
 								break;
 					case 'i':	// Read integral setting
-								uartSendNum(15);
+								uartSendNum(i);
 								break;
 					case 'd':	// Read derivative setting
-								uartSendNum(16);
+								uartSendNum(d);
 								break;
 				}
 			}

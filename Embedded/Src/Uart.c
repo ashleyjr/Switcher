@@ -61,3 +61,15 @@ void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
 	uartLoadOut('\r');
 	uartClear();
 }
+
+U16 uartGetNum(U8 * numStr){		// Send up to 16-bit number over UART
+	U8 i;
+	U16 multi = 1000;
+	U16 total = 0;
+	for(i=0;i<4;i++){
+		total += ((*numStr--) - 48)*multi;
+		multi = multi/10;
+	}
+	uartClear();
+	return total;
+}
