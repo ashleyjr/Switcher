@@ -10,8 +10,7 @@ volatile U8 uart_out[UART_SIZE_OUT];
 volatile U8 head;
 volatile U8 tail;
 
-volatile U8 uart_in[UART_SIZE_IN];
-volatile U8 uart_in_ptr;
+volatile U8 uart_in[UART_IN_SIZE];
 
 
 void uartInit(void){
@@ -22,10 +21,11 @@ void uartInit(void){
 }
 
 void uartClear(void){
-	U8 i;
-	for(i=0;i<UART_SIZE_IN;i++){
-		uart_in[i] = 0;
-	}
+	uart_in[UART_IN_0] = 0;
+	uart_in[UART_IN_1] = 0;
+	uart_in[UART_IN_2] = 0;
+	uart_in[UART_IN_3] = 0;
+	uart_in[UART_IN_4] = 0;
 }
 
 void uartLoadOut(U8 tx){
@@ -34,6 +34,16 @@ void uartLoadOut(U8 tx){
 	if(head == UART_SIZE_OUT){
 		head = 0;
 	}
+}
+
+bool uartIsNum(U8 toCheck){
+	if(toCheck > 57){
+		return false;
+	}
+	if(toCheck < 48){
+		return false;
+	}
+	return true;
 }
 
 void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
@@ -48,4 +58,5 @@ void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
 	}
 	uartLoadOut('\n');
 	uartLoadOut('\r');
+	uartClear();
 }

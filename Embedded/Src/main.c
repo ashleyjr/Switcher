@@ -25,9 +25,9 @@
 //-----------------------------------------------------------------------------
 // Global Variables
 //-----------------------------------------------------------------------------
+volatile bool bounce;
 volatile U32 soft_timer;
-extern volatile U8 uart_in[UART_SIZE_IN];
-extern volatile U8 uart_in_ptr;
+extern volatile U8 uart_in[UART_IN_SIZE];
 
 SBIT(TEST2, SFR_P1, 3);                 // DS5 P1.0 LED
 SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
@@ -48,16 +48,76 @@ void main (void){
 	setPwm(0x88FF,1);
 	SCON0_RI = 0;
 	while (1){
-		switch(uart_in[0]){
-			case 'a': 	uartSendNum(10000);
-						uartClear();
-						break;
-			case 'b': 	uartSendNum(20000);
-						uartClear();
-						break;
+		
+		// Handle bounce back - Safe time to load buffer
+		if(bounce){
+			uartLoadOut(uart_in[0]);
+			bounce = false;
 		}
 		
-		
+		// The menu
+		if('x' == uart_in[UART_IN_0]){
+			if(	uartIsNum(uart_in[UART_IN_1]) & 
+				uartIsNum(uart_in[UART_IN_2]) & 
+				uartIsNum(uart_in[UART_IN_3]) 
+				){
+				// 5 byte commands
+				switch(uart_in[UART_IN_4]){
+					case 'p':	// Write proportional setting
+								uartSendNum(1);
+								break;
+					case 'i':	// Write integral setting
+								uartSendNum(2);
+								break;
+					case 'd':	// Write derivative setting
+								uartSendNum(3);
+								break;
+					case 'v':	// Write desired voltage output in mV
+								uartSendNum(4);
+								break;
+					case 'c':	// Write desired current output in mA
+								uartSendNum(5);
+								break;
+					case 'u':	// Set upper limit to input operation in mV
+								uartSendNum(6);
+								break;
+					case 'l':	// Set lower limit to input operation in mV
+								uartSendNum(7);
+								break;
+				}
+			}else{
+				// 2 byte commands
+				switch(uart_in[UART_IN_1]){
+					case 'x':	// Return ADC1 in mV
+								uartSendNum(8);
+								break;
+					case 'y':	// Return ADC2 in mV
+								uartSendNum(9);
+								break;
+					case 'z':	// Return ADC3 in mV
+								uartSendNum(10);
+								break;
+					case 'c':	// Return output current in mA
+								uartSendNum(11);
+								break;
+					case 'g':	// Enable the power supply
+								uartSendNum(12);
+								break;
+					case 's':	// Disable the power supply
+								uartSendNum(13);
+								break;
+					case 'p':	// Read proportional setting
+								uartSendNum(14);
+								break;
+					case 'i':	// Read integral setting
+								uartSendNum(15);
+								break;
+					case 'd':	// Read derivative setting
+								uartSendNum(16);
+								break;
+				}
+			}
+		}
 	
 		// Stall until timer reaches set point
 		while(soft_timer < 10000);
