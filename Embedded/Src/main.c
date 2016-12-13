@@ -52,7 +52,7 @@ void main (void){
 		// Handle bounce back - Safe time to load buffer
 		if(bounce){
 			uartLoadOut(uart_in[0]);
-			bounce = false;
+			bounce = false;				// Is it safe after this?
 		}
 		
 		// The menu

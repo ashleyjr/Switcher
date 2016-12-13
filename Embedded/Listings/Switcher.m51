@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        12/13/2016  23:05:37  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/13/2016  23:14:50  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -59,7 +59,7 @@ LINK MAP OF MODULE:  .\Objects\Switcher (INITDEVICE)
             CODE    0A9BH     0069H     UNIT         ?PR?INITDEVICE?INITDEVICE
             CODE    0B04H     0055H     UNIT         ?PR?_UARTGETNUM?UART
             CODE    0B59H     0050H     UNIT         ?PR?_UARTSENDNUM?UART
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:05:37  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:14:50  PAGE 2
 
 
             CODE    0BA9H     0038H     UNIT         ?PR?TIMER1_ISR?INTERRUPTS
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   B:00D8H.6       PUBLIC        PCA0CN_CR
   D:00A5H         PUBLIC        P1MDOUT
   D:00A8H         PUBLIC        IE
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:05:37  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:14:50  PAGE 3
 
 
   D:00FCH         PUBLIC        PCA0CPH0
@@ -179,7 +179,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   C:0AE8H         LINE#         155
   C:0AEBH         LINE#         156
   C:0AEEH         LINE#         164
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:05:37  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:14:50  PAGE 4
 
 
   C:0AF1H         LINE#         166
@@ -239,7 +239,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   C:08AFH         LINE#         77
   C:08BCH         LINE#         78
   C:08BEH         LINE#         79
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:05:37  PAGE 5
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:14:50  PAGE 5
 
 
   C:08BEH         LINE#         80
@@ -299,7 +299,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   D:0004H         SYMBOL        target
   D:0002H         SYMBOL        p
   -------         DO            
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:05:37  PAGE 6
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:14:50  PAGE 6
 
 
   D:0006H         SYMBOL        error
@@ -359,7 +359,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   C:0C1AH         LINE#         57
   C:0C1DH         LINE#         58
   C:0C20H         LINE#         59
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:05:37  PAGE 7
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:14:50  PAGE 7
 
 
   C:0C23H         LINE#         60
@@ -419,7 +419,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   C:0C5BH         LINE#         45
   C:0C5DH         LINE#         46
   C:0C5DH         LINE#         47
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:05:37  PAGE 8
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:14:50  PAGE 8
 
 
   C:0C5EH         LINE#         48
@@ -479,7 +479,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
   C:0C69H         LINE#         9
   C:0C6DH         LINE#         10
   -------         ENDPROC       _READADC
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:05:37  PAGE 9
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:14:50  PAGE 9
 
 
   -------         ENDMOD        ADC
@@ -539,7 +539,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (INITDEVICE)
 
 ******************************************************************************
 * RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 03C8H BYTE (47%) *
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:05:37  PAGE 10
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/13/2016  23:14:50  PAGE 10
 
 
 ******************************************************************************
