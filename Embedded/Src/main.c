@@ -37,10 +37,19 @@ SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 //-----------------------------------------------------------------------------
 
 void main (void){
-	U16 p,i,d,v,c;
+	U16 d,v,c;
 	U16 out;
 	U16 pwm;
-	U16 error;
+	int u;
+	int error;
+	int integral = 0;
+	
+	int p = 1;
+	int i = 1;
+	int target = 900;//5800;  Divide target mV by 6
+	
+	
+	
 	initDevice();
 	uartInit();
 	TEST1 = 1;
@@ -48,29 +57,31 @@ void main (void){
 	setPwm(0x0000,1);
 	SCON0_RI = 0;
 	soft_timer = 0;
+	
+	pwm = 0xFFFF;		// PWM starts off		
+	
 	while (1){
 		TEST1 = 1;
 		
+
+		//out = readAdc(ADC3);		// Read output voltage
+		//out = out*6;
 		
-		out = readAdc(ADC3);		// Read output voltage
-		out = out*6;
-		
-		
-		if(out < 5500){
-			error = 5500 - out;			// can be negative
-			pwm = 0xFFFF;				//
-			pwm -= error*4;				// Proportional error
-			setPwm(pwm,2);
-		}else{
-			setPwm(0xFFFF,2);
+		error = target - readAdc(ADC3);
+		u = p*error;
+		integral += error/i;
+		u += integral;	
+		if(u < 0){
+			u = 0;
 		}
+		if(u > 10000){
+			u = 0;
+			integral = 0;
+		}
+		pwm = 0xFFFF - (U16)u;
+		setPwm(pwm,2);
 		
-		
-		//uartSendNum(out);
-		//uartLoadOut(',');
-		uartSendNum(pwm);
-		uartLoadOut(',');
-		uartSendNum(error);
+		uartSendNum((U16)u);
 		uartLoadOut('\n');
 		uartLoadOut('\r');
 		
@@ -149,7 +160,7 @@ void main (void){
 		TEST1 = 0;
 		
 		// Stall until timer reaches set point
-		while(soft_timer < 1000);
+		while(soft_timer < 500);
 		soft_timer = 0;
 	}
 }

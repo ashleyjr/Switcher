@@ -1,1 +1,0 @@
-"Src\Interrupts.c" OPTIMIZE (8,SIZE) BROWSE INCDIR(.\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\Interrupts.lst) OBJECT(.\Objects\Interrupts.obj)

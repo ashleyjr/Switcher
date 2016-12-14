@@ -1,1 +1,0 @@
-"Src\Pid.c" OPTIMIZE (8,SIZE) BROWSE INCDIR(.\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\Pid.lst) OBJECT(.\Objects\Pid.obj)
