@@ -37,16 +37,15 @@ SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 //-----------------------------------------------------------------------------
 
 void main (void){
-	U16 d,v,c;
-	U16 out;
-	U16 pwm;
-	int u;
-	int error;
-	int integral = 0;
+	bool enabled = false;
+	int target_mV = 0;
 	
-	int p = 1;
-	int i = 1;
-	int target = 900;//5800;  Divide target mV by 6
+	U16 p,i,d,v,c;
+	U16 pwm;
+	
+	U16 adc1;
+	U16 adc2;
+	U16 adc3;
 	
 	
 	
@@ -56,36 +55,21 @@ void main (void){
 	TEST2 = 1;
 	setPwm(0x0000,1);
 	SCON0_RI = 0;
-	soft_timer = 0;
-	
-	pwm = 0xFFFF;		// PWM starts off		
-	
+	soft_timer = 0;	
 	while (1){
 		TEST1 = 1;
 		
-
-		//out = readAdc(ADC3);		// Read output voltage
-		//out = out*6;
+		// Capture
+		adc1 = readAdc(ADC1)*6;
+		adc2 = readAdc(ADC2)*6;
+		adc3 = readAdc(ADC3)*6;
 		
-		error = target - readAdc(ADC3);
-		u = p*error;
-		integral += error/i;
-		u += integral;	
-		if(u < 0){
-			u = 0;
+		// Run control loop
+		pwm = 0xFFFF;
+		if(enabled){
+			pwm -= (U16)pidUpdate(adc3,target_mV,10,5,30000);
 		}
-		if(u > 10000){
-			u = 0;
-			integral = 0;
-		}
-		pwm = 0xFFFF - (U16)u;
 		setPwm(pwm,2);
-		
-		uartSendNum((U16)u);
-		uartLoadOut('\n');
-		uartLoadOut('\r');
-		
-		
 		
 		// Handle bounce back - Safe time to load buffer
 		if(bounce){
@@ -112,7 +96,7 @@ void main (void){
 								d = uartGetNum(&uart_in[4]);
 								break;
 					case 'v':	// Write desired voltage output in mV
-								v = uartGetNum(&uart_in[4]);
+								target_mV = uartGetNum(&uart_in[4]);
 								break;
 					case 'c':	// Write desired current output in mA
 								c = uartGetNum(&uart_in[4]);
@@ -128,22 +112,22 @@ void main (void){
 				// 2 byte commands
 				switch(uart_in[1]){
 					case 'x':	// Return ADC1 in mV
-								uartSendNum(8);
+								uartSendNum(adc1);
 								break;
 					case 'y':	// Return ADC2 in mV
-								uartSendNum(9);
+								uartSendNum(adc2);
 								break;
 					case 'z':	// Return ADC3 in mV
-								uartSendNum(10);
+								uartSendNum(adc3);
 								break;
 					case 'c':	// Return output current in mA
 								uartSendNum(11);
 								break;
 					case 'g':	// Enable the power supply
-								uartSendNum(12);
+								enabled = true;
 								break;
 					case 's':	// Disable the power supply
-								uartSendNum(13);
+								enabled = false;
 								break;
 					case 'p':	// Read proportional setting
 								uartSendNum(p);
@@ -160,7 +144,7 @@ void main (void){
 		TEST1 = 0;
 		
 		// Stall until timer reaches set point
-		while(soft_timer < 500);
+		while(soft_timer < 300);
 		soft_timer = 0;
 	}
 }
