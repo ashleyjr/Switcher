@@ -38,16 +38,43 @@ SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 
 void main (void){
 	U16 p,i,d,v,c;
-	
+	U16 out;
+	U16 pwm;
+	U16 error;
 	initDevice();
 	uartInit();
 	TEST1 = 1;
 	TEST2 = 1;
-	setPwm(0x80FF,0);
-	setPwm(0x88FF,1);
+	setPwm(0x0000,1);
 	SCON0_RI = 0;
 	soft_timer = 0;
 	while (1){
+		TEST1 = 1;
+		
+		
+		out = readAdc(ADC3);		// Read output voltage
+		out = out*6;
+		
+		
+		if(out < 5500){
+			error = 5500 - out;			// can be negative
+			pwm = 0xFFFF;				//
+			pwm -= error*4;				// Proportional error
+			setPwm(pwm,2);
+		}else{
+			setPwm(0xFFFF,2);
+		}
+		
+		
+		//uartSendNum(out);
+		//uartLoadOut(',');
+		uartSendNum(pwm);
+		uartLoadOut(',');
+		uartSendNum(error);
+		uartLoadOut('\n');
+		uartLoadOut('\r');
+		
+		
 		
 		// Handle bounce back - Safe time to load buffer
 		if(bounce){
@@ -119,9 +146,10 @@ void main (void){
 				}
 			}
 		}
-	
+		TEST1 = 0;
+		
 		// Stall until timer reaches set point
-		while(soft_timer < 10000);
+		while(soft_timer < 1000);
 		soft_timer = 0;
 	}
 }

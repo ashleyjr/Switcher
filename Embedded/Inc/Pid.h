@@ -20,6 +20,6 @@
 // Function Prototypes
 //-----------------------------------------------------------------------------
 
-U8 pidUpdate(U16 adc, U16 target, int p);
+U16 pidUpdate(U16 adc, U16 target, int p);
 
 #endif // PID
