@@ -12,7 +12,7 @@
 
 #define UART_SIZE_OUT 16
 
-#define UART_IN_SIZE	6
+#define UART_IN_SIZE	5
 
 void uartInit(void);
 void uartClear(void);

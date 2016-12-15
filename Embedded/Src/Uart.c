@@ -26,7 +26,6 @@ void uartClear(void){
 	uart_in[2] = 0;
 	uart_in[3] = 0;
 	uart_in[4] = 0;
-	uart_in[5] = 0;
 }
 
 void uartLoadOut(U8 tx){
