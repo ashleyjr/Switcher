@@ -6,26 +6,15 @@
 
 #include "Uart.h"
 
+volatile U8 uart_in[UART_IN_SIZE];
 volatile U8 uart_out[UART_SIZE_OUT];
 volatile U8 head;
 volatile U8 tail;
-
-volatile U8 uart_in[UART_IN_SIZE];
-
 
 void uartInit(void){
 	SCON0_TI = 1; 
 	head = 0;
 	tail = 0;
-	uartClear();
-}
-
-void uartClear(void){
-	uart_in[0] = 0;
-	uart_in[1] = 0;
-	uart_in[2] = 0;
-	uart_in[3] = 0;
-	uart_in[4] = 0;
 }
 
 void uartLoadOut(U8 tx){
@@ -58,7 +47,7 @@ void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
 	}
 	uartLoadOut('\n');
 	uartLoadOut('\r');
-	uartClear();
+	uart_in[0] = 0;					// Stop UART menu from running
 }
 
 U16 uartGetNum(U8 * numStr){		// Send up to 16-bit number over UART
@@ -69,6 +58,6 @@ U16 uartGetNum(U8 * numStr){		// Send up to 16-bit number over UART
 		total += ((*numStr--) - 48)*multi;
 		multi = multi/10;
 	}
-	uartClear();
+	uart_in[0] = 0;					// Stop UART menu from running
 	return total;
 }

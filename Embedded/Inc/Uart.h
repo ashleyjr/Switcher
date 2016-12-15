@@ -10,14 +10,13 @@
 #ifndef __UART_H__
 #define __UART_H__
 
+#define UART_IN_SIZE	5
 #define UART_SIZE_OUT 16
 
-#define UART_IN_SIZE	5
-
 void uartInit(void);
-void uartClear(void);
 void uartLoadOut(U8 tx);
 bool uartIsNum(U8 toCheck);
 void uartSendNum(U16 toSend);
 U16 uartGetNum(U8 * numStr);
+
 #endif

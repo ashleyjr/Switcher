@@ -51,13 +51,11 @@ INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 INTERRUPT (UART0_ISR, UART0_IRQn){
 	if(SCON0_RI){
 		SCON0_RI = 0;
-		uart_in[5] = uart_in[4];	// Small buffer, less code not to use loop
-		uart_in[4] = uart_in[3];	
+		uart_in[4] = uart_in[3];	// Small buffer, less code not to use loop
 		uart_in[3] = uart_in[2];
 		uart_in[2] = uart_in[1];
 		uart_in[1] = uart_in[0];
 		uart_in[0] = SBUF0;
-		SCON0_RI = 0;
 		bounce = true;
 	}
 }
