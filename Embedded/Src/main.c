@@ -37,8 +37,8 @@ SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 //-----------------------------------------------------------------------------
 
 void main (void){
-	bool enabled = false;
-	int target_mV = 0;
+	bool enabled = true;
+	int target_mV = 5800;
 	
 	U16 p,i,d,v,c;
 	U16 pwm;
@@ -60,9 +60,9 @@ void main (void){
 		TEST1 = 1;
 		
 		// Capture
-		adc1 = readAdc(ADC1)*6;
-		adc2 = readAdc(ADC2)*6;
-		adc3 = readAdc(ADC3)*6;
+		adc1 = readAdc(ADC1);
+		adc2 = readAdc(ADC2);
+		adc3 = readAdc(ADC3);
 		
 		// Run control loop
 		pwm = 0xFFFF;
