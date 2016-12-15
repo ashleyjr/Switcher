@@ -77,68 +77,63 @@ void main (void){
 			bounce = false;				// Is it safe after this?
 		}
 		
-		// The menu
-		if('x' == uart_in[0]){
-			if(	uartIsNum(uart_in[1]) & 
-				uartIsNum(uart_in[2]) & 
-				uartIsNum(uart_in[3]) &
-				uartIsNum(uart_in[4]) 
-				){
-				// 6 byte commands
-				switch(uart_in[5]){
-					case 'p':	// Write proportional setting
-								p = uartGetNum(&uart_in[4]);
-								break;
-					case 'i':	// Write integral setting
-								i = uartGetNum(&uart_in[4]);
-								break;
-					case 'd':	// Write derivative setting
-								d = uartGetNum(&uart_in[4]);
-								break;
-					case 'v':	// Write desired voltage output in mV
-								target_mV = uartGetNum(&uart_in[4]);
-								break;
-					case 'c':	// Write desired current output in mA
-								c = uartGetNum(&uart_in[4]);
-								break;
-					case 'u':	// Set upper limit to input operation in mV
-								uartSendNum(6);
-								break;
-					case 'l':	// Set lower limit to input operation in mV
-								uartSendNum(7);
-								break;
-				}
-			}else{
-				// 2 byte commands
-				switch(uart_in[1]){
-					case 'x':	// Return ADC1 in mV
-								uartSendNum(adc1);
-								break;
-					case 'y':	// Return ADC2 in mV
-								uartSendNum(adc2);
-								break;
-					case 'z':	// Return ADC3 in mV
-								uartSendNum(adc3);
-								break;
-					case 'c':	// Return output current in mA
-								uartSendNum(11);
-								break;
-					case 'g':	// Enable the power supply
-								enabled = true;
-								break;
-					case 's':	// Disable the power supply
-								enabled = false;
-								break;
-					case 'p':	// Read proportional setting
-								uartSendNum(p);
-								break;
-					case 'i':	// Read integral setting
-								uartSendNum(i);
-								break;
-					case 'd':	// Read derivative setting
-								uartSendNum(d);
-								break;
-				}
+		// MENU
+		
+		// 1 byte commands
+		switch(uart_in[0]){
+			case 'x':	// Return ADC1 in mV
+						uartSendNum(adc1);
+						break;
+			case 'y':	// Return ADC2 in mV
+						uartSendNum(adc2);
+						break;
+			case 'z':	// Return ADC3 in mV
+						uartSendNum(adc3);
+						break;
+			case 'j':	// Return output current in mA
+						uartSendNum(11);
+						break;
+			case 'g':	// Enable the power supply
+						enabled = true;
+						break;
+			case 's':	// Disable the power supply
+						enabled = false;
+						break;
+		}
+		
+		// 5 byte commands
+		if(	uartIsNum(uart_in[0]) & 
+			uartIsNum(uart_in[1]) & 
+			uartIsNum(uart_in[2]) &
+			uartIsNum(uart_in[3]) 
+			){
+			switch(uart_in[4]){
+				case 'p':	// Write proportional setting
+							p = uartGetNum(&uart_in[3]);
+							uartSendNum(p);
+							break;
+				case 'i':	// Write integral setting
+							i = uartGetNum(&uart_in[3]);
+							uartSendNum(i);
+							break;
+				case 'd':	// Write derivative setting
+							d = uartGetNum(&uart_in[3]);
+							uartSendNum(d);
+							break;
+				case 'v':	// Write desired voltage output in mV
+							target_mV = uartGetNum(&uart_in[3]);
+							uartSendNum(target_mV);
+							break;
+				case 'c':	// Write desired current output in mA
+							c = uartGetNum(&uart_in[3]);
+							uartSendNum(c);
+							break;
+				case 'u':	// Set upper limit to input operation in mV
+							uartSendNum(6);
+							break;
+				case 'l':	// Set lower limit to input operation in mV
+							uartSendNum(7);
+							break;
 			}
 		}
 		TEST1 = 0;
