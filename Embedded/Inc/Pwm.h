@@ -4,6 +4,9 @@
 #include "SI_C8051F850_Register_Enums.h"
 #include "SI_C8051F850_Defs.h"
 
-void setPwm(U16 duty, U8 channel);
+#define PWM1	false
+#define PWM2	true
+
+void setPwm(U16 duty, bool channel);
 
 #endif

@@ -40,7 +40,7 @@ void main (void){
 	bool enabled = true;
 	int target_mV = 5800;
 	
-	U16 p,i,d,v,c;
+	U16 p,i,d,c;
 	U16 pwm;
 	
 	U16 adc1;
@@ -53,7 +53,8 @@ void main (void){
 	uartInit();
 	TEST1 = 1;
 	TEST2 = 1;
-	setPwm(0x0000,1);
+	setPwm(0x0000,PWM1);
+
 	SCON0_RI = 0;
 	soft_timer = 0;	
 	while (1){
@@ -69,7 +70,7 @@ void main (void){
 		if(enabled){
 			pwm -= (U16)pidUpdate(adc3,target_mV,10,5,30000);
 		}
-		setPwm(pwm,2);
+		setPwm(pwm,PWM2);
 		
 		// Handle bounce back - Safe time to load buffer
 		if(bounce){
