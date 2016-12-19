@@ -1,6 +1,8 @@
 \documentclass[12pt]{article}%
 \usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.2cm, right=2.2cm]
 {geometry}
+\usepackage{float}
+\restylefloat{table}
 
 %---------------------------------------------------------------------------
 \begin{document}
@@ -20,6 +22,27 @@
 
 
 \subsection{Menu}
+\begin{table}[H]
+   \centering
+   \caption{UART menu}
+   \label{tab:menu}
+   \begin{tabular}{|p{4cm}|p{1.2cm}|p{1.8cm}|p{1.8cm}|p{4cm}|}
+   \hline
+      \textbf{Command}              & \textbf{Char}   &  \textbf{Send numbers}   &  \textbf{Return numbers}  &  \textbf{Notes}\\ \hline
+      Enable                        & g               &  0                       &  0                        &  0                        \\ \hline
+      Disable                       & s               &  0                       &  0                        &  0                        \\ \hline
+      Read ADC1                     & x               &  0                       &  4                        &  Result in mV                         \\ \hline
+      Read ADC2                     & y               &  0                       &  4                        &  Result in mV                         \\ \hline
+      Read ADC3                     & z               &  0                       &  4                        &  Result in mV                         \\ \hline
+      Read output current           & j               &  0                       &  4                        &  Result in mA              \\ \hline
+      Set output voltage            & v               &  4                       &  0                        &  Send value in mV         \\ \hline
+      Set otuput current            & c               &  4                       &  0                        &  Send value in mA    \\ \hline
+      Set controller P              & p               &  4                       &  0                        &  Value is divide by 10    \\ \hline
+      Set controller I              & i               &  4                       &  0                        &  Value is divide by 10         \\ \hline
+      Set input voltage upper limit & u               &  4                       &  0                        &  Send value in mV             \\ \hline
+      Set input voltage lower limit & l               &  4                       &  0                        &  Send value in mV         \\ \hline
+   \end{tabular}
+\end{table}
 
        
 %---------------------------------------------------------------------------
