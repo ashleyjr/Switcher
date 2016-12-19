@@ -2,3 +2,5 @@
 *.obj
 *.uvgui.*
 *.s#*
+*.aux
+*.log
