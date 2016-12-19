@@ -1,4 +1,5 @@
 import random
+import serial
 import wx
 import matplotlib
 matplotlib.use('WXAgg')
@@ -91,6 +92,8 @@ class GraphFrame(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, -1, self.title)
 
+        self.ser = serial.Serial("COM100", 9600)
+
         self.datagen = DataGen()
         self.data = [self.datagen.next()]
         self.paused = False
@@ -110,18 +113,12 @@ class GraphFrame(wx.Frame):
 
         self.xmin_control = BoundControlBox(self.panel, -1, "X min", 0)
         self.xmax_control = BoundControlBox(self.panel, -1, "X max", 50)
-        self.ymin_control = BoundControlBox(self.panel, -1, "Y min", 0)
-        self.ymax_control = BoundControlBox(self.panel, -1, "Y max", 100)
 
-        self.pause_button = wx.Button(self.panel, -1, "Pause")
-        self.Bind(wx.EVT_BUTTON, self.on_pause_button, self.pause_button)
-        self.Bind(wx.EVT_UPDATE_UI, self.on_update_pause_button, self.pause_button)
+        self.adc1_button = wx.Button(self.panel, -1, "ADC1")
+        self.Bind(wx.EVT_BUTTON, self.on_adc1_button, self.adc1_button)
 
-        self.cb_grid = wx.CheckBox(self.panel, -1,
-                                   "Show Grid",
-                                   style=wx.ALIGN_RIGHT)
-        self.Bind(wx.EVT_CHECKBOX, self.on_cb_grid, self.cb_grid)
-        self.cb_grid.SetValue(True)
+
+
 
         self.cb_xlab = wx.CheckBox(self.panel, -1,
                                    "Show X labels",
@@ -129,19 +126,15 @@ class GraphFrame(wx.Frame):
         self.Bind(wx.EVT_CHECKBOX, self.on_cb_xlab, self.cb_xlab)
         self.cb_xlab.SetValue(True)
 
+
         self.hbox1 = wx.BoxSizer(wx.HORIZONTAL)
-        self.hbox1.Add(self.pause_button, border=5, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
+        self.hbox1.Add(self.adc1_button, border=5, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
         self.hbox1.AddSpacer(20)
-        self.hbox1.Add(self.cb_grid, border=5, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
-        self.hbox1.AddSpacer(10)
         self.hbox1.Add(self.cb_xlab, border=5, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
 
         self.hbox2 = wx.BoxSizer(wx.HORIZONTAL)
         self.hbox2.Add(self.xmin_control, border=5, flag=wx.ALL)
         self.hbox2.Add(self.xmax_control, border=5, flag=wx.ALL)
-        self.hbox2.AddSpacer(24)
-        self.hbox2.Add(self.ymin_control, border=5, flag=wx.ALL)
-        self.hbox2.Add(self.ymax_control, border=5, flag=wx.ALL)
 
         self.vbox = wx.BoxSizer(wx.VERTICAL)
         self.vbox.Add(self.canvas, 1, flag=wx.LEFT | wx.TOP | wx.GROW)
@@ -160,7 +153,7 @@ class GraphFrame(wx.Frame):
 
         self.axes = self.fig.add_subplot(111)
         self.axes.set_axis_bgcolor('black')
-        self.axes.set_title('Very important random data', size=12)
+        #self.axes.set_title('Very important random data', size=12)
 
         pylab.setp(self.axes.get_xticklabels(), fontsize=8)
         pylab.setp(self.axes.get_yticklabels(), fontsize=8)
@@ -198,16 +191,8 @@ class GraphFrame(wx.Frame):
         # minimal/maximal value in the current display, and not
         # the whole data set.
         #
-        if self.ymin_control.is_auto():
-            ymin = round(min(self.data), 0) - 1
-        else:
-            ymin = int(self.ymin_control.manual_value())
-
-        if self.ymax_control.is_auto():
-            ymax = round(max(self.data), 0) + 1
-        else:
-            ymax = int(self.ymax_control.manual_value())
-
+        ymin = round(min(self.data), 0) - 1
+        ymax = round(max(self.data), 0) + 1
         self.axes.set_xbound(lower=xmin, upper=xmax)
         self.axes.set_ybound(lower=ymin, upper=ymax)
 
@@ -216,10 +201,7 @@ class GraphFrame(wx.Frame):
         # so just passing the flag into the first statement won't
         # work.
         #
-        if self.cb_grid.IsChecked():
-            self.axes.grid(True, color='gray')
-        else:
-            self.axes.grid(False)
+        self.axes.grid(True, color='gray')
 
         # Using setp here is convenient, because get_xticklabels
         # returns a list over which one needs to explicitly
@@ -233,12 +215,8 @@ class GraphFrame(wx.Frame):
 
         self.canvas.draw()
 
-    def on_pause_button(self, event):
+    def on_adc1_button(self, event):
         self.paused = not self.paused
-
-    def on_update_pause_button(self, event):
-        label = "Resume" if self.paused else "Pause"
-        self.pause_button.SetLabel(label)
 
     def on_cb_grid(self, event):
         self.draw_plot()
@@ -250,9 +228,9 @@ class GraphFrame(wx.Frame):
         # if paused do not add data, but still redraw the plot
         # (to respond to scale modifications, grid change, etc.)
         #
-        if not self.paused:
+        if(self.paused):
+            self.ser.write("Test\n\r")
             self.data.append(self.datagen.next())
-
         self.draw_plot()
 
     def on_exit(self, event):
