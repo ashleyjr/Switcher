@@ -110,23 +110,23 @@ void main (void){
 			){
 			switch(uart_in[4]){
 				case 'p':	// Write proportional setting
-							p = uartGetNum(&uart_in[3]);
+							p = uartGetNum();
 							uartSendNum(p);
 							break;
 				case 'i':	// Write integral setting
-							i = uartGetNum(&uart_in[3]);
+							i = uartGetNum();
 							uartSendNum(i);
 							break;
 				case 'd':	// Write derivative setting
-							d = uartGetNum(&uart_in[3]);
+							d = uartGetNum();
 							uartSendNum(d);
 							break;
 				case 'v':	// Write desired voltage output in mV
-							target_mV = uartGetNum(&uart_in[3]);
+							target_mV = uartGetNum();
 							uartSendNum(target_mV);
 							break;
 				case 'c':	// Write desired current output in mA
-							c = uartGetNum(&uart_in[3]);
+							c = uartGetNum();
 							uartSendNum(c);
 							break;
 				case 'u':	// Set upper limit to input operation in mV

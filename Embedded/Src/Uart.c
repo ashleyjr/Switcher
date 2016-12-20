@@ -50,7 +50,8 @@ void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
 	uart_in[0] = 0;					// Stop UART menu from running
 }
 
-U16 uartGetNum(U8 * numStr){		// Send up to 16-bit number over UART
+U16 uartGetNum(void){				// UART buffer used to build number
+	U8 * numStr = &uart_in[3];
 	U8 i;
 	U16 multi = 1000;
 	U16 total = 0;
