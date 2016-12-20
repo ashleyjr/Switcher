@@ -24,6 +24,7 @@ extern volatile U8 uart_in_ptr;
 //-----------------------------------------------------------------------------
 // Interrupts
 //-----------------------------------------------------------------------------
+INTERRUPT (TIMER1_ISR, TIMER1_IRQn){}	// Required for UART timing
 
 INTERRUPT (TIMER2_ISR, TIMER2_IRQn){	
 	soft_timer++;
