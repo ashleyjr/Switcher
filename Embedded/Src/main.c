@@ -25,8 +25,8 @@
 //-----------------------------------------------------------------------------
 // Global Variables
 //-----------------------------------------------------------------------------
-volatile bool bounce;
-volatile U32 soft_timer;
+extern volatile bool bounce;
+extern volatile U8 soft_timer;
 extern volatile U8 uart_in[UART_IN_SIZE];
 
 SBIT(TEST2, SFR_P1, 3);                 // DS5 P1.0 LED
@@ -68,7 +68,7 @@ void main (void){
 		// Run control loop
 		pwm = 0xFFFF;
 		if(enabled){
-			pwm -= (U16)pidUpdate(adc3,target_mV,10,5,30000);
+			pwm -= (U16)pidUpdate(adc3,target_mV,2,1,30000);
 		}
 		setPwm(pwm,PWM2);
 		
@@ -140,7 +140,7 @@ void main (void){
 		TEST1 = 0;
 		
 		// Stall until timer reaches set point
-		while(soft_timer < 2000);
+		while(soft_timer < 6);
 		soft_timer = 0;
 	}
 }

@@ -12,8 +12,8 @@
 //-----------------------------------------------------------------------------
 // Global Variables
 //-----------------------------------------------------------------------------
-extern volatile bool bounce;
-extern volatile U32 soft_timer;
+volatile bool bounce;
+volatile U8 soft_timer;
 
 extern volatile U8 uart_out[UART_SIZE_OUT];
 extern volatile U8 uart_in[UART_IN_SIZE];
@@ -21,17 +21,12 @@ extern volatile U8 head;
 extern volatile U8 tail;
 extern volatile U8 uart_in_ptr;
 
-U32 j;
-
 //-----------------------------------------------------------------------------
-// PCA0_ISR
+// Interrupts
 //-----------------------------------------------------------------------------
-// Interrupt every 115.1KHz
-INTERRUPT (TIMER1_ISR, TIMER1_IRQn){
-	soft_timer++;
-}
 
 INTERRUPT (TIMER2_ISR, TIMER2_IRQn){	
+	soft_timer++;
 	if(head != tail){
 		SBUF0 = uart_out[tail];				// Timer tuned so no need to check
 		tail++;
