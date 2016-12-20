@@ -220,7 +220,7 @@ void initDevice(void) {
 	/*
 	// TR2 (Timer 2 Run Control) = RUN (Start Timer 2 running.)
 	*/
-	TMR2CN |= TMR2CN_TF2LEN__ENABLED | TMR2CN_T2SPLIT__8_BIT_RELOAD;
+	//TMR2CN |= TMR2CN_TF2LEN__ENABLED;
 	TMR2CN |= TMR2CN_TR2__RUN;
 	// [TMR2CN]$
 

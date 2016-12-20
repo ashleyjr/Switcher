@@ -140,7 +140,7 @@ void main (void){
 		TEST1 = 0;
 		
 		// Stall until timer reaches set point
-		while(soft_timer < 300);
+		while(soft_timer < 2000);
 		soft_timer = 0;
 	}
 }

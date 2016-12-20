@@ -31,20 +31,16 @@ INTERRUPT (TIMER1_ISR, TIMER1_IRQn){
 	soft_timer++;
 }
 
-INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
-	j++;
-	if(j == 2){
-		if(head != tail){
-			SBUF0 = uart_out[tail];				// Timer tuned so no need to check
-			tail++;
-			if(tail == UART_SIZE_OUT){
-				tail = 0;
-			}
+INTERRUPT (TIMER2_ISR, TIMER2_IRQn){	
+	if(head != tail){
+		SBUF0 = uart_out[tail];				// Timer tuned so no need to check
+		tail++;
+		if(tail == UART_SIZE_OUT){
+			tail = 0;
 		}
-		j = 0;
 	}
-	TMR2CN_TF2H = 0;
-	TMR2CN_TF2L = 0;
+	TMR2H = 250;							// Tx every 1 ms
+	TMR2CN_TF2H = 0;						// Enable interrupt again
 }
 
 // Interrups for both RX and TX
