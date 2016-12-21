@@ -73,8 +73,9 @@ void main (void){
 		pwm_buck = 0x0000;
 		pwm_boost = 0xFFFF;
 		if(enabled){
-			pwm_buck += (U16)(-pidUpdate(adc3,target_mV,&integral_buck,1,0,30000));
-			pwm_boost -= (U16)pidUpdate(adc3,target_mV,&integral_boost,2,1,30000);
+			//pwm_buck += (U16)(-pidUpdate(adc3,target_mV,&integral_buck,1,0,30000));
+			pwm_boost -= (U16)pidUpdate(adc3,target_mV,&integral_boost,1,1,1000);
+			uartSendNum(pwm_boost);
 		}
 		setPwm(pwm_buck,PWM1);
 		setPwm(pwm_boost,PWM2);
@@ -147,7 +148,7 @@ void main (void){
 		TEST1 = 0;
 		
 		// Stall until timer reaches set point
-		while(soft_timer < 6);
+		while(soft_timer < 100);
 		soft_timer = 0;
 	}
 }
