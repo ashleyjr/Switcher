@@ -38,16 +38,19 @@ SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 
 void main (void){
 	bool enabled = true;
-	int target_mV = 5800;
+	int target_mV = 5000;
 	
 	U16 p,i,d,c;
+	
+	U16 pwm_buck;
 	U16 pwm_boost;
 	
 	U16 adc1;
 	U16 adc2;
 	U16 adc3;
 	
-	int integral_boost;
+	int integral_buck = 0;
+	int integral_boost = 0;
 	
 	
 	
@@ -55,7 +58,6 @@ void main (void){
 	uartInit();
 	TEST1 = 1;
 	TEST2 = 1;
-	setPwm(0x0000,PWM1);
 
 	SCON0_RI = 0;
 	soft_timer = 0;	
@@ -68,10 +70,13 @@ void main (void){
 		adc3 = readAdc(ADC3);
 		
 		// Run control loop
+		pwm_buck = 0x0000;
 		pwm_boost = 0xFFFF;
 		if(enabled){
+			pwm_buck += (U16)(-pidUpdate(adc3,target_mV,&integral_buck,1,0,30000));
 			pwm_boost -= (U16)pidUpdate(adc3,target_mV,&integral_boost,2,1,30000);
 		}
+		setPwm(pwm_buck,PWM1);
 		setPwm(pwm_boost,PWM2);
 		
 		// Handle bounce back - Safe time to load buffer
