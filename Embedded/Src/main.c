@@ -41,11 +41,13 @@ void main (void){
 	int target_mV = 5800;
 	
 	U16 p,i,d,c;
-	U16 pwm;
+	U16 pwm_boost;
 	
 	U16 adc1;
 	U16 adc2;
 	U16 adc3;
+	
+	int integral_boost;
 	
 	
 	
@@ -66,11 +68,11 @@ void main (void){
 		adc3 = readAdc(ADC3);
 		
 		// Run control loop
-		pwm = 0xFFFF;
+		pwm_boost = 0xFFFF;
 		if(enabled){
-			pwm -= (U16)pidUpdate(adc3,target_mV,2,1,30000);
+			pwm_boost -= (U16)pidUpdate(adc3,target_mV,&integral_boost,2,1,30000);
 		}
-		setPwm(pwm,PWM2);
+		setPwm(pwm_boost,PWM2);
 		
 		// Handle bounce back - Safe time to load buffer
 		if(bounce){

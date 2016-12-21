@@ -20,6 +20,6 @@
 // Function Prototypes
 //-----------------------------------------------------------------------------
 
-int pidUpdate(int , int target, int p, int i, int stop);
+int pidUpdate(int , int target, int * integral, int p, int i, int stop);
 
 #endif // PID
