@@ -10,16 +10,9 @@
 #include "SI_C8051F850_Defs.h"
 
 //-----------------------------------------------------------------------------
-// Global Constants
-//-----------------------------------------------------------------------------
-
-#define PWM_TOP		250
-#define PWM_BOTTOM	5
-
-//-----------------------------------------------------------------------------
 // Function Prototypes
 //-----------------------------------------------------------------------------
 
-int pidUpdate(int , int target, int * integral, int p, int i, int stop);
+int pidUpdate(U16 in , U16 target, int * integral, int p, int i);
 
 #endif // PID

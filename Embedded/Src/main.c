@@ -38,7 +38,7 @@ SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 
 void main (void){
 	bool enabled = true;
-	int target_mV = 5000;
+	U16 target_mV = 5000;
 	
 	U16 p,i,d,c;
 	
@@ -74,7 +74,7 @@ void main (void){
 		pwm_boost = 0xFFFF;
 		if(enabled){
 			//pwm_buck += (U16)(-pidUpdate(adc3,target_mV,&integral_buck,1,0,30000));
-			pwm_boost -= (U16)pidUpdate(adc3,target_mV,&integral_boost,1,1,1000);
+			pwm_boost -= (U16)pidUpdate(adc3,target_mV,&integral_boost,1,1);
 			uartSendNum(pwm_boost);
 		}
 		setPwm(pwm_buck,PWM1);
