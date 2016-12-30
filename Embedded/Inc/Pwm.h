@@ -7,6 +7,6 @@
 #define PWM1	false
 #define PWM2	true
 
-void setPwm(U16 duty, bool channel);
+void setPwm(U8 duty, bool channel);
 
 #endif

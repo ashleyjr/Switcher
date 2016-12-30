@@ -42,8 +42,8 @@ void main (void){
 	
 	U16 p,i,d,c;
 	
-	U16 pwm_buck;
-	U16 pwm_boost;
+	U8 pwm_buck;
+	U8 pwm_boost;
 	
 	U16 adc1;
 	U16 adc2;
@@ -74,7 +74,7 @@ void main (void){
 		pwm_boost = 0xFFFF;
 		if(enabled){
 			//pwm_buck += (U16)(-pidUpdate(adc3,target_mV,&integral_buck,1,0,30000));
-			pwm_boost -= (U16)pidUpdate(adc3,target_mV,&integral_boost,1,1);
+			pwm_boost -= (U8)pidUpdate(adc3,target_mV,&integral_boost,1,1);
 			uartSendNum(pwm_boost);
 		}
 		setPwm(pwm_buck,PWM1);

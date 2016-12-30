@@ -20,5 +20,5 @@ int pidUpdate(U16 in, U16 target, int * integral, int p, int i){
 	out = error*p;
 	out += *integral*i;	
 	
-	return out/100;
+	return out >> 8;
 }
