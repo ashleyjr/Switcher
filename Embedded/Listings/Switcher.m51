@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        12/30/2016  23:07:58  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/30/2016  23:19:41  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -50,16 +50,16 @@ LINK MAP OF MODULE:  .\Objects\Switcher (MAIN)
             CODE    0AA2H     009BH     UNIT         ?PR?MAIN?MAIN
             CODE    0B3DH     007DH     UNIT         ?PR?_UARTNUMBERS?MAIN
             CODE    0BBAH     0017H     UNIT         ?PR?UART0_ISR?INTERRUPTS
-            CODE    0BD1H     0013H     UNIT         ?PR?_UARTLOADOUT?MAIN
-            CODE    0BE4H     000CH     UNIT         ?C_C51STARTUP
-            CODE    0BF0H     0001H     UNIT         ?PR?TIMER1_ISR?INTERRUPTS
+            CODE    0BD1H     000EH     UNIT         ?PR?_UARTLOADOUT?MAIN
+            CODE    0BDFH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0BEBH     0001H     UNIT         ?PR?TIMER1_ISR?INTERRUPTS
 
 
 
 OVERLAY MAP OF MODULE:   .\Objects\Switcher (MAIN)
 
 
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/30/2016  23:07:58  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/30/2016  23:19:41  PAGE 2
 
 
 SEGMENT                              BIT_GROUP          DATA_GROUP 
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (MAIN)
   D:00A9H         PUBLIC        CLKSEL
   D:008DH         PUBLIC        TH1
   D:008BH         PUBLIC        TL1
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/30/2016  23:07:58  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/30/2016  23:19:41  PAGE 3
 
 
   D:000CH         PUBLIC        integral
@@ -178,27 +178,25 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (MAIN)
   C:0B11H         LINE#         200
   C:0B14H         LINE#         201
   C:0B19H         LINE#         202
-  C:0B1BH         LINE#         203
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/30/2016  23:07:58  PAGE 4
+  C:0B1BH         LINE#         204
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/30/2016  23:19:41  PAGE 4
 
 
-  C:0B20H         LINE#         204
-  C:0B2DH         LINE#         205
+  C:0B20H         LINE#         205
   C:0B2DH         LINE#         206
-  C:0B32H         LINE#         207
-  C:0B3BH         LINE#         208
+  C:0B2DH         LINE#         207
+  C:0B32H         LINE#         208
   C:0B3BH         LINE#         209
   C:0B3BH         LINE#         210
+  C:0B3BH         LINE#         211
   -------         ENDPROC       MAIN
   -------         PROC          _UARTLOADOUT
   D:0007H         SYMBOL        tx
-  C:0BD1H         LINE#         213
   C:0BD1H         LINE#         214
-  C:0BD9H         LINE#         215
-  C:0BDBH         LINE#         216
-  C:0BE0H         LINE#         217
-  C:0BE3H         LINE#         218
-  C:0BE3H         LINE#         219
+  C:0BD1H         LINE#         215
+  C:0BD9H         LINE#         216
+  C:0BDBH         LINE#         217
+  C:0BDEH         LINE#         218
   -------         ENDPROC       _UARTLOADOUT
   -------         PROC          _UARTNUMBERS
   D:0006H         SYMBOL        toSend
@@ -210,40 +208,40 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (MAIN)
   D:0082H         SYMBOL        scale
   D:0029H         SYMBOL        i
   -------         ENDDO         
+  C:0B3DH         LINE#         220
   C:0B3DH         LINE#         221
-  C:0B3DH         LINE#         222
-  C:0B41H         LINE#         223
-  C:0B46H         LINE#         225
-  C:0B49H         LINE#         226
-  C:0B4CH         LINE#         227
-  C:0B52H         LINE#         228
-  C:0B55H         LINE#         229
-  C:0B64H         LINE#         230
-  C:0B72H         LINE#         231
+  C:0B41H         LINE#         222
+  C:0B46H         LINE#         224
+  C:0B49H         LINE#         225
+  C:0B4CH         LINE#         226
+  C:0B52H         LINE#         227
+  C:0B55H         LINE#         228
+  C:0B64H         LINE#         229
+  C:0B72H         LINE#         230
+  C:0B7AH         LINE#         231
   C:0B7AH         LINE#         232
-  C:0B7AH         LINE#         233
-  C:0B98H         LINE#         234
-  C:0B9AH         LINE#         235
-  C:0BA9H         LINE#         236
-  C:0BABH         LINE#         237
-  C:0BB0H         LINE#         238
-  C:0BB5H         LINE#         239
-  C:0BB9H         LINE#         240
+  C:0B98H         LINE#         233
+  C:0B9AH         LINE#         234
+  C:0BA9H         LINE#         235
+  C:0BABH         LINE#         236
+  C:0BB0H         LINE#         237
+  C:0BB5H         LINE#         238
+  C:0BB9H         LINE#         239
   -------         ENDPROC       _UARTNUMBERS
   -------         ENDMOD        MAIN
 
   -------         MODULE        INTERRUPTS
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0BF0H         PUBLIC        TIMER1_ISR
+  C:0BEBH         PUBLIC        TIMER1_ISR
   C:09BAH         PUBLIC        TIMER2_ISR
   D:00FCH         PUBLIC        PCA0CPH0
   D:00EAH         PUBLIC        PCA0CPH1
   D:00BBH         PUBLIC        ADC0MX
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/30/2016  23:07:58  PAGE 5
-
-
   B:00C8H.7       PUBLIC        TMR2CN_TF2H
   D:00E8H         PUBLIC        ADC0CN0
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/30/2016  23:19:41  PAGE 5
+
+
   C:0BBAH         PUBLIC        UART0_ISR
   B:0098H.0       PUBLIC        SCON0_RI
   D:0099H         PUBLIC        SBUF0
@@ -252,7 +250,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (MAIN)
   D:00CCH         PUBLIC        TMR2L
   D:00BDH         PUBLIC        ADC0
   -------         PROC          TIMER1_ISR
-  C:0BF0H         LINE#         23
+  C:0BEBH         LINE#         23
   -------         ENDPROC       TIMER1_ISR
   -------         PROC          TIMER2_ISR
   -------         DO            
@@ -299,11 +297,11 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (MAIN)
   C:0BC5H         LINE#         63
   C:0BC8H         LINE#         64
   C:0BCBH         LINE#         65
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/30/2016  23:07:58  PAGE 6
-
-
   C:0BCEH         LINE#         66
   C:0BD0H         LINE#         67
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/30/2016  23:19:41  PAGE 6
+
+
   C:0BD0H         LINE#         68
   -------         ENDPROC       UART0_ISR
   -------         ENDMOD        INTERRUPTS
@@ -329,8 +327,8 @@ SYMBOL TABLE OF MODULE:  .\Objects\Switcher (MAIN)
   -------         ENDMOD        ?C?ULDIV
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0234H BYTE (27%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 022FH BYTE (27%) *
 ******************************************************************************
 
-Program Size: data=37.2 xdata=0 code=1021
+Program Size: data=37.2 xdata=0 code=1016
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

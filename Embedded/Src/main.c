@@ -200,6 +200,7 @@ void main (void){
 		if(bounce){
 			uartLoadOut(uart_in[0]);
 			bounce = false;	
+			
 			if('v' == uart_in[4]){
 				target_mV = uartNumbers(target_mV,false);
 			}
@@ -211,11 +212,9 @@ void main (void){
 }
 
 void uartLoadOut(U8 tx){
-	uart_out[head] = tx;
-	head++;
-	if(head == UART_SIZE_OUT){
-		head = 0;
-	}
+	uart_out[head] = tx;		// Buffer outgoing
+	head++;						
+	head %= UART_SIZE_OUT;		// Wrap around
 }
 
 U16 uartNumbers(U16 toSend, bool transmit){		// Send up to 16-bit number over UART
