@@ -13,6 +13,6 @@
 // Function Prototypes
 //-----------------------------------------------------------------------------
 
-int pidUpdate(U16 in , U16 target, int * integral, int p, int i);
+int pidUpdate(U16 in , U16 target, int * integral, U16 i);
 
 #endif // PID

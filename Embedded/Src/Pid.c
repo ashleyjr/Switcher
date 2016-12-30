@@ -11,14 +11,7 @@
 
 
 
-int pidUpdate(U16 in, U16 target, int * integral, int p, int i){
-	int out;
-	int error;
-	error = (int)target - (int)in;
-	*integral += error;
-	
-	out = error*p;
-	out += *integral*i;	
-	
-	return out >> 8;
+int pidUpdate(U16 in, U16 target, int * integral, U16 i){
+	*integral += (int)target - (int)in;;
+	return *integral/i;
 }
