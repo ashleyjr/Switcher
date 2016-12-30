@@ -20,6 +20,8 @@ extern U16 				target_mV;
 //-----------------------------------------------------------------------------
 // Interrupts
 //-----------------------------------------------------------------------------
+INTERRUPT (TIMER1_ISR, TIMER1_IRQn){}				// Needed for UART timing
+
 INTERRUPT (TIMER2_ISR, TIMER2_IRQn){	
 	int out;
 	int error;

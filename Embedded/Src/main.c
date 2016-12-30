@@ -23,7 +23,7 @@ volatile U16 	target_mV;
 //-----------------------------------------------------------------------------
 
 void uartLoadOut(U8 tx);
-
+void uartSendNum(U16 toSend);
 void main (void){
 	// Start of peripheral setup
 	U8 TCON_save;
@@ -200,6 +200,14 @@ void main (void){
 		if(bounce){
 			uartLoadOut(uart_in[0]);
 			bounce = false;	
+			
+			if('a' == uart_in[0]){
+				target_mV += 100;
+			}
+			if('s' == uart_in[0]){
+				target_mV -= 100;
+			}
+			uartSendNum(target_mV);
 		}
 	}
 }
@@ -212,3 +220,17 @@ void uartLoadOut(U8 tx){
 	}
 }
 
+void uartSendNum(U16 toSend){		// Send up to 16-bit number over UART
+	U16 send = toSend;
+	U16 temp;
+	U16 divider = 10000;
+	while(divider){
+		temp = send / divider;
+		send -= (temp*divider);
+		uartLoadOut(temp + 48);
+		divider = divider / 10;
+	}
+	uartLoadOut('\n');
+	uartLoadOut('\r');
+	uart_in[0] = 0;					// Stop UART menu from running
+}
