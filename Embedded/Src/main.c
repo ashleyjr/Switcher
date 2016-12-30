@@ -60,95 +60,105 @@ void main (void){
 	TEST2 = 1;
 
 	SCON0_RI = 0;
-	soft_timer = 0;	
+	soft_timer = 0;
+	
+	
+		pwm_buck = 0x00;
+		pwm_boost = 0xFF;
+	setPwm(pwm_buck,PWM1);
+	setPwm(pwm_boost,PWM2);
+	soft_timer = 0;
+	while(soft_timer < 100); // stall
+
 	while (1){
 		TEST1 = 1;
 		
 		// Capture
-		adc1 = readAdc(ADC1);
-		adc2 = readAdc(ADC2);
+		//adc1 = readAdc(ADC1);
+		//adc2 = readAdc(ADC2);
 		adc3 = readAdc(ADC3);
 		
 		// Run control loop
-		pwm_buck = 0x0000;
-		pwm_boost = 0xFFFF;
+		pwm_buck = 0x00;
+		pwm_boost = 0xFF;
 		if(enabled){
-			//pwm_buck += (U16)(-pidUpdate(adc3,target_mV,&integral_buck,1,0,30000));
-			pwm_boost -= (U8)pidUpdate(adc3,target_mV,&integral_boost,1,1);
-			uartSendNum(pwm_boost);
+			pwm_buck += (U16)(-pidUpdate(adc3,target_mV,&integral_buck,20,10));
+			pwm_boost -= (U8)pidUpdate(adc3,target_mV,&integral_boost,20,2);
+			
+			//uartSendNum(pwm_boost);
 		}
 		setPwm(pwm_buck,PWM1);
 		setPwm(pwm_boost,PWM2);
 		
-		// Handle bounce back - Safe time to load buffer
-		if(bounce){
-			uartLoadOut(uart_in[0]);
-			bounce = false;				// Is it safe after this?
-		}
-		
-		// MENU
-		
-		// 1 byte commands
-		switch(uart_in[0]){
-			case 'x':	// Return ADC1 in mV
-						uartSendNum(adc1);
-						break;
-			case 'y':	// Return ADC2 in mV
-						uartSendNum(adc2);
-						break;
-			case 'z':	// Return ADC3 in mV
-						uartSendNum(adc3);
-						break;
-			case 'j':	// Return output current in mA
-						uartSendNum(11);
-						break;
-			case 'g':	// Enable the power supply
-						enabled = true;
-						break;
-			case 's':	// Disable the power supply
-						enabled = false;
-						break;
-		}
-		
-		// 5 byte commands
-		if(	uartIsNum(uart_in[0]) & 
-			uartIsNum(uart_in[1]) & 
-			uartIsNum(uart_in[2]) &
-			uartIsNum(uart_in[3]) 
-			){
-			switch(uart_in[4]){
-				case 'p':	// Write proportional setting
-							p = uartGetNum();
-							uartSendNum(p);
-							break;
-				case 'i':	// Write integral setting
-							i = uartGetNum();
-							uartSendNum(i);
-							break;
-				case 'd':	// Write derivative setting
-							d = uartGetNum();
-							uartSendNum(d);
-							break;
-				case 'v':	// Write desired voltage output in mV
-							target_mV = uartGetNum();
-							uartSendNum(target_mV);
-							break;
-				case 'c':	// Write desired current output in mA
-							c = uartGetNum();
-							uartSendNum(c);
-							break;
-				case 'u':	// Set upper limit to input operation in mV
-							uartSendNum(6);
-							break;
-				case 'l':	// Set lower limit to input operation in mV
-							uartSendNum(7);
-							break;
-			}
-		}
+//		// Handle bounce back - Safe time to load buffer
+//		if(bounce){
+//			uartLoadOut(uart_in[0]);
+//			bounce = false;				// Is it safe after this?
+//		}
+//		
+//		// MENU
+//		
+//		// 1 byte commands
+//		switch(uart_in[0]){
+//			case 'x':	// Return ADC1 in mV
+//						uartSendNum(adc1);
+//						break;
+//			case 'y':	// Return ADC2 in mV
+//						uartSendNum(adc2);
+//						break;
+//			case 'z':	// Return ADC3 in mV
+//						uartSendNum(adc3);
+//						break;
+//			case 'j':	// Return output current in mA
+//						uartSendNum(11);
+//						break;
+//			case 'g':	// Enable the power supply
+//						enabled = true;
+//						break;
+//			case 's':	// Disable the power supply
+//						enabled = false;
+//						break;
+//		}
+//		
+//		// 5 byte commands
+//		if(	uartIsNum(uart_in[0]) & 
+//			uartIsNum(uart_in[1]) & 
+//			uartIsNum(uart_in[2]) &
+//			uartIsNum(uart_in[3]) 
+//			){
+//			switch(uart_in[4]){
+//				case 'p':	// Write proportional setting
+//							p = uartGetNum();
+//							uartSendNum(p);
+//							break;
+//				case 'i':	// Write integral setting
+//							i = uartGetNum();
+//							uartSendNum(i);
+//							break;
+//				case 'd':	// Write derivative setting
+//							d = uartGetNum();
+//							uartSendNum(d);
+//							break;
+//				case 'v':	// Write desired voltage output in mV
+//							target_mV = uartGetNum();
+//							uartSendNum(target_mV);
+//							break;
+//				case 'c':	// Write desired current output in mA
+//							c = uartGetNum();
+//							uartSendNum(c);
+//							break;
+//				case 'u':	// Set upper limit to input operation in mV
+//							uartSendNum(6);
+//							break;
+//				case 'l':	// Set lower limit to input operation in mV
+//							uartSendNum(7);
+//							break;
+//			}
+//		}
 		TEST1 = 0;
 		
 		// Stall until timer reaches set point
-		while(soft_timer < 100);
+		while(soft_timer < 2);
 		soft_timer = 0;
 	}
 }
