@@ -28,7 +28,7 @@
 //-----------------------------------------------------------------------------
 // Global Variables
 //-----------------------------------------------------------------------------
-//extern volatile bool bounce;
+extern volatile bool bounce;
 extern volatile U8 soft_timer;
 extern volatile U8 uart_in[UART_IN_SIZE];
 
@@ -46,7 +46,7 @@ void main (void){
 	//U8 pwm_buck;
 	//U8 pwm_boost;
 	
-	U16 adc3;
+	//U16 adc3;
 	
 	int integral_buck = 0;
 	int integral_boost = 0;
@@ -55,7 +55,7 @@ void main (void){
 	
 	
 	initDevice();
-	//uartInit();
+	uartInit();
 	//TEST1 = 1;
 	//TEST2 = 1;
 
@@ -65,33 +65,33 @@ void main (void){
 		soft_timer = 0;
 		
 		// Measure
-		adc3 = readAdc(ADC3);
+		//adc3 = readAdc(ADC3);
 
-		// Calc error
-		error = (int)target_mV - (int)adc3;
+//		// Calc error
+//		error = (int)target_mV - (int)readAdc(ADC3);
 
-		// Buck
-		integral_buck += error;
-		out = error*P;
-		out += integral_buck*I;	
-		out /= 1000;
-		if(out < 0){
-			out = 0;
-		}
-		PCA0CPH0 = 0x00 - (U8)out;
+//		// Buck
+//		integral_buck += error;
+//		out = error*P;
+//		out += integral_buck*I;	
+//		out /= 1000;
+//		if(out < 0){
+//			out = 0;
+//		}
+//		PCA0CPH0 = PCA0CPH1 = 0x00 - (U8)out;
 
-		// Boost
-		integral_boost += error;
-		out = error*P;
-		out += integral_boost*I;
-		out /= 1000;
-		if(out < 0){
-			out = 0;
-		}
-		PCA0CPH1 = 0xFF - (U8)out;
+//		// Boost
+//		integral_boost += error;
+//		out = error*P;
+//		out += integral_boost*I;
+//		out /= 1000;
+//		if(out < 0){
+//			out = 0;
+//		}
+//		PCA0CPH1 = 0xFF - (U8)out;
 		
 		// Stall until timer reaches set point
-		while(soft_timer < 2);
+		//while(soft_timer < 2);
 		
 		
 		
@@ -102,10 +102,10 @@ void main (void){
 		//}
 		
 //		// Handle bounce back - Safe time to load buffer
-//		if(bounce){
-//			uartLoadOut(uart_in[0]);
-//			bounce = false;				// Is it safe after this?
-//		}
+		if(bounce){
+			uartLoadOut(uart_in[0]);
+			bounce = false;				// Is it safe after this?
+		}
 //		
 //		// MENU
 //		
@@ -168,7 +168,7 @@ void main (void){
 //		}
 		
 		// Stall until timer reaches set point
-		while(soft_timer < 2);
+		//while(soft_timer < 2);
 	}
 }
 //-----------------------------------------------------------------------------
