@@ -8,7 +8,12 @@
 // Defines
 //-----------------------------------------------------------------------------
 #define SYSCLK      	24500000   				// SYSCLK frequency in Hz
-#define BAUDRATE   		115200		// Baud rate of UART in bps
+#define BAUDRATE   		115200					// Baud rate of UART in bps
+
+
+#define P			5
+#define I			2
+
 
 
 //-----------------------------------------------------------------------------
@@ -17,20 +22,18 @@
 #include "SI_C8051F850_Register_Enums.h"
 #include "SI_C8051F850_Defs.h"
 #include "InitDevice.h"
-#include "Pid.h"
 #include "Uart.h"
 #include "Adc.h"
-#include "Pwm.h"
 
 //-----------------------------------------------------------------------------
 // Global Variables
 //-----------------------------------------------------------------------------
-extern volatile bool bounce;
+//extern volatile bool bounce;
 extern volatile U8 soft_timer;
 extern volatile U8 uart_in[UART_IN_SIZE];
 
-SBIT(TEST2, SFR_P1, 3);                 // DS5 P1.0 LED
-SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
+//SBIT(TEST2, SFR_P1, 3);                 // DS5 P1.0 LED
+//SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
 
 //-----------------------------------------------------------------------------
 // MAIN Routine
@@ -40,55 +43,63 @@ void main (void){
 	bool enabled = true;
 	U16 target_mV = 5000;
 	
-	U16 p,i,d,c;
+	//U8 pwm_buck;
+	//U8 pwm_boost;
 	
-	U8 pwm_buck;
-	U8 pwm_boost;
-	
-	U16 adc1;
-	U16 adc2;
 	U16 adc3;
 	
 	int integral_buck = 0;
 	int integral_boost = 0;
-	
+	int out;
+	int error;
 	
 	
 	initDevice();
-	uartInit();
-	TEST1 = 1;
-	TEST2 = 1;
+	//uartInit();
+	//TEST1 = 1;
+	//TEST2 = 1;
 
 	SCON0_RI = 0;
-	soft_timer = 0;
 	
-	
-		pwm_buck = 0x00;
-		pwm_boost = 0xFF;
-	setPwm(pwm_buck,PWM1);
-	setPwm(pwm_boost,PWM2);
-	soft_timer = 0;
-	while(soft_timer < 100); // stall
-
 	while (1){
-		TEST1 = 1;
+		soft_timer = 0;
 		
-		// Capture
-		//adc1 = readAdc(ADC1);
-		//adc2 = readAdc(ADC2);
+		// Measure
 		adc3 = readAdc(ADC3);
-		
-		// Run control loop
-		pwm_buck = 0x00;
-		pwm_boost = 0xFF;
-		if(enabled){
-			pwm_buck += (U16)(-pidUpdate(adc3,target_mV,&integral_buck,20,10));
-			pwm_boost -= (U8)pidUpdate(adc3,target_mV,&integral_boost,20,2);
-			
-			//uartSendNum(pwm_boost);
+
+		// Calc error
+		error = (int)target_mV - (int)adc3;
+
+		// Buck
+		integral_buck += error;
+		out = error*P;
+		out += integral_buck*I;	
+		out /= 1000;
+		if(out < 0){
+			out = 0;
 		}
-		setPwm(pwm_buck,PWM1);
-		setPwm(pwm_boost,PWM2);
+		PCA0CPH0 = 0x00 - (U8)out;
+
+		// Boost
+		integral_boost += error;
+		out = error*P;
+		out += integral_boost*I;
+		out /= 1000;
+		if(out < 0){
+			out = 0;
+		}
+		PCA0CPH1 = 0xFF - (U8)out;
+		
+		// Stall until timer reaches set point
+		while(soft_timer < 2);
+		
+		
+		
+		
+		
+		
+		
+		//}
 		
 //		// Handle bounce back - Safe time to load buffer
 //		if(bounce){
@@ -155,11 +166,9 @@ void main (void){
 //							break;
 //			}
 //		}
-		TEST1 = 0;
 		
 		// Stall until timer reaches set point
 		while(soft_timer < 2);
-		soft_timer = 0;
 	}
 }
 //-----------------------------------------------------------------------------

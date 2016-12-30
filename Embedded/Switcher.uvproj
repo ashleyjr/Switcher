@@ -549,11 +549,6 @@
               <FilePath>.\Src\main.c</FilePath>
             </File>
             <File>
-              <FileName>Pid.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\Pid.c</FilePath>
-            </File>
-            <File>
               <FileName>Interrupts.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\Interrupts.c</FilePath>
@@ -567,11 +562,6 @@
               <FileName>Adc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\Adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>Pwm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\Pwm.c</FilePath>
             </File>
           </Files>
         </Group>
