@@ -220,18 +220,17 @@ void uartLoadOut(U8 tx){
 U16 uartNumbers(U16 toSend, bool transmit){		// Send up to 16-bit number over UART
 	U16 out = toSend;
 	U16 num = 0;
-	U16 temp;
-	U16 scale = 1000;
-	U8 i = 3;
-	while(scale){
-		if(transmit){
-			temp = out / scale;
-			out -= (temp*scale);
-			uartLoadOut(temp + 48);
+	U16 scale = 10000;
+	U8 i = 4;
+	while(i){									// On zero done
+		scale /= 10;							// Shift
+		i--;									// Move through UART array
+		num += (uart_in[i]-48)*scale;			// ascii to number
+		if(transmit){							// Put if statement at back of loop to save on jumps 
+			num = out / scale;					// 10 powers
+			uartLoadOut(num + 48);				// Number to ascii
+			out %= scale;						// Remainder for next time
 		}
-		num += (uart_in[i]-48)*scale;
-		i--;
-		scale /= 10;
 	}
 	uartLoadOut('\n');
 	uartLoadOut('\r');
