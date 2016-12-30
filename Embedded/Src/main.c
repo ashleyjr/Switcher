@@ -61,16 +61,6 @@ void main (void){
 
 	SCON0_RI = 0;
 	soft_timer = 0;	
-	
-	
-	setPwm(0x00,PWM1);
-	setPwm(0xFF,PWM2);
-	// Stall for in rush
-	soft_timer = 0;
-	while(soft_timer < 200);
-
-	
-	
 	while (1){
 		TEST1 = 1;
 		
@@ -80,11 +70,11 @@ void main (void){
 		adc3 = readAdc(ADC3);
 		
 		// Run control loop
-		pwm_buck = 0x00;
-		pwm_boost = 0xFF;
+		pwm_buck = 0x0000;
+		pwm_boost = 0xFFFF;
 		if(enabled){
 			//pwm_buck += (U16)(-pidUpdate(adc3,target_mV,&integral_buck,1,0,30000));
-			pwm_boost -= (U8)pidUpdate(adc3,target_mV,&integral_boost,3000);
+			pwm_boost -= (U8)pidUpdate(adc3,target_mV,&integral_boost,1,1);
 			uartSendNum(pwm_boost);
 		}
 		setPwm(pwm_buck,PWM1);
@@ -158,7 +148,7 @@ void main (void){
 		TEST1 = 0;
 		
 		// Stall until timer reaches set point
-		while(soft_timer < 14);		// 100Hz
+		while(soft_timer < 100);
 		soft_timer = 0;
 	}
 }
