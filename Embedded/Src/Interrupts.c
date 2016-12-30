@@ -4,45 +4,37 @@
 // Brief:	ISR routines
 //-----------------------------------------------------------------------------
 
-// USER INCLUDES			
-#include <SI_C8051F850_Register_Enums.h>
-#include "Uart.h"
-#include "Pid.h"
-#include "Adc.h"
-
-#define P			10
-#define I			2
+#include "main.h"
 
 //-----------------------------------------------------------------------------
 // Global Variables
 //-----------------------------------------------------------------------------
-volatile bool bounce;
-
-U16 target_mV = 5000;
-int integral_buck = 0;
-int integral_boost = 0;
-int out;
-int error;
-
-extern volatile U8 uart_out[UART_SIZE_OUT];
-extern volatile U8 uart_in[UART_IN_SIZE];
-extern volatile U8 head;
-extern volatile U8 tail;
-extern volatile U8 uart_in_ptr;
-
-SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
+extern volatile 		U8 uart_out[UART_SIZE_OUT];
+extern volatile 		U8 uart_in[UART_IN_SIZE];
+extern volatile 		U8 head;
+extern volatile 		U8 tail;
+extern volatile bool 	bounce;
+extern int 				integral;
+extern U16 				target_mV;
 
 //-----------------------------------------------------------------------------
 // Interrupts
 //-----------------------------------------------------------------------------
-INTERRUPT (TIMER1_ISR, TIMER1_IRQn){}				// Required for UART timing
-
 INTERRUPT (TIMER2_ISR, TIMER2_IRQn){	
-	TEST1 = 1;										// Timing debug
-	error = (int)target_mV - (int)readAdc(ADC3);	// PID controller
-	integral_buck += error;
+	int out;
+	int error;
+	U32 adc;										// Need room for multiplication so 32 bits
+	TEST1 = 1;	
+	ADC0MX = ADC3;									// WARNING: sel can go out of range for used ADCs
+	ADC0CN0 |= ADC0CN0_ADBUSY__SET;
+	while(ADC0CN0 & ADC0CN0_ADBUSY__SET);			// Wait for sample to complete
+	adc = ADC0;										// Scale
+	adc *= SCALE_MUL;
+	adc /= SCALE_DIV;								// Timing debug
+	error = (int)target_mV - (int)adc;				// PID controller
+	integral += error;
 	out = error*P;
-	out += integral_buck*I;	
+	out += integral*I;	
 	out /= 1000;
 	if(out < 0){
 		out = 0;

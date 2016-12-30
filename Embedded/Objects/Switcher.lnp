@@ -1,7 +1,4 @@
-".\Objects\InitDevice.obj",
 ".\Objects\main.obj",
-".\Objects\Interrupts.obj",
-".\Objects\Uart.obj",
-".\Objects\Adc.obj" 
+".\Objects\Interrupts.obj" 
 TO ".\Objects\Switcher" 
 PRINT(".\Listings\Switcher.m51") RAMSIZE(256) 
