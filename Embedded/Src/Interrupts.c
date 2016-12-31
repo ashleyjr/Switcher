@@ -9,11 +9,12 @@
 //-----------------------------------------------------------------------------
 // Global Variables
 //-----------------------------------------------------------------------------
-extern volatile 		U8 uart_out[UART_SIZE_OUT];
-extern volatile 		U8 head;
-extern volatile 		U8 tail;
-extern int 				integral;
-extern U16 				target_mV;
+extern volatile 		U8 		uart_out[UART_SIZE_OUT];
+extern volatile 		U8 		head;
+extern volatile 		U8 		tail;
+extern 					int 	integral;
+extern 					U16 	target_mV;
+extern 					bool	enabled;				
 
 //-----------------------------------------------------------------------------
 // Interrupts
@@ -37,6 +38,9 @@ INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 	out += integral*I;	
 	out /= 1000;
 	if(out < 0){
+		out = 0;
+	}
+	if(!enabled){
 		out = 0;
 	}
 	PCA0CPH0 = PCA0CPH1 = 0xFF - (U8)out;

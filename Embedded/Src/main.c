@@ -16,6 +16,7 @@ volatile U8 	head;
 volatile U8 	tail;
 volatile int 	integral;
 volatile U16 	target_mV;
+volatile bool	enabled;
 
 //-----------------------------------------------------------------------------
 // MAIN Routine
@@ -158,8 +159,6 @@ void main (void){
 	// PCA
 		PCA0CN_CR =
 			PCA0CN_CR__STOP;
-		PCA0CPH0 = 
-			(128 << PCA0CPH0_PCA0CPH0__SHIFT);
 		PCA0CPM0 = 
 			PCA0CPM0_CAPN__DISABLED 			| 
 			PCA0CPM0_ECCF__ENABLED 				| 
@@ -168,8 +167,6 @@ void main (void){
 			PCA0CPM0_ECOM__ENABLED				| 
 			PCA0CPM0_PWM__ENABLED 				| 
 			PCA0CPM0_TOG__DISABLED;
-		PCA0CPH1 = 
-			(128 << PCA0CPH0_PCA0CPH0__SHIFT);
 		PCA0CPM1 = 
 			PCA0CPM1_CAPN__DISABLED 			| 
 			PCA0CPM1_ECCF__ENABLED 				|		 
@@ -188,6 +185,7 @@ void main (void){
 		TMR2CN |= TMR2CN_TR2__RUN;
 	// End of peripheral setup
 	
+	enabled 	= false;
 	integral 	= 0;
 	target_mV 	= 5250;
 	
@@ -211,17 +209,23 @@ void main (void){
 			if('a' == uart_in[0]){
 				uartNumbers(target_mV,true);
 			}
+			if('g' == uart_in[0]){
+				enabled = true;
+			}
+			if('s' == uart_in[0]){
+				enabled = false;
+			}
 		}
 	}
 }
 
-void uartLoadOut(U8 tx){
-	uart_out[head] = tx;		// Buffer outgoing
+void uartLoadOut(U8 tx){						// Handle buffering out Tx UART
+	uart_out[head] = tx;						// Buffer outgoing
 	head++;						
-	head %= UART_SIZE_OUT;		// Wrap around
+	head %= UART_SIZE_OUT;						// Wrap around
 }
 
-U16 uartNumbers(U16 toSend, bool transmit){		// Send up to 16-bit number over UART
+U16 uartNumbers(U16 toSend, bool transmit){		// Tx/Rx up to 4 length numbers over UART
 	U16 out = toSend;
 	U16 num = 0;
 	U16 scale = 10000;
