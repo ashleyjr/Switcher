@@ -4,7 +4,31 @@
 // Brief:	Header file for PID controller 
 //-----------------------------------------------------------------------------
 
-#include "main.h"
+#include "SI_C8051F850_Register_Enums.h"
+#include "SI_C8051F850_Defs.h"
+
+#define SYSCLK      	24500000   				// SYSCLK frequency in Hz
+#define BAUDRATE   		115200					// Baud rate of UART in bps
+
+#define P				5
+#define I				2
+
+#define UART_IN_SIZE	5
+#define UART_SIZE_OUT 	8
+
+#define ADC1		0x08
+#define ADC2		0x09
+#define ADC3		0x0A
+
+#define SCALE_MUL	5926
+#define SCALE_DIV	1000
+
+SBIT(TEST2, SFR_P1, 3);                 // DS5 P1.0 LED
+SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
+
+U16 readAdc(U8 sel);
+void uartLoadOut(U8 tx);
+U16 uartNumbers(U16 toSend,bool transmit);
 
 //-----------------------------------------------------------------------------
 // Global Variables
@@ -261,4 +285,43 @@ U16 readAdc(U8 sel){
 	adc *= SCALE_MUL;
 	adc /= SCALE_DIV;
 	return adc;
+}
+
+
+INTERRUPT (TIMER1_ISR, TIMER1_IRQn){}				// Needed for UART timing
+
+	
+INTERRUPT (TIMER2_ISR, TIMER2_IRQn){	
+	int out;
+	int error;
+	TEST1 = 1;	
+	
+
+	adc1 = readAdc(ADC1);
+	adc2 = readAdc(ADC2);
+	adc3 = readAdc(ADC3);
+	
+
+	error = (int)target_mV - (int)adc3;				// PID controller
+	integral += error;
+	out = error*P;
+	out += integral*I;	
+	out /= 1000;
+	if((out < 0) || (!enabled)){
+		out = 0;
+	}
+	PCA0CPH0 = PCA0CPH1 = 0xFF - (U8)out;
+	
+
+
+	if(head != tail){
+		SBUF0 = uart_out[tail];						// Timer tuned so no need to check
+		tail++;										// Transmit UART
+		tail %= UART_SIZE_OUT;						// Wrap around
+	}
+	
+	
+	TMR2H = 255;									// Runs at 4KHz
+	TMR2CN_TF2H = 0;								// Enable interrupt again
+	TEST1 = 0;										// Timing debug
 }
