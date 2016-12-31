@@ -20,8 +20,7 @@
 #define ADC2		0x09
 #define ADC3		0x0A
 
-#define SCALE_MUL	5926
-#define SHIFT_1024	10
+#define SCALE_MUL	6068				// When combined with >> 10 will scale by 5.926 to compensate for potential divider
 
 SBIT(TEST2, SFR_P1, 3);                 // DS5 P1.0 LED
 SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
@@ -246,7 +245,7 @@ void main (void){
 			}
 		}
 	}
-}
+} 
 
 void uartLoadOut(U8 tx){						// Handle buffering out Tx UART
 	uart_out[head] = tx;						// Buffer outgoing
@@ -275,21 +274,16 @@ U16 uartNumbers(U16 toSend, bool transmit){		// Tx/Rx up to 4 length numbers ove
 }
 
 U16 readAdc(U8 sel){
-	U32 adc;
+	U8 i;
 	ADC0MX = sel;
-	ADC0CN0 |= ADC0CN0_ADBUSY__SET;
-	while(ADC0CN0 & ADC0CN0_ADBUSY__SET);		// Wait for sample to complete
-	ADC0CN0 |= ADC0CN0_ADBUSY__SET;
-	while(ADC0CN0 & ADC0CN0_ADBUSY__SET);		// Wait for sample to complete
-	adc = ADC0;									// Scale to mV
-	adc *= SCALE_MUL;
-	adc = adc >> SHIFT_1024;					// Divide by 1024
-	return adc;
+	for(i=0;i<2;i++){
+		ADC0CN0 |= ADC0CN0_ADBUSY__SET;
+		while(ADC0CN0 & ADC0CN0_ADBUSY__SET);		// Wait for sample to complete
+	}
+	return (((U32)ADC0)*SCALE_MUL) >> 10;		// Scale to mV
 }
 
-
 INTERRUPT (TIMER1_ISR, TIMER1_IRQn){}				// Needed for UART timing
-
 	
 INTERRUPT (TIMER2_ISR, TIMER2_IRQn){	
 	int out;
@@ -304,7 +298,7 @@ INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 
 	error = (int)target_mV - (int)adc3;				// PID controller
 	integral += error;
-	out = ((error*P) + (integral*I)) >> SHIFT_1024;	// Divide by 1024
+	out = ((error*P) + (integral*I)) >> 10;			// Divide by 1024
 	if((out < 0) || (!enabled)){
 		out = 0;
 	}
