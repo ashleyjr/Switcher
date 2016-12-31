@@ -10,10 +10,8 @@
 // Global Variables
 //-----------------------------------------------------------------------------
 extern volatile 		U8 uart_out[UART_SIZE_OUT];
-extern volatile 		U8 uart_in[UART_IN_SIZE];
 extern volatile 		U8 head;
 extern volatile 		U8 tail;
-extern volatile bool 	bounce;
 extern int 				integral;
 extern U16 				target_mV;
 
@@ -55,15 +53,4 @@ INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 	TEST1 = 0;										// Timing debug
 }
 
-INTERRUPT (UART0_ISR, UART0_IRQn){					// Interrups for both RX and TX
-	if(SCON0_RI){
-		SCON0_RI = 0;
-		uart_in[4] = uart_in[3];					// Small buffer, less code not to use loop
-		uart_in[3] = uart_in[2];
-		uart_in[2] = uart_in[1];
-		uart_in[1] = uart_in[0];
-		uart_in[0] = SBUF0;
-		bounce = true;
-	}
-}
 	

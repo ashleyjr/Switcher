@@ -14,7 +14,6 @@ volatile U8 	uart_in[UART_IN_SIZE];
 volatile U8 	uart_out[UART_SIZE_OUT];
 volatile U8 	head;
 volatile U8 	tail;
-volatile bool 	bounce;
 volatile int 	integral;
 volatile U16 	target_mV;
 
@@ -189,7 +188,6 @@ void main (void){
 		TMR2CN |= TMR2CN_TR2__RUN;
 	// End of peripheral setup
 	
-	bounce 		= false;
 	integral 	= 0;
 	target_mV 	= 5250;
 	
@@ -197,9 +195,15 @@ void main (void){
 	SCON0_RI 	= 0;
 	
 	while (1){
-		if(bounce){
+		if(SCON0_RI){
+			SCON0_RI = 0;
+			uart_in[4] = uart_in[3];					// Small buffer, less code not to use loop
+			uart_in[3] = uart_in[2];
+			uart_in[2] = uart_in[1];
+			uart_in[1] = uart_in[0];
+			uart_in[0] = SBUF0;
+			
 			uartLoadOut(uart_in[0]);
-			bounce = false;	
 			
 			if('v' == uart_in[4]){
 				target_mV = uartNumbers(target_mV,false);
