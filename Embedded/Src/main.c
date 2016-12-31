@@ -17,13 +17,14 @@ volatile U8 	tail;
 volatile int 	integral;
 volatile U16 	target_mV;
 volatile bool	enabled;
+volatile U16	adc1;
+volatile U16	adc2;
+volatile U16	adc3;
 
 //-----------------------------------------------------------------------------
 // MAIN Routine
 //-----------------------------------------------------------------------------
 
-void uartLoadOut(U8 tx);
-U16 uartNumbers(U16 toSend,bool transmit);
 void main (void){
 	// Start of peripheral setup
 	U8 TCON_save;
@@ -203,17 +204,21 @@ void main (void){
 			
 			uartLoadOut(uart_in[0]);
 			
-			if('v' == uart_in[4]){
-				target_mV = uartNumbers(target_mV,false);
-			}
-			if('a' == uart_in[0]){
-				uartNumbers(target_mV,true);
-			}
-			if('g' == uart_in[0]){
-				enabled = true;
-			}
-			if('s' == uart_in[0]){
-				enabled = false;
+			switch(uart_in[0]){
+				case 'a': 	uartNumbers(target_mV,true);
+							break;
+				case 'i': 	uartNumbers(adc1,true);
+							break;
+				case 'o': 	uartNumbers(adc3,true);
+							break;
+				case 'g': 	enabled = true;
+							break;
+				case 's': 	enabled = false;
+							break;
+				default:	if('v' == uart_in[4]){
+								target_mV = uartNumbers(target_mV,false);
+							}
+							break;
 			}
 		}
 	}
@@ -243,4 +248,17 @@ U16 uartNumbers(U16 toSend, bool transmit){		// Tx/Rx up to 4 length numbers ove
 	uartLoadOut('\n');
 	uartLoadOut('\r');
 	return num;
+}
+
+U16 readAdc(U8 sel){
+	U32 adc;
+	ADC0MX = sel;
+	ADC0CN0 |= ADC0CN0_ADBUSY__SET;
+	while(ADC0CN0 & ADC0CN0_ADBUSY__SET);		// Wait for sample to complete
+	ADC0CN0 |= ADC0CN0_ADBUSY__SET;
+	while(ADC0CN0 & ADC0CN0_ADBUSY__SET);		// Wait for sample to complete
+	adc = ADC0;									// Scale to mV
+	adc *= SCALE_MUL;
+	adc /= SCALE_DIV;
+	return adc;
 }
