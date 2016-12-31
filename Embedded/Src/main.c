@@ -21,7 +21,7 @@
 #define ADC3		0x0A
 
 #define SCALE_MUL	5926
-#define SCALE_DIV	1000
+#define SHIFT_1024	10
 
 SBIT(TEST2, SFR_P1, 3);                 // DS5 P1.0 LED
 SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
@@ -283,7 +283,7 @@ U16 readAdc(U8 sel){
 	while(ADC0CN0 & ADC0CN0_ADBUSY__SET);		// Wait for sample to complete
 	adc = ADC0;									// Scale to mV
 	adc *= SCALE_MUL;
-	adc /= SCALE_DIV;
+	adc = adc >> SHIFT_1024;					// Divide by 1024
 	return adc;
 }
 
@@ -304,13 +304,11 @@ INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 
 	error = (int)target_mV - (int)adc3;				// PID controller
 	integral += error;
-	out = error*P;
-	out += integral*I;	
-	out /= 1000;
+	out = ((error*P) + (integral*I)) >> SHIFT_1024;	// Divide by 1024
 	if((out < 0) || (!enabled)){
 		out = 0;
 	}
-	PCA0CPH0 = PCA0CPH1 = 0xFF - (U8)out;
+	PCA0CPH0 = PCA0CPH1 = 0xFF - out;
 	
 
 
