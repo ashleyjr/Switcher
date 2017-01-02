@@ -7,7 +7,7 @@ from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigCanvas
 import pylab
 import numpy as np
 
-tick_ms = 100
+tick_ms = 1
 
 
 class GraphFrame(wx.Frame):
@@ -37,17 +37,23 @@ class GraphFrame(wx.Frame):
         self.hbox1 = None
         self.vbox = None
 
+        self.enabled = True
+        self.time = 0
+
         self.ser = serial.Serial(args.com_port, args.baud_rate)
         self.create_main_panel()
         self.redraw_timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.on_redraw_timer, self.redraw_timer)
-        self.redraw_timer.Start(tick_ms)
+        self.redraw_timer.Start(1)
 
     def create_main_panel(self):
         self.panel = wx.Panel(self)
 
         self.init_plot()
         self.canvas = FigCanvas(self.panel, -1, self.fig)
+
+        self.cb_enable = wx.CheckBox(self.panel, -1, "Enable", style=wx.ALIGN_LEFT)
+        self.cb_enable.SetValue(False)
 
         self.cb_adc1 = wx.CheckBox(self.panel, -1, "Read input voltage", style=wx.ALIGN_LEFT)
         self.cb_adc1.SetValue(False)
@@ -59,6 +65,7 @@ class GraphFrame(wx.Frame):
         self.cb_adc3.SetValue(False)
 
         self.hbox1 = wx.BoxSizer(wx.VERTICAL)
+        self.hbox1.Add(self.cb_enable, border=5, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
         self.hbox1.Add(self.cb_adc1, border=5, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
         self.hbox1.Add(self.cb_adc2, border=5, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
         self.hbox1.Add(self.cb_adc3, border=5, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
@@ -85,12 +92,12 @@ class GraphFrame(wx.Frame):
 
     def draw_plot(self):
 
-        top = float(len(self.adc1_data)*tick_ms) / 1000
+        top = float(len(self.adc1_data)*tick_ms*100) / 1000
         time_s = np.linspace(0, top, len(self.adc1_data))
         xmin = 0
         xmax = time_s[len(time_s)-1]
-        ymin = round(np.amin(np.concatenate([self.adc1_data, self.adc2_data, self.adc3_data])), 0) - 1
-        ymax = round(np.amax(np.concatenate([self.adc1_data, self.adc2_data, self.adc3_data])), 0) + 1
+        ymin = round(np.amin(np.concatenate([self.adc1_data, self.adc2_data, self.adc3_data])), 0) - 100
+        ymax = round(np.amax(np.concatenate([self.adc1_data, self.adc2_data, self.adc3_data])), 0) + 100
         self.axes.set_xbound(lower=xmin, upper=xmax)
         self.axes.set_ybound(lower=ymin, upper=ymax)
 
@@ -111,30 +118,51 @@ class GraphFrame(wx.Frame):
 
         self.canvas.draw()
 
+    def sample(self, cmd):
+        self.ser.flushInput()
+        self.ser.write(cmd)
+        while True:
+            if self.ser.inWaiting() > 4:
+                if self.ser.read(1) == cmd:
+                    return int(self.ser.read(4))
+
     def on_redraw_timer(self, event):
 
-        """ ADC1 plotting"""
-        if self.cb_adc1.IsChecked():
-            self.ser.write("ADC1 \n\r")
-            self.adc1_data.append(random.random())
-        else:
-            self.adc1_data.append(self.adc1_data[len(self.adc1_data)-1])
+        if 0 == self.time:
+            """ Enable """
+            if self.cb_enable.IsChecked() != self.enabled:
+                self.enabled = self.cb_enable.IsChecked()
+                if self.cb_enable.IsChecked():
+                    self.ser.write("g")
+                else:
+                    self.ser.write("s")
 
-        """ ADC2 plotting"""
-        if self.cb_adc2.IsChecked():
-            self.ser.write("ADC2 \n\r")
-            self.adc2_data.append(random.random())
-        else:
-            self.adc2_data.append(self.adc2_data[len(self.adc2_data)-1])
+        if 1 == self.time:
+            """ ADC1 plotting"""
+            if self.cb_adc1.IsChecked():
+                self.adc1_data.append(self.sample("x"))
+            else:
+                self.adc1_data.append(self.adc1_data[len(self.adc1_data)-1])
 
-        """ ADC3 plotting"""
-        if self.cb_adc3.IsChecked():
-            self.ser.write("ADC3 \n\r")
-            self.adc3_data.append(random.random())
-        else:
-            self.adc3_data.append(self.adc3_data[len(self.adc3_data)-1])
+        if 2 == self.time:
+            """ ADC2 plotting"""
+            if self.cb_adc2.IsChecked():
+                self.adc2_data.append(self.sample("y"))
+            else:
+                self.adc2_data.append(self.adc2_data[len(self.adc2_data)-1])
 
-        self.draw_plot()
+        if 3 == self.time:
+            """ ADC3 plotting"""
+            if self.cb_adc3.IsChecked():
+                self.adc3_data.append(self.sample("z"))
+            else:
+                self.adc3_data.append(self.adc3_data[len(self.adc3_data)-1])
+
+        if 10 == self.time:
+            self.draw_plot()
+            self.time = 0
+        else:
+            self.time += 1
 
     def on_exit(self):
         self.Destroy()

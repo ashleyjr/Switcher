@@ -230,9 +230,11 @@ void main (void){
 			switch(uart_in[0]){
 				case 'a': 	uartNumbers(target_mV,true);
 							break;
-				case 'i': 	uartNumbers(adc1,true);
+				case 'x': 	uartNumbers(adc1,true);
 							break;
-				case 'o': 	uartNumbers(adc3,true);
+				case 'y': 	uartNumbers(adc2,true);
+							break;
+				case 'z': 	uartNumbers(adc3,true);
 							break;
 				case 'g': 	enabled = true;
 							break;
