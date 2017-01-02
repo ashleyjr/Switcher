@@ -43,6 +43,7 @@ volatile bool	enabled;
 volatile U16	adc1;
 volatile U16	adc2;
 volatile U16	adc3;
+volatile U16 	current;
 
 //-----------------------------------------------------------------------------
 // MAIN Routine
@@ -230,15 +231,17 @@ void main (void){
 			switch(uart_in[0]){
 				case 'a': 	uartNumbers(target_mV,true);
 							break;
+				case 'c': 	uartNumbers(current,true);
+							break;
+				case 'g': 	enabled = true;
+							break;
+				case 's': 	enabled = false;
+							break;
 				case 'x': 	uartNumbers(adc1,true);
 							break;
 				case 'y': 	uartNumbers(adc2,true);
 							break;
 				case 'z': 	uartNumbers(adc3,true);
-							break;
-				case 'g': 	enabled = true;
-							break;
-				case 's': 	enabled = false;
 							break;
 				default:	if('v' == uart_in[4]){
 								target_mV = uartNumbers(target_mV,false);
@@ -296,6 +299,7 @@ INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 	adc1 = readAdc(ADC1);
 	adc2 = readAdc(ADC2);
 	adc3 = readAdc(ADC3);
+	current = (adc2 - adc3)*10;
 	
 
 	error = (int)target_mV - (int)adc3;				// PID controller
