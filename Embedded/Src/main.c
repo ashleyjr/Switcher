@@ -140,15 +140,12 @@ void main (void){
 			ADC0CN0_ADEN__ENABLED				|
 			ADC0CN0_ADCM__ADBUSY;
 	// Timer 0
-		TCON_save = 
-			TCON;
-			TCON &= 
-			TCON_TR0__BMASK 	&	 
+		TCON_save = TCON;
+		TCON &= 
+			TCON_TR0__BMASK 					&	 
 			TCON_TR1__BMASK;
-		TH1 = 
-			(150 << TH1_TH1__SHIFT);
-		TL1 = 
-			(150 << TL1_TL1__SHIFT);
+		TH1 = (150 << TH1_TH1__SHIFT);
+		TL1 = (150 << TL1_TL1__SHIFT);
 		TCON = 
 			TCON_save;
 	// Timer setup
@@ -341,7 +338,7 @@ U16 readAdc(U8 sel){								// Read the available ADCs
 
 INTERRUPT (TIMER1_ISR, TIMER1_IRQn){}				// Needed for UART timing
 	
-INTERRUPT (TIMER2_ISR, TIMER2_IRQn){	
+INTERRUPT (TIMER2_ISR, TIMER2_IRQn){				// One timer handling UART Tx and PID
 	int out;
 	int error;
 	TEST1 = 1;	
