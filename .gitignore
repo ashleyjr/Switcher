@@ -4,3 +4,4 @@
 *.s#*
 *.aux
 *.log
+*.synctex.*
