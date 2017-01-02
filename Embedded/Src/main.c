@@ -1,11 +1,19 @@
 //-----------------------------------------------------------------------------
 // Project: Switcher
-// File: 	Pid.h	
-// Brief:	Header file for PID controller 
+// File: 	main.c
+// Brief:	Single main file containing all code
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+// Includes
 //-----------------------------------------------------------------------------
 
 #include "SI_C8051F850_Register_Enums.h"
 #include "SI_C8051F850_Defs.h"
+
+//-----------------------------------------------------------------------------
+// Defines
+//-----------------------------------------------------------------------------
 
 #define SYSCLK      		24500000   				// SYSCLK frequency in Hz
 #define BAUDRATE   			115200					// Baud rate of UART in bps
@@ -13,7 +21,7 @@
 #define P					5
 #define I					2
 
-#define UART_IN_SIZE		5
+#define UART_SIZE_IN		5
 #define UART_SIZE_OUT 		8
 
 #define ADC1				0x08
@@ -29,6 +37,10 @@
 SBIT(TEST2, SFR_P1, 3);                 			// DS5 P1.0 LED
 SBIT(TEST1, SFR_P1, 4);                 			// DS5 P1.0 LED
 
+//-----------------------------------------------------------------------------
+// Prototypes
+//-----------------------------------------------------------------------------
+
 U16 readAdc(U8 sel);
 void uartLoadOut(U8 tx);
 U16 uartNumbers(U16 toSend,bool transmit);
@@ -37,7 +49,7 @@ U16 uartNumbers(U16 toSend,bool transmit);
 // Global Variables
 //-----------------------------------------------------------------------------
 
-volatile U8 	uart_in[UART_IN_SIZE];
+volatile U8 	uart_in[UART_SIZE_IN];
 volatile U8 	uart_out[UART_SIZE_OUT];
 volatile U8 	head;
 volatile U8 	tail;
@@ -53,7 +65,7 @@ volatile U16	adc3;
 volatile U16 	current;
 
 //-----------------------------------------------------------------------------
-// MAIN Routine
+// Main Routine
 //-----------------------------------------------------------------------------
 
 void main (void){
@@ -274,6 +286,10 @@ void main (void){
 	}
 } 
 
+//-----------------------------------------------------------------------------
+// Routines
+//-----------------------------------------------------------------------------
+
 void uartLoadOut(U8 tx){							// Handle buffering out Tx UART
 	uart_out[head] = tx;							// Buffer outgoing
 	head++;						
@@ -309,7 +325,7 @@ U16 uartNumbers(U16 toSend, bool transmit){			// Tx/Rx up to 4 length numbers ov
 	return num;
 }
 
-U16 readAdc(U8 sel){
+U16 readAdc(U8 sel){								// Read the available ADCs
 	U8 i;
 	ADC0MX = sel;
 	for(i=0;i<2;i++){
@@ -318,6 +334,10 @@ U16 readAdc(U8 sel){
 	}
 	return (((U32)ADC0)*SCALE_MUL) >> 10;			// Scale to mV
 }
+
+//-----------------------------------------------------------------------------
+// Interrupt Routines
+//-----------------------------------------------------------------------------
 
 INTERRUPT (TIMER1_ISR, TIMER1_IRQn){}				// Needed for UART timing
 	
@@ -359,3 +379,7 @@ INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 	TMR2CN_TF2H = 0;								// Enable interrupt again
 	TEST1 = 0;										// Timing debug
 }
+
+//-----------------------------------------------------------------------------
+// END
+//-----------------------------------------------------------------------------
