@@ -7,23 +7,25 @@
 #include "SI_C8051F850_Register_Enums.h"
 #include "SI_C8051F850_Defs.h"
 
-#define SYSCLK      	24500000   				// SYSCLK frequency in Hz
-#define BAUDRATE   		115200					// Baud rate of UART in bps
+#define SYSCLK      		24500000   				// SYSCLK frequency in Hz
+#define BAUDRATE   			115200					// Baud rate of UART in bps
 
-#define P				5
-#define I				2
+#define P					5
+#define I					2
 
-#define UART_IN_SIZE	5
-#define UART_SIZE_OUT 	8
+#define UART_IN_SIZE		5
+#define UART_SIZE_OUT 		8
 
-#define ADC1		0x08
-#define ADC2		0x09
-#define ADC3		0x0A
+#define ADC1				0x08
+#define ADC2				0x09
+#define ADC3				0x0A
 
-#define SCALE_MUL	6068				// When combined with >> 10 will scale by 5.926 to compensate for potential divider
+#define SCALE_MUL			6068					// When combined with >> 10 will scale by 5.926 to compensate for potential divider
 
-SBIT(TEST2, SFR_P1, 3);                 // DS5 P1.0 LED
-SBIT(TEST1, SFR_P1, 4);                 // DS5 P1.0 LED
+#define DEFAULT_OUT_MV		5000
+
+SBIT(TEST2, SFR_P1, 3);                 			// DS5 P1.0 LED
+SBIT(TEST1, SFR_P1, 4);                 			// DS5 P1.0 LED
 
 U16 readAdc(U8 sel);
 void uartLoadOut(U8 tx);
@@ -212,7 +214,7 @@ void main (void){
 	
 	enabled 	= false;
 	integral 	= 0;
-	target_mV 	= 5250;
+	target_mV 	= DEFAULT_OUT_MV;
 	
 	SCON0_TI 	= 1; 
 	SCON0_RI 	= 0;
@@ -252,29 +254,38 @@ void main (void){
 	}
 } 
 
-void uartLoadOut(U8 tx){						// Handle buffering out Tx UART
-	uart_out[head] = tx;						// Buffer outgoing
+void uartLoadOut(U8 tx){							// Handle buffering out Tx UART
+	uart_out[head] = tx;							// Buffer outgoing
 	head++;						
-	head %= UART_SIZE_OUT;						// Wrap around
+	head %= UART_SIZE_OUT;							// Wrap around
 }
 
-U16 uartNumbers(U16 toSend, bool transmit){		// Tx/Rx up to 4 length numbers over UART
+U16 uartNumbers(U16 toSend, bool transmit){			// Tx/Rx up to 4 length numbers over UART
 	U16 out = toSend;
 	U16 num = 0;
 	U16 scale = 10000;
+	U8 test;
 	U8 i = 4;
-	while(i){									// On zero done
-		scale /= 10;							// Shift
-		i--;									// Move through UART array
-		num += (uart_in[i]-48)*scale;			// ascii to number
-		if(transmit){							// Put if statement at back of loop to save on jumps 
-			num = out / scale;					// 10 powers
-			uartLoadOut(num + 48);				// Number to ascii
-			out %= scale;						// Remainder for next time
+	bool bad = false;
+	while(i){										// On zero done
+		scale /= 10;								// Shift
+		i--;										// Move through UART array
+		test = uart_in[i] - 48;						// ascii to num
+		if( (test < 0)||(test > 10) ){				// check is 0 to 9
+			bad = true;
+		}
+		num += test*scale;							// shift in to position
+		if(transmit){								// Put if statement at back of loop to save on jumps 
+			num = out / scale;						// 10 powers
+			uartLoadOut(num + 48);					// Number to ascii
+			out %= scale;							// Remainder for next time
 		}
 	}
 	uartLoadOut('\n');
 	uartLoadOut('\r');
+	if(bad){
+		num = DEFAULT_OUT_MV;						// Not all valid numbers so set output as default
+	}
 	return num;
 }
 
@@ -285,7 +296,7 @@ U16 readAdc(U8 sel){
 		ADC0CN0 |= ADC0CN0_ADBUSY__SET;
 		while(ADC0CN0 & ADC0CN0_ADBUSY__SET);		// Wait for sample to complete
 	}
-	return (((U32)ADC0)*SCALE_MUL) >> 10;		// Scale to mV
+	return (((U32)ADC0)*SCALE_MUL) >> 10;			// Scale to mV
 }
 
 INTERRUPT (TIMER1_ISR, TIMER1_IRQn){}				// Needed for UART timing
