@@ -40,6 +40,7 @@ volatile U8 	uart_out[UART_SIZE_OUT];
 volatile U8 	head;
 volatile U8 	tail;
 volatile int 	integral;
+volatile U8 	duty;
 volatile U16 	target_mV;
 volatile bool	enabled;
 volatile U16	adc1;
@@ -222,7 +223,7 @@ void main (void){
 	while (1){
 		if(SCON0_RI){
 			SCON0_RI = 0;
-			uart_in[4] = uart_in[3];					// Small buffer, less code not to use loop
+			uart_in[4] = uart_in[3];										// Small buffer, less code not to use loop
 			uart_in[3] = uart_in[2];
 			uart_in[2] = uart_in[1];
 			uart_in[1] = uart_in[0];
@@ -235,9 +236,12 @@ void main (void){
 							break;
 				case 'c': 	uartNumbers(current,true);
 							break;
-				case 'g': 	enabled = true;
+				case 'd': 	uartNumbers(duty,true);
 							break;
-				case 's': 	enabled = false;
+				case 'g': 	enabled 	= true;
+							integral 	= 0;
+							break;
+				case 's': 	enabled 	= false;
 							break;
 				case 'x': 	uartNumbers(adc1,true);
 							break;
@@ -246,7 +250,8 @@ void main (void){
 				case 'z': 	uartNumbers(adc3,true);
 							break;
 				default:	if('v' == uart_in[4]){
-								target_mV = uartNumbers(target_mV,false);
+								target_mV 	= uartNumbers(target_mV,false);
+								integral 	= 0;
 							}
 							break;
 			}
@@ -285,6 +290,7 @@ U16 uartNumbers(U16 toSend, bool transmit){			// Tx/Rx up to 4 length numbers ov
 	uartLoadOut('\r');
 	if(bad){
 		num = DEFAULT_OUT_MV;						// Not all valid numbers so set output as default
+		enabled = false;							// Stop running
 	}
 	return num;
 }
@@ -319,6 +325,7 @@ INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 	if((out < 0) || (!enabled)){
 		out = 0;
 	}
+	duty = out;
 	PCA0CPH0 = PCA0CPH1 = 0xFF - out;
 	
 
