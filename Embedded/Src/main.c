@@ -23,6 +23,8 @@
 #define SCALE_MUL			6068					// When combined with >> 10 will scale by 5.926 to compensate for potential divider
 
 #define DEFAULT_OUT_MV		5000
+#define DEFAULT_HIGH_MV		6000
+#define DEFAULT_LOW_MV		4000
 
 SBIT(TEST2, SFR_P1, 3);                 			// DS5 P1.0 LED
 SBIT(TEST1, SFR_P1, 4);                 			// DS5 P1.0 LED
@@ -41,6 +43,8 @@ volatile U8 	head;
 volatile U8 	tail;
 volatile int 	integral;
 volatile U8 	duty;
+volatile U16 	high_mV;
+volatile U16 	low_mV;
 volatile U16 	target_mV;
 volatile bool	enabled;
 volatile U16	adc1;
@@ -216,6 +220,8 @@ void main (void){
 	enabled 	= false;
 	integral 	= 0;
 	target_mV 	= DEFAULT_OUT_MV;
+	high_mV		= DEFAULT_HIGH_MV;
+	low_mV		= DEFAULT_LOW_MV;
 	
 	SCON0_TI 	= 1; 
 	SCON0_RI 	= 0;
@@ -249,9 +255,14 @@ void main (void){
 							break;
 				case 'z': 	uartNumbers(adc3,true);
 							break;
-				default:	if('v' == uart_in[4]){
-								target_mV 	= uartNumbers(target_mV,false);
-								integral 	= 0;
+				default:	switch(uart_in[4]){
+								case 'h':	high_mV		= uartNumbers(high_mV,false);
+											break;
+								case 'l':	low_mV		= uartNumbers(low_mV,false);
+											break;
+								case 'v':	target_mV 	= uartNumbers(target_mV,false);
+											integral 	= 0;
+											break;
 							}
 							break;
 			}
@@ -276,7 +287,7 @@ U16 uartNumbers(U16 toSend, bool transmit){			// Tx/Rx up to 4 length numbers ov
 		scale /= 10;								// Shift
 		i--;										// Move through UART array
 		test = uart_in[i] - 48;						// ascii to num
-		if( (test < 0)||(test > 10) ){				// check is 0 to 9
+		if(test > 10){								// check is 0 to 9, unsigned
 			bad = true;
 		}
 		num += test*scale;							// shift in to position
@@ -290,7 +301,6 @@ U16 uartNumbers(U16 toSend, bool transmit){			// Tx/Rx up to 4 length numbers ov
 	uartLoadOut('\r');
 	if(bad){
 		num = DEFAULT_OUT_MV;						// Not all valid numbers so set output as default
-		enabled = false;							// Stop running
 	}
 	return num;
 }
@@ -317,6 +327,10 @@ INTERRUPT (TIMER2_ISR, TIMER2_IRQn){
 	adc2 = readAdc(ADC2);
 	adc3 = readAdc(ADC3);
 	current = (adc2 - adc3)*10;
+	
+	if((adc1 < low_mV) || (adc1 > high_mV)){		// Watch input voltage
+		enabled = false;
+	}
 	
 
 	error = (int)target_mV - (int)adc3;				// PID controller
