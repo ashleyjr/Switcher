@@ -249,6 +249,10 @@ void main (void){
 							break;
 				case 's': 	enabled 	= false;
 							break;
+				case 'm': 	uartNumbers(high_mV,true);
+							break;
+				case 'n': 	uartNumbers(low_mV,true);
+							break;
 				case 'x': 	uartNumbers(adc1,true);
 							break;
 				case 'y': 	uartNumbers(adc2,true);
