@@ -247,26 +247,26 @@ void main (void){
 			uartLoadOut(uart_in[0]);
 			
 			switch(uart_in[0]){
-				case 'a': 	uartNumbers(target_mV,true);
+				case 0: 	uartNumbers(target_mV,true);
 							break;
-				case 'c': 	uartNumbers(current,true);
+				case 1: 	uartNumbers(current,true);
 							break;
-				case 'd': 	uartNumbers(duty,true);
+				case 2: 	uartNumbers(duty,true);
 							break;
-				case 'g': 	enabled 	= true;
+				case 3: 	enabled 	= true;
 							integral 	= 0;
 							break;
-				case 's': 	enabled 	= false;
+				case 4: 	enabled 	= false;
 							break;
-				case 'm': 	uartNumbers(high_mV,true);
+				case 5: 	uartNumbers(high_mV,true);
 							break;
-				case 'n': 	uartNumbers(low_mV,true);
+				case 6: 	uartNumbers(low_mV,true);
 							break;
-				case 'x': 	uartNumbers(adc1,true);
+				case 7: 	uartNumbers(adc1,true);
 							break;
-				case 'y': 	uartNumbers(adc2,true);
+				case 8: 	uartNumbers(adc2,true);
 							break;
-				case 'z': 	uartNumbers(adc3,true);
+				case 9: 	uartNumbers(adc3,true);
 							break;
 				default:	switch(uart_in[4]){
 								case 'h':	high_mV		= uartNumbers(high_mV,false);

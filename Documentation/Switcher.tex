@@ -3,6 +3,7 @@
 {geometry}
 \usepackage{float}
 \usepackage{graphicx}
+\usepackage{listings}
 \restylefloat{table}
 
 %---------------------------------------------------------------------------
@@ -71,6 +72,104 @@ The Pulse Width Modulation (PWM) is controlled from the counter array. The outpu
       Set input voltage lower limit & l               &  4                       &  0                        &  Send value in mV         \\ \hline
    \end{tabular}
 \end{table}
+
+
+
+\subsection{Assembly analysis}
+
+The following sections of code are library function inserted by the compilier implict to facilite some more complex operations.
+
+\subsubsection{ADC scaling}
+
+Listing \ref{adc0} is a line of code operating on a 32 bit signed integer and invokes listing \ref{limul} and \ref{ulshr}. The purpose of this operation is to cast the voltage recorded by the ADC to a representation in mV. It is possible for the target voltage to be translated instead but this would still require the same piece of code. The 12 bit oputput but the ADC must be multiplied 5.926 as to represent the voltage at the top of the potential divider. Fixed but multiplication followed by a shift operation removes the need for a floating point operation but yeilds the same result.
+
+\lstset{
+  caption=LIMUL, 
+  basicstyle=\footnotesize, frame=tb,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=adc0
+}
+\begin{lstlisting}
+return (((U32)ADC0)*SCALE_MUL) >> 10;
+\end{lstlisting}
+
+\lstset{
+  caption=LIMUL, 
+  basicstyle=\footnotesize, frame=tb,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=limul
+}
+\lstinputlisting{limul.asm}
+
+\lstset{
+  caption=ULSHR, 
+  basicstyle=\footnotesize, frame=tb,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=ulshr
+}
+\lstinputlisting{ulshr.asm}
+
+
+
+\subsubsection{ADC scaling}
+
+
+\lstset{
+  caption=IMUL, 
+  basicstyle=\footnotesize, frame=tb,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=imul
+}
+\lstinputlisting{imul.asm}
+
+
+
+
+\subsubsection{Division}
+
+Division and modulus operations are contained in \ref{div} invoke the functions contained in \ref{udiv}.
+
+\lstset{
+  caption=Division, 
+  basicstyle=\footnotesize, frame=tb,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=div
+}
+\begin{lstlisting}
+scale /= 10;
+
+num = out / scale;
+
+out %= scale;	
+\end{lstlisting}
+
+\lstset{
+  caption=UDIV, 
+  basicstyle=\footnotesize, frame=tb,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=udiv
+}
+\lstinputlisting{udiv.asm}
+
+
+\subsubsection{Switch}
+
+This library function is generated to control large switch statements??
+
+\lstset{
+  caption=CCASE, 
+  basicstyle=\footnotesize, frame=tb,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=ccase
+}
+\lstinputlisting{ccase.asm}
+
+
+
+
+
+
+
 
        
 %---------------------------------------------------------------------------
