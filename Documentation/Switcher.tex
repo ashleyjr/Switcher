@@ -15,9 +15,66 @@
 %---------------------------------------------------------------------------
 \section{Introduction}
 
+Design and build a switch mode power supply (SMPS) which will operate in boost and buck mode. The controller will contain a selection of menu options allowing the user to control as many features as possible of the SMPS operation. The software running on the controlling processor must consist of no more than 1024 bytes.
+
+\subsection{Processor selection}
+
+The chosen processor is a \textbf{Silicon Labs C8051F850-C-GU} which uses the 8051 architecture. An 8051 processor is a good choice for a code size reduction exercise as there are many throughly tested compiliers available. The Keil c51 compilier will be used to generate assmebly for this project.
 
 \section{Hardware}
 
+\subsection{Schematic}
+
+\begin{figure}[H]
+	\centering
+  	\includegraphics[width=16cm]{sch.png}
+  	\caption{Schematic.}
+  	\label{fig:sch}
+\end{figure}
+
+\subsection{Bill of Materials (BoM)}
+
+
+\begin{table}[H]
+   \centering
+   \caption{BoM}
+   \label{tab:bom}
+   \begin{tabular}{|p{2.5cm}|p{1.2cm}|p{7cm}|p{5cm}|}
+   \hline
+      	\textbf{Designator}        	& 	\textbf{Value}	&	\textbf{Manufacturer}   		&  	\textbf{Manufacturer Part Number}	\\ \hline
+	C1,C2				&	10uF			&	 MULTICOMP				&	MCGPR25V106M5X11			\\ \hline
+	D1,D4,D5			&	3.3V			&	ON SEMICONDUCTOR		&	1N5333BG					\\ \hline
+	D2,D3				&				&	TAIWAN SEMICONDUCTOR	&	SR1504					\\ \hline
+	JP1,JP2			&				&	AMPHENOL FCI	&	77311-401-36LF					\\ \hline
+	L1				&	22uH			&	PANASONIC 	&	ELC08D220E			\\ \hline
+	Q1				&				& 	MULTICOMP	                              &      BC337		\\ \hline
+	Q2				&			&	FAIRCHILD SEMICONDUCTOR	&	FQP27P06		\\ \hline
+	Q3				&		&	FAIRCHILD SEMICONDUCTOR	&	FQP30N06L	\\ \hline
+	R1,R4,R5,R8		&	470$\Omega$		&	MULTICOMP	&	MF12 470R	\\ \hline
+	R2,R3,R6,R9		&	560$\Omega$		&	MULTICOMP	&	MF12 560R	\\ \hline
+	R7		&	0.1$\Omega$		&	VISHAY	&  LVR01R1000FE12	\\ \hline
+	Strip board		&		&	KEMO & ELECTRONIC	E012	\\ \hline
+	Dev board		&		&	SILICON LABS	&  LTOOLSTICK850DC-UG	\\ \hline
+
+   \end{tabular}
+\end{table}
+
+
+\subsection{Stripboard}
+
+\begin{figure}[H]
+	\centering
+  	\includegraphics[width=16cm]{top.jpg}
+  	\caption{Stripboard top side.}
+  	\label{fig:top}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+  	\includegraphics[width=16cm]{bot.jpg}
+  	\caption{Stripboard bottom side.}
+  	\label{fig:bot}
+\end{figure}
 
 \section{Software}
 
