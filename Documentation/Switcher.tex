@@ -75,6 +75,7 @@ The Pulse Width Modulation (PWM) is controlled from the counter array. The outpu
 
 
 
+
 \subsection{Assembly analysis}
 
 The following sections of code are library function inserted by the compilier implict to facilite some more complex operations.
@@ -126,6 +127,27 @@ out %= scale;
 
 This library function is generated to control large switch statements??
 
+
+\section{Testing}
+
+The potential dividers constantly place the power supply under a load of $515\Omega$. To test both the UART interface anhd the switch mode functionaility a small python script is used to create GUI to plot values in real time. The input and output voltages recorded by the mircocontroller are contained in Figure \ref{fig:gui} and the actual values are contained in \ref{fig:scope}.
+
+\begin{figure}[H]
+	\centering
+  	\includegraphics[width=12cm]{gui.png}
+  	\caption{Sine wave output on GUI.}
+  	\label{fig:gui}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+  	\includegraphics[width=12cm]{scope.png}
+  	\caption{Sine wave output on scope.}
+  	\label{fig:scope}
+\end{figure}
+
+
+
 \section{Conclusion}
 
 The complete assembly in listing \ref{switcher.asm} is generated from the code in listing \ref{main.c}. The C code is contained within a single file and generates $950$ lines of assembler with an additional $3$ lines contained within the jump table and the jump on reset...
@@ -139,6 +161,14 @@ The complete assembly in listing \ref{switcher.asm} is generated from the code i
 \end{itemize}
 
 The Keil c51 compilier limits machine code generation to 2KB (not a problem) however it also limits the use of memory less than 2KB by always jumping to address $2048$ and then continuing with the compiled assembler. Excluding the first $2048$ is not completely fair because the jump on reset and the jump table would still exsist. The highest vector used in the jump table is at address $43$ so assuming this is not optimised by the compilier the total code size comes to \textbf{993 bytes}.
+
+\subsection{Further work}
+
+\begin{itemize}
+  	\item Improve output current
+	\item Replaced protection diodes with sutiable parts
+	\item Improve resolution of ADC to enable constant control
+\end{itemize}
 
 \section{Appendix}
 
