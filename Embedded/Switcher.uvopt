@@ -79,8 +79,8 @@
       </OPTFL>
       <CpuCode>3</CpuCode>
       <DebugOpt>
-        <uSim>1</uSim>
-        <uTrg>0</uTrg>
+        <uSim>0</uSim>
+        <uTrg>1</uTrg>
         <sLdApp>1</sLdApp>
         <sGomain>1</sGomain>
         <sRbreak>1</sRbreak>
@@ -159,7 +159,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>Src\MAIN.C</Filename>
+          <Filename>C:\Users\Ashley Robinson\Desktop\Switcher\Embedded\Src\MAIN.C</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\Switcher\MAIN\344</Expression>
         </Bp>
@@ -175,7 +175,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>Src\MAIN.C</Filename>
+          <Filename>C:\Users\Ashley Robinson\Desktop\Switcher\Embedded\Src\MAIN.C</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\Switcher\MAIN\358</Expression>
         </Bp>
