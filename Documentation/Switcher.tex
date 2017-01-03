@@ -85,7 +85,7 @@ Listing \ref{adc0} is a line of code operating on a 32 bit signed integer and in
 
 \lstset{
   caption=LIMUL, 
-  basicstyle=\footnotesize, frame=tb,
+  basicstyle=\footnotesize, frame=tb,basicstyle=\fontsize{6}{7}\ttfamily,
   xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
 label=adc0
 }
@@ -93,34 +93,12 @@ label=adc0
 return (((U32)ADC0)*SCALE_MUL) >> 10;
 \end{lstlisting}
 
-\lstset{
-  caption=LIMUL, 
-  basicstyle=\footnotesize, frame=tb,
-  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
-label=limul
-}
-\lstinputlisting{limul.asm}
-
-\lstset{
-  caption=ULSHR, 
-  basicstyle=\footnotesize, frame=tb,
-  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
-label=ulshr
-}
-\lstinputlisting{ulshr.asm}
 
 
 
 \subsubsection{ADC scaling}
 
 
-\lstset{
-  caption=IMUL, 
-  basicstyle=\footnotesize, frame=tb,
-  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
-label=imul
-}
-\lstinputlisting{imul.asm}
 
 
 
@@ -131,7 +109,7 @@ Division and modulus operations are contained in \ref{div} invoke the functions 
 
 \lstset{
   caption=Division, 
-  basicstyle=\footnotesize, frame=tb,
+  basicstyle=\footnotesize, frame=tb,basicstyle=\fontsize{6}{7}\ttfamily,
   xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
 label=div
 }
@@ -143,31 +121,87 @@ num = out / scale;
 out %= scale;	
 \end{lstlisting}
 
+
+\subsubsection{Switch}
+
+This library function is generated to control large switch statements??
+
+\section{Conclusion}
+
+The complete assembly in listing \ref{switcher.asm} is generated from the code in listing \ref{main.c}. The C code is contained within a single file and generates $950$ lines of assembler with an additional $3$ lines contained within the jump table and the jump on reset...
+
+\begin{itemize}
+  	\item \textbf{0x0000} Jumps straight to 0x0800
+	\item \textbf{0x001B} Jump table entry TIMER1\_ISR(C:0BB6)
+	\item \textbf{0x002B} Jump table entry TIMER2\_ISR(C:094C)
+	\item \textbf{0x0800} First line of code generated from main.c
+  	\item \textbf{0x0BB6} Final line of code generated from main.c
+\end{itemize}
+
+The Keil c51 compilier limits machine code generation to 2KB (not a problem) however it also limits the use of memory less than 2KB by always jumping to address $2048$ and then continuing with the compiled assembler. Excluding the first $2048$ is not completely fair because the jump on reset and the jump table would still exsist. The highest vector used in the jump table is at address $43$ so assuming this is not optimised by the compilier the total code size comes to \textbf{993 bytes}.
+
+\section{Appendix}
+
+\subsection{Code listings}
+
+\lstset{
+  caption=main.c, 
+  basicstyle=\fontsize{6}{7}\ttfamily, frame=tb,
+  xleftmargin=.05\textwidth, xrightmargin=.05\textwidth,
+label=main.c, tabsize=4	
+}
+\lstinputlisting[language=C]{main.c}
+
+\lstset{
+  caption=Swicther.asm, 
+  basicstyle=\footnotesize, frame=tb,basicstyle=\fontsize{6}{7}\ttfamily,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=switcher.asm
+}
+\lstinputlisting{Switcher.asm}
+
+\lstset{
+  caption=LIMUL, 
+  basicstyle=\footnotesize, frame=tb,basicstyle=\fontsize{6}{7}\ttfamily,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=limul
+}
+\lstinputlisting{limul.asm}
+
+\lstset{
+  caption=ULSHR, 
+  basicstyle=\footnotesize, frame=tb,basicstyle=\fontsize{6}{7}\ttfamily,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=ulshr
+}
+\lstinputlisting{ulshr.asm}
+
+
+\lstset{
+  caption=IMUL, 
+  basicstyle=\footnotesize, frame=tb,basicstyle=\fontsize{6}{7}\ttfamily,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
+label=imul
+}
+\lstinputlisting{imul.asm}
+
+
 \lstset{
   caption=UDIV, 
-  basicstyle=\footnotesize, frame=tb,
+  basicstyle=\footnotesize, frame=tb,basicstyle=\fontsize{6}{7}\ttfamily,
   xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
 label=udiv
 }
 \lstinputlisting{udiv.asm}
 
 
-\subsubsection{Switch}
-
-This library function is generated to control large switch statements??
-
 \lstset{
   caption=CCASE, 
-  basicstyle=\footnotesize, frame=tb,
+  basicstyle=\footnotesize, frame=tb,basicstyle=\fontsize{6}{7}\ttfamily,
   xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
 label=ccase
 }
 \lstinputlisting{ccase.asm}
-
-
-
-
-
 
 
 
