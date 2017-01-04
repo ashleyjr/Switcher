@@ -15,13 +15,15 @@
 %---------------------------------------------------------------------------
 \section{Introduction}
 
-Design and build a switch mode power supply (SMPS) which will operate in boost and buck mode. The controller will contain a selection of menu options allowing the user to control as many features as possible of the SMPS operation. The software running on the controlling processor must consist of no more than 1024 bytes.
+The task is to design and build a switch mode power supply (SMPS) which will operate in boost and buck mode. The controller will contain a selection of menu options allowing the user to control as many features as possible of the SMPS operation. The software running on the controlling processor must consist of no more than 1024 bytes of machine code.
 
 \subsection{Processor selection}
 
 The chosen processor is a \textbf{Silicon Labs C8051F850-C-GU} which uses the 8051 architecture. An 8051 processor is a good choice for a code size reduction exercise as there are many throughly tested compiliers available. The Keil c51 compilier will be used to generate assmebly for this project.
 
 \section{Hardware}
+
+A soldering iron and solder is required to build the switcher hardware. The schematic is held in Figure \ref{fig:sch} along with the BoM in Table \ref{tab:bom}. Photos of the top and bottom of the stripboard build are contained in Figures \ref{fig:top} and \ref{fig:bot}. Note the visible modification to the development board is not required to replicated the design however \textbf{R5, R6 and R9 must be removed from the board development board}.
 
 \subsection{Schematic}
 
@@ -86,7 +88,7 @@ A single ADC is multiplexed to measure three voltages on the board.
 
 \subsubsection{Universal Asyncronhouse/Syncronhous Transceiver (UART)}
 
-The UART is configure to run at 115200 baud with no control flow with a ring buffer interface. Trasmission from the microcontroller happens through \textbf{uartLoadOut} which adds to the \textbf{8 byte} buffer and is then unloaded from a timer. The input is not interrupt driven and is handled in the main control loop using a \textbf{5 byte} buffer that is enough to contain the longest command.
+ Trasmission from the microcontroller happens through \textbf{uartLoadOut} which adds to the \textbf{8 byte} buffer and is then unloaded from a timer. The input is not interrupt driven and is handled in the main loop using a \textbf{5 byte} buffer that is enough to contain the longest command.
 
 \subsubsection{Programmable Counter Array (PCA)}
 
@@ -94,9 +96,11 @@ The Pulse Width Modulation (PWM) is controlled from the counter array. The outpu
 
 \subsubsection{Timers}
 
-\textbf{Timer 0} is used as baud rate generagtion for the UART. \textbf{Timer 2} is used to trigger an Interrupt Service Routine (ISR) which runs at 4KHz. The ISR control the UART transmission, sampling of the ADC, running the controller and finally setting the PWM.
+\textbf{Timer 0} is used as baud rate generagtion for the UART. \textbf{Timer 2} is used to trigger an Interrupt Service Routine (ISR) which runs at 4KHz. The ISR controls the UART transmission, sampling of the ADC, running the controller and finally setting the PWM.
 
 \subsection{Operation}
+
+A brief desciprtion of the software operation is contained in Figure \ref{fig:overview} and the full code in Listing \ref{main.c}.
 
 \begin{figure}[H]
 	\centering
@@ -108,11 +112,14 @@ The Pulse Width Modulation (PWM) is controlled from the counter array. The outpu
 
 
 \subsection{UART Menu}
+
+The baud rate of the UART is 115200 with 8 data bits, no parrity or control flow. The commands in Table \ref{tab:menu} reference the single characters for the menu and amount of the data to be exchanged.
+
 \begin{table}[H]
    \centering
    \caption{UART menu}
    \label{tab:menu}
-   \begin{tabular}{|p{4cm}|p{1.2cm}|p{1.8cm}|p{1.8cm}|p{4cm}|}
+   \begin{tabular}{|p{4cm}|p{1.2cm}|p{1.8cm}|p{1.8cm}|p{5cm}|}
    \hline
       \textbf{Command}              & \textbf{Char}   &  \textbf{Send numbers}   &  \textbf{Return numbers}  &  \textbf{Notes}\\ \hline
       Enable                        & g               &  0                       &  0                        &  0                        \\ \hline
@@ -120,13 +127,14 @@ The Pulse Width Modulation (PWM) is controlled from the counter array. The outpu
       Read ADC1                     & x               &  0                       &  4                        &  Result in mV                         \\ \hline
       Read ADC2                     & y               &  0                       &  4                        &  Result in mV                         \\ \hline
       Read ADC3                     & z               &  0                       &  4                        &  Result in mV                         \\ \hline
-      Read output current           & j               &  0                       &  4                        &  Result in mA              \\ \hline
+      Read PWM duty                    & d               &  0                       &  4                        &  Percent = Result /2.55                         \\ \hline
+      Read output current           & c               &  0                       &  4                        &  Result in mA              \\ \hline
       Set output voltage            & v               &  4                       &  0                        &  Send value in mV         \\ \hline
-      Set otuput current            & c               &  4                       &  0                        &  Send value in mA    \\ \hline
-      Set controller P              & p               &  4                       &  0                        &  Value is divide by 10    \\ \hline
-      Set controller I              & i               &  4                       &  0                        &  Value is divide by 10         \\ \hline
-      Set input voltage upper limit & u               &  4                       &  0                        &  Send value in mV             \\ \hline
+      Set input voltage upper limit & h               &  4                       &  0                        &  Send value in mV             \\ \hline
       Set input voltage lower limit & l               &  4                       &  0                        &  Send value in mV         \\ \hline
+      Read set output voltage            & a               &  0                      &  4                       &  Result value in mV         \\ \hline
+      Read set input voltage upper limit & m               &  0                       &  4                        &  Result in mV             \\ \hline
+      Read set input voltage lower limit & n              &  0                       &  4                        &  Result in mV         \\ \hline
    \end{tabular}
 \end{table}
 
@@ -135,14 +143,14 @@ The Pulse Width Modulation (PWM) is controlled from the counter array. The outpu
 
 \subsection{Assembly analysis}
 
-The following sections of code are library function inserted by the compilier implict to facilite some more complex operations.
+The following sections of code are library functions inserted by the compilier implictly to facilite some more complex operations. A total of 146 lines of assemebly are inserted for the implcit functions; not including any extra code to build stack frames, etc.
 
 \subsubsection{ADC scaling}
 
-Listing \ref{adc0} is a line of code operating on a 32 bit signed integer and invokes listing \ref{limul} and \ref{ulshr}. The purpose of this operation is to cast the voltage recorded by the ADC to a representation in mV. It is possible for the target voltage to be translated instead but this would still require the same piece of code. The 12 bit oputput but the ADC must be multiplied 5.926 as to represent the voltage at the top of the potential divider. Fixed but multiplication followed by a shift operation removes the need for a floating point operation but yeilds the same result.
+Listing \ref{adc0} is a line of code operating on a 32 bit signed integer and invokes listing \ref{limul} and \ref{ulshr}. The purpose of this operation is to cast the voltage recorded by the ADC to a representation in mV. It is possible for the target voltage to be translated instead but this would still require the same piece of code. The 12 bit oputput but the ADC must be multiplied 5.926 as to represent the voltage at the top of the potential divider. Fixed bit multiplication followed by a shift operation removes the need for a floating point operation but yeilds the same result. The value of the potential dividers can be changed to improve the operation required. The additional lines of assembly total 57 from using this operation.
 
 \lstset{
-  caption=LIMUL, 
+  caption=ADC, 
   basicstyle=\footnotesize, frame=tb,basicstyle=\fontsize{6}{7}\ttfamily,
   xleftmargin=.2\textwidth, xrightmargin=.2\textwidth,
 label=adc0
@@ -154,16 +162,12 @@ return (((U32)ADC0)*SCALE_MUL) >> 10;
 
 
 
-\subsubsection{ADC scaling}
-
-
-
 
 
 
 \subsubsection{Division}
 
-Division and modulus operations are contained in \ref{div} invoke the functions contained in \ref{udiv}.
+Division and modulus operations are contained in \ref{div} invoke the functions contained in \ref{udiv} which contains 62 lines of assembly. 
 
 \lstset{
   caption=Division, 
@@ -182,7 +186,7 @@ out %= scale;
 
 \subsubsection{Switch}
 
-This library function is generated to control large switch statements??
+Using a case statement will generate different assmebly from an if/else ladder. The function in Listing \ref{ccase} is used to control the switch statement and totals 27 lines of assembly.
 
 
 \section{Testing}
@@ -218,6 +222,18 @@ The complete assembly in listing \ref{switcher.asm} is generated from the code i
 \end{itemize}
 
 The Keil c51 compilier limits machine code generation to 2KB (not a problem) however it also limits the use of memory less than 2KB by always jumping to address $2048$ and then continuing with the compiled assembler. Excluding the first $2048$ is not completely fair because the jump on reset and the jump table would still exsist. The highest vector used in the jump table is at address $43$ so assuming this is not optimised by the compilier the total code size comes to \textbf{993 bytes}.
+
+\subsection{Code size over time}
+
+The graph in \ref{fig:size} pltos code size agaiinst discret commits. Initial development is erratic, the size slowly grows as more features are added and eventually the code is optimised  back below the limit.
+
+\begin{figure}[H]
+	\centering
+  	\includegraphics[width=12cm]{size.png}
+  	\caption{Code size against commits.}
+  	\label{fig:size}
+\end{figure}
+
 
 \subsection{Further work}
 
